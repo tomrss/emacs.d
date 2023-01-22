@@ -23,8 +23,8 @@
 (require 'mod-completions)
 (require 'mod-editing)
 (require 'mod-window)
-(require 'mod-terminals)
 (require 'mod-org)
+(require 'mod-terminals)
 (require 'mod-development)
 
 ;;; init.el ends here

@@ -22,6 +22,7 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 
 ;;;; Fonts and icons
+
 (when (display-graphic-p)
   (when (x-list-fonts "JetBrains Mono NL")
     (set-face-attribute 'default     nil :font "JetBrains Mono NL" :height 110 :weight 'normal)
