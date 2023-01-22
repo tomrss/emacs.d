@@ -1,9 +1,9 @@
-#+title: .emacs.d
+#+title: emacs.d
 #+author: Tommaso Rossi
 
 Personal GNU Emacs configuration.
 
-* Guiding Principles
+** Guiding Principles
 
 - Fast startup (less than 1.5 seconds)
 - Try to prioritize builtin features (=eglot=, =project=, =flymake=, ...)when it's possible
@@ -16,7 +16,7 @@ Personal GNU Emacs configuration.
 - Focus on terminals (=eshell=, =vterm=)
 - It has to work in the terminal
 
-* Installation
+** Installation
 
 Clone the repo in =.emacs.d= (or the directory you want if you use the =--init-directory=
 option of Emacs 29):
@@ -31,7 +31,7 @@ Install packages: start Emacs or launch installer script with:
   make install
 #+end_src
 
-** Upgrade dependencies
+*** Upgrade dependencies
 
 If you want to upgrade dependecies, you can pull latest upgrades on the main branch and
 then rebuild by restarting Emacs or launching =make rebuild=.
@@ -42,9 +42,9 @@ If you want to upgrade further, you can do:
   make upgrade rebuild
 #+end_src
 
-* Modules
+** Modules
 
-** Clean Init Directory
+*** Clean Init Directory
 
 Module dedicated to cleaning the Emacs home directory from files that are not part of the
 configuration and that should not be checked into source control.
@@ -55,13 +55,13 @@ only things I really need.
 
 This module has no dependencies.
 
-** Defaults
+*** Defaults
 
 Set some defaults, like =recentf-mode= and =savehist-mode=.
 
 This module has no dependencies.
 
-** Packaging
+*** Packaging
 
 Configure package management.  By default, it uses =straight.el= as package manager, and it is
 strongly suggested to keep it.
@@ -74,7 +74,7 @@ With the =EMACS_PACKAGING_SYSTEM= environment variable, you can control which pa
 - =none=.  Do not use any type of packaging system.  This is meant for packaging tools that
   are external to Emacs, like GNU Guix.
 
-** Keys
+*** Keys
 
 Module for customizing keys.  It sets up a custom minor mode holding every user-defined key:
 that is used instead of =global-set-key= in order to avoid that keys are overridden by major
@@ -82,34 +82,34 @@ modes.
 
 It also sets up Vim emulation with =evil-mode=.
 
-** User Interface
+*** User Interface
 
 Module for customizing user interface.
 
 It contains customization of fonts and icons, themes, modeline, directory tree view
 (=treemacs=), =dired=, welcome screen and others.
 
-** Completions
+*** Completions
 
 Module for setting up completions: enhancing self-documentation (=which-key=, =helpful=)
 , minibuffer completions ui (=vertico=, =marginalia=), candidate filtering and sorting
 (=orderless=), helper functions (=consult=, =embark=), completions at point (=corfu=).
 
-** Editing
+*** Editing
 
 TODO
 
-** Window management
+*** Window management
 
 Module for enhancing windows and buffers management using builtin features like =winner= and
 =windmove=, as well as external packages =shackle= for setting up clear and simple display
 rules for buffers and =ace-window= to quicky select windows.
 
-** Org mode
+*** Org mode
 
 Module for customizing =org-mode= and setting up =org-roam= note taking tool.
 
-** Terminals
+*** Terminals
 
 Module entirely dedicated to terminals, included Comint mode (based on which many command
 interpreters in Emacs are written) and therefore Compilation mode.
@@ -118,9 +118,7 @@ Special focus on the amazing =eshell= and the external package =vterm=, which ha
 as terminal emulator for everything that needs a proper terminal emulator. Eshell, which is
 not a terminal emulator but is more integrated with Emacs, is used for everything else.
 
-** Development
+*** Development
 
 Development module, containing Eglot configuration and customizations for some programming
 modes, most notably Python.
-
-
