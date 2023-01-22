@@ -1,0 +1,126 @@
+#+title: .emacs.d
+#+author: Tommaso Rossi
+
+Personal GNU Emacs configuration.
+
+* Guiding Principles
+
+- Fast startup (less than 1.5 seconds)
+- Try to prioritize builtin features (=eglot=, =project=, =flymake=, ...)when it's possible
+- Keep things standard
+- Avoid too much key customization
+- But sadly Vim emulation (=evil-mode=) is too much confortable, so use it...
+- Reproducible builds with functional package management (=straight.el=)
+- Modular configuration: modules represents customization macro-areas and not single features
+- Keep the Emacs home directory clean
+- Focus on terminals (=eshell=, =vterm=)
+- It has to work in the terminal
+
+* Installation
+
+Clone the repo in =.emacs.d= (or the directory you want if you use the =--init-directory=
+option of Emacs 29):
+
+#+begin_src shell
+  git clone https://github.com/tomrss/emacs.d .emacs.d
+#+end_src
+
+Install packages: start Emacs or launch installer script with:
+#+begin_src shell
+  cd .emacs.d
+  make install
+#+end_src
+
+** Upgrade dependencies
+
+If you want to upgrade dependecies, you can pull latest upgrades on the main branch and
+then rebuild by restarting Emacs or launching =make rebuild=.
+
+If you want to upgrade further, you can do:
+
+#+begin_src shell
+  make upgrade rebuild
+#+end_src
+
+* Modules
+
+** Clean Init Directory
+
+Module dedicated to cleaning the Emacs home directory from files that are not part of the
+configuration and that should not be checked into source control.
+Those files are put in a =.cache= folder inside Emacs directory.
+
+It is pretty much what the [[https://github.com/emacscollective/no-littering][no-littering]] package does, but I wanted to do it myself configuring
+only things I really need.
+
+This module has no dependencies.
+
+** Defaults
+
+Set some defaults, like =recentf-mode= and =savehist-mode=.
+
+This module has no dependencies.
+
+** Packaging
+
+Configure package management.  By default, it uses =straight.el= as package manager, and it is
+strongly suggested to keep it.
+
+With the =EMACS_PACKAGING_SYSTEM= environment variable, you can control which packaging system to use:
+- =straight=.  Use =straight.el=.  It is the default and it is suggested to leave it be.
+  When using other packaging systems, you loose the reproducible builds with lockfile
+  and the management script will not be able to operate.
+- =builtin=.  Use builtin =package.el=.
+- =none=.  Do not use any type of packaging system.  This is meant for packaging tools that
+  are external to Emacs, like GNU Guix.
+
+** Keys
+
+Module for customizing keys.  It sets up a custom minor mode holding every user-defined key:
+that is used instead of =global-set-key= in order to avoid that keys are overridden by major
+modes.
+
+It also sets up Vim emulation with =evil-mode=.
+
+** User Interface
+
+Module for customizing user interface.
+
+It contains customization of fonts and icons, themes, modeline, directory tree view
+(=treemacs=), =dired=, welcome screen and others.
+
+** Completions
+
+Module for setting up completions: enhancing self-documentation (=which-key=, =helpful=)
+, minibuffer completions ui (=vertico=, =marginalia=), candidate filtering and sorting
+(=orderless=), helper functions (=consult=, =embark=), completions at point (=corfu=).
+
+** Editing
+
+TODO
+
+** Window management
+
+Module for enhancing windows and buffers management using builtin features like =winner= and
+=windmove=, as well as external packages =shackle= for setting up clear and simple display
+rules for buffers and =ace-window= to quicky select windows.
+
+** Org mode
+
+Module for customizing =org-mode= and setting up =org-roam= note taking tool.
+
+** Terminals
+
+Module entirely dedicated to terminals, included Comint mode (based on which many command
+interpreters in Emacs are written) and therefore Compilation mode.
+
+Special focus on the amazing =eshell= and the external package =vterm=, which has been chosen
+as terminal emulator for everything that needs a proper terminal emulator. Eshell, which is
+not a terminal emulator but is more integrated with Emacs, is used for everything else.
+
+** Development
+
+Development module, containing Eglot configuration and customizations for some programming
+modes, most notably Python.
+
+
