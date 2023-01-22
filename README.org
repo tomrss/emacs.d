@@ -6,7 +6,7 @@ Personal GNU Emacs configuration.
 ** Guiding Principles
 
 - Fast startup (less than 1.5 seconds)
-- Try to prioritize builtin features (=eglot=, =project=, =flymake=, ...)when it's possible
+- Try to prioritize builtin features (=eglot=, =project=, =flymake=, ...) when it's possible
 - Keep things standard
 - Avoid too much key customization
 - But sadly Vim emulation (=evil-mode=) is too much confortable, so use it...
