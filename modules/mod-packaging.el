@@ -17,7 +17,7 @@
 (defconst +packaging-system
   (intern (or (getenv "EMACS_PACKAGING_SYSTEM") "straight"))
   "Packaging system to use.
-Choice between `straight', `builtin', `guix'")
+Choice between `straight', `builtin', `none'")
 
 ;; initialize packaging
 (cond
@@ -42,8 +42,8 @@ Choice between `straight', `builtin', `guix'")
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents)))
- ((eq +packaging-system 'guix)
-  ;; do nothing, guix will do it
+ ((eq +packaging-system 'none)
+  ;; do nothing
   nil))
 
 
@@ -60,7 +60,7 @@ Choice between `straight', `builtin', `guix'")
    ((eq +packaging-system 'builtin)
     `(unless (package-installed-p ,package)
        (package-install ,package)))
-   ((eq +packaging-system 'guix)
+   ((eq +packaging-system 'none)
     nil)))
 
 (provide 'mod-packaging)
