@@ -116,13 +116,19 @@ the same project."
   
   (defun +eshell-prompt-pwd-section ()
     "Eshell prompt section that displays path (pwd)."
-    (let* ((section (abbreviate-file-name (eshell/pwd))))
+    (let ((section (abbreviate-file-name (eshell/pwd))))
       (propertize section 'face '+eshell-pwd-face)))
 
   (defun +eshell-prompt-venv-section ()
     "Eshell prompt section that displays virtualenv info."
     (when (bound-and-true-p pyvenv-virtual-env-name)
-      (let ((section (concat "(" pyvenv-virtual-env-name ") ")))
+      (let* ((python-version
+              (with-temp-buffer
+                (shell-command "python --version" t)
+                (buffer-substring-no-properties (point-min)
+                                                (- (point-max) 1))))
+             (section
+              (concat "(" pyvenv-virtual-env-name " : " python-version ")")))
         (propertize section 'face '+eshell-venv-face))))
 
   (defun +eshell-prompt-whoami-section ()
