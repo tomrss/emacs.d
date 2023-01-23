@@ -51,8 +51,11 @@
 ;; silent native compilation warning
 (setq native-comp-async-report-warnings-errors 'silent)
 
-;; flymake mode is safe as local variable
+;; local variables that are safe to use
 (add-to-list 'safe-local-variable-values '(flymake-mode))
+(add-to-list 'safe-local-variable-values '(pyvenv-virtualenvwrapper-python . "python3.8"))
+(add-to-list 'safe-local-variable-values '(python-interpreter . "python3.8"))
+(add-to-list 'safe-local-variable-values '(python-shell-interpreter . "python3.8"))
 
 ;;;; Manage backups
 

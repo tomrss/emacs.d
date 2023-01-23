@@ -147,7 +147,7 @@
       (pyvenv-deactivate))
     (unless pyvenv-virtual-env-name
       (unless (file-directory-p venv-directory)
-        (pyvenv-create proj-name "python"))
+        (pyvenv-create proj-name python-shell-interpreter))
       (pyvenv-activate venv-directory))))
 
 (defun +setup-virtualenv ()
@@ -155,8 +155,12 @@
   (interactive)
   (+setup-virtualenv-project (project-current t)))
 
+(defun +setup-virtualenv-after-dir-locals ()
+  "Setup virtual environment after dir locals are set."
+  (add-hook 'hack-local-variables-hook #'+setup-virtualenv nil t))
+
 (add-hook 'python-mode-hook #'+eglot-deferred)
-(add-hook 'python-mode-hook #'+setup-virtualenv)
+(add-hook 'python-mode-hook #'+setup-virtualenv-after-dir-locals)
 
 ;;;; C#
 
