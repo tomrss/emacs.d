@@ -85,6 +85,9 @@
 
 ;; TODO try tempel
 
+;;;; Debugger
+(straight-use-package 'realgud)
+
 ;;;; Eglot (Language Server Protocol)
 
 (defun +eglot-deferred ()
