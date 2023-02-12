@@ -18,7 +18,7 @@
 ;;;; Version control
 
 ;; magit
-(+use-package 'magit)
+(u/use-package 'magit)
 (unless (fboundp 'magit-get-current-branch)
   (autoload #'magit-get-current-branch "magit" nil t))
 (with-eval-after-load 'magit
@@ -29,10 +29,10 @@
 (define-key project-prefix-map (kbd "G") #'magit-status)
 (add-to-list 'project-switch-commands '(magit-status "Magit"))
 
-(+define-key (kbd "C-x g") #'magit-status) ; is the default but it's somehow deleted
+(u/define-key (kbd "C-x g") #'magit-status) ; is the default but it's somehow deleted
 
 ;; highlight changes (git gutters)
-(+use-package 'diff-hl)
+(u/use-package 'diff-hl)
 (autoload #'diff-hl-magit-post-refresh "diff-hl" nil t)
 (add-hook 'dired-mode-hook #'diff-hl-dired-mode-unless-remote)
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
@@ -55,7 +55,7 @@
 (add-to-list 'electric-pair-pairs '(?{ . ?}))
 
 ;; highlight matching delimiters with rainbow colors
-(+use-package 'rainbow-delimiters)
+(u/use-package 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'inferior-emacs-lisp-mode-hook #'rainbow-delimiters-mode)
 
@@ -73,7 +73,7 @@
 
 ;; aggressively indent as you type
 ;; TODO this sometimes interfere with undo
-(+use-package 'aggressive-indent)
+(u/use-package 'aggressive-indent)
 (autoload 'aggressive-indent-mode "aggressive-indent")
 (with-eval-after-load 'aggressive-indent
   (setq aggressive-indent-comments-too t))
@@ -90,9 +90,9 @@
 
 ;;;; Eglot (Language Server Protocol)
 
-(defun +eglot-deferred ()
+(defun u/eglot-deferred ()
   "Load eglot deferred excluding consult previews."
-  (unless (+consult-preview-p)
+  (unless (u/consult-preview-p)
     (eglot-ensure)))
 
 (with-eval-after-load 'eglot
@@ -104,43 +104,43 @@
 ;;;; Java
 
 ;; TODO it doeesnt work
-;; (+use-package 'eglot-java)
+;; (u/use-package 'eglot-java)
 ;; (add-hook 'java-mode-hook 'eglot-java-mode)
 
 ;;;; Groovy
 
-(+use-package 'groovy-mode)
+(u/use-package 'groovy-mode)
 ;; TODO find a groovy ls that works
-;; (add-hook 'groovy-mode-hook #'+eglot-deferred)
+;; (add-hook 'groovy-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 
 ;;;; Kotlin
 
-(+use-package 'kotlin-mode)
-(add-hook 'kotlin-mode-hook #'+eglot-deferred)
+(u/use-package 'kotlin-mode)
+(add-hook 'kotlin-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
 
 ;;;; Scala
 
-(+use-package 'scala-mode)
-(add-hook 'scala-mode-hook #'+eglot-deferred)
+(u/use-package 'scala-mode)
+(add-hook 'scala-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.sc\(ala\)?\\'" . scala-mode))
 
 ;;;; Clojure
 
-(+use-package 'clojure-mode)
-(add-hook 'clojure-mode-hook #'+eglot-deferred)
+(u/use-package 'clojure-mode)
+(add-hook 'clojure-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-mode))
-(+use-package 'cider)
+(u/use-package 'cider)
 
 ;;;; Python
 
-(+use-package 'pyvenv)
+(u/use-package 'pyvenv)
 (with-eval-after-load 'pyvenv
   (setq pyvenv-mode-line-indicator
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] "))))
 
-(defun +setup-virtualenv-project (proj)
+(defun u/setup-virtualenv-project (proj)
   "Setup pyvenv in project PROJ."
   (pyvenv-mode +1)
   (let* ((proj-name (project-name proj))
@@ -153,45 +153,45 @@
         (pyvenv-create proj-name python-shell-interpreter))
       (pyvenv-activate venv-directory))))
 
-(defun +setup-virtualenv ()
+(defun u/setup-virtualenv ()
   "Setup virtual environment."
   (interactive)
-  (+setup-virtualenv-project (project-current t)))
+  (u/setup-virtualenv-project (project-current t)))
 
-(defun +setup-virtualenv-after-dir-locals ()
+(defun u/setup-virtualenv-after-dir-locals ()
   "Setup virtual environment after dir locals are set."
-  (add-hook 'hack-local-variables-hook #'+setup-virtualenv nil t))
+  (add-hook 'hack-local-variables-hook #'u/setup-virtualenv nil t))
 
-(add-hook 'python-mode-hook #'+eglot-deferred)
-(add-hook 'python-mode-hook #'+setup-virtualenv-after-dir-locals)
+(add-hook 'python-mode-hook #'u/eglot-deferred)
+(add-hook 'python-mode-hook #'u/setup-virtualenv-after-dir-locals)
 
 ;;;; C#
 
-(+use-package 'csharp-mode)
-(add-hook 'csharp-mode-hook #'+eglot-deferred)
+(u/use-package 'csharp-mode)
+(add-hook 'csharp-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode))
 
 ;;;; Go
 
-(+use-package 'go-mode)
-(add-hook 'go-mode-hook #'+eglot-deferred)
+(u/use-package 'go-mode)
+(add-hook 'go-mode-hook #'u/eglot-deferred)
 (add-hook 'go-mode-hook (lambda () (setq indent-tabs-mode t)))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 ;;;; LaTeX
 
 ;; add a preview pane of the current edited LaTeX buffer.
-(+use-package 'latex-preview-pane)
+(u/use-package 'latex-preview-pane)
 (add-hook 'latex-mode-hook #'latex-preview-pane-mode)
 
 ;;;; Dockerfile
 
-(+use-package 'dockerfile-mode)
+(u/use-package 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 
 ;;;; Markdown
 
-(+use-package 'markdown-mode)
+(u/use-package 'markdown-mode)
 (unless
     (fboundp 'gfm-mode)
   (autoload #'gfm-mode "markdown-mode" nil t))
@@ -202,7 +202,7 @@
 
 ;;;; Yaml
 
-(+use-package 'yaml-mode)
+(u/use-package 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 ;; this is for terraform templates
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\.tftpl\\'" . yaml-mode))
@@ -213,26 +213,26 @@
 
 ;;;; Toml
 
-(+use-package 'toml-mode)
+(u/use-package 'toml-mode)
 (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-mode))
 
 
 ;;;; Csv
 
-(+use-package 'csv-mode)
+(u/use-package 'csv-mode)
 (add-to-list 'auto-mode-alist '("\\.csv\\'" . csv-mode))
 
 ;;;; Terraform
 
-(+use-package 'terraform-mode)
+(u/use-package 'terraform-mode)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
-(add-hook 'terraform-mode-hook #'+eglot-deferred)
+(add-hook 'terraform-mode-hook #'u/eglot-deferred)
 (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '(terraform-mode "terraform-ls" "serve")))
 
-(defun +terraform-command (command &optional interactive)
+(defun u/terraform-command (command &optional interactive)
   "Execute Terrafom COMMAND.
 
 If INTERACTIVE is non-nil, `comint-mode' will be used."
@@ -242,34 +242,34 @@ If INTERACTIVE is non-nil, `comint-mode' will be used."
      interactive
      (lambda (_) (format "*terraform: %s @ %s *" command default-directory)))))
 
-(defun +terraform-init ()
+(defun u/terraform-init ()
   "Terraform plan."
   (interactive)
-  (+terraform-command "init"))
+  (u/terraform-command "init"))
 
-(defun +terraform-plan ()
+(defun u/terraform-plan ()
   "Terraform plan."
   (interactive)
-  (+terraform-command "plan"))
+  (u/terraform-command "plan"))
 
-(defun +terraform-apply ()
+(defun u/terraform-apply ()
   "Terraform apply."
   (interactive)
-  (+terraform-command "apply" t))
+  (u/terraform-command "apply" t))
 
-(defun +terraform-apply-auto-approve ()
+(defun u/terraform-apply-auto-approve ()
   "Terraform apply auto approve."
   (interactive)
-  (+terraform-command "apply -auto-approve"))
+  (u/terraform-command "apply -auto-approve"))
 
-(defun +terraform-destroy ()
+(defun u/terraform-destroy ()
   "Terraform destroy."
   (interactive)
-  (+terraform-command "destroy" t))
+  (u/terraform-command "destroy" t))
 
 ;;;; Rest client
 
-(+use-package 'restclient)
+(u/use-package 'restclient)
 (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
 
 ;; TODO write something to persist requests/responses in `scratch' fashion.
@@ -279,8 +279,8 @@ If INTERACTIVE is non-nil, `comint-mode' will be used."
 
 ;;;; Kubernetes
 
-(+use-package 'kubernetes)
-(+use-package 'kubernetes-evil)
+(u/use-package 'kubernetes)
+(u/use-package 'kubernetes-evil)
 (with-eval-after-load 'kubernetes-overview
   ;; set very low frequency because it is too dangerous and slow
   (setq kubernetes-poll-frequency 3600)

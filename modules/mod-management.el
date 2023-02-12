@@ -40,23 +40,23 @@
   ;; echo file size
   (evil-define-key 'normal dired-mode-map (kbd "g s") #'diredfm-file-size))
 
-(+define-key (kbd "C-x j") #'dired-jump)
+(u/define-key (kbd "C-x j") #'dired-jump)
 
 ;; dired icons
-(+use-package 'all-the-icons-dired)
+(u/use-package 'all-the-icons-dired)
 (with-eval-after-load 'dired
   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
 
 ;; dired colorization
-(+use-package 'diredfl)
+(u/use-package 'diredfl)
 (with-eval-after-load 'dired
   (add-hook 'dired-mode-hook #'diredfl-mode))
 
 ;;;; Directory tree view
 
-(+use-package 'treemacs)
-(+use-package 'treemacs-all-the-icons)
-(+define-key (kbd "C-x c t") #'treemacs-select-window)
+(u/use-package 'treemacs)
+(u/use-package 'treemacs-all-the-icons)
+(u/define-key (kbd "C-x c t") #'treemacs-select-window)
 (with-eval-after-load 'treemacs
   (treemacs-project-follow-mode t)
   (treemacs-follow-mode t)
@@ -68,12 +68,12 @@
   (require 'treemacs-all-the-icons)
   (treemacs-load-theme "all-the-icons"))
 
-(+use-package 'treemacs-evil)
+(u/use-package 'treemacs-evil)
 (with-eval-after-load 'evil
   (with-eval-after-load 'treemacs
     (require 'treemacs-evil)))
 
-(+use-package 'treemacs-magit)
+(u/use-package 'treemacs-magit)
 (with-eval-after-load 'magit
   (with-eval-after-load 'treemacs
     (require 'treemacs-magit)))

@@ -17,66 +17,66 @@
 ;;;; Getting help and docs
 
 ;; improve self documentation
-(+use-package 'helpful)
-(+define-key [remap describe-command] #'helpful-command)
-(+define-key [remap describe-function] #'helpful-callable)
-(+define-key [remap describe-key] #'helpful-key)
-(+define-key [remap describe-symbol] #'helpful-symbol)
-(+define-key [remap describe-variable] #'helpful-variable)
-(+define-key (kbd "C-h o") #'helpful-symbol)
-(+define-key (kbd "C-h p") #'helpful-at-point)
+(u/use-package 'helpful)
+(u/define-key [remap describe-command] #'helpful-command)
+(u/define-key [remap describe-function] #'helpful-callable)
+(u/define-key [remap describe-key] #'helpful-key)
+(u/define-key [remap describe-symbol] #'helpful-symbol)
+(u/define-key [remap describe-variable] #'helpful-variable)
+(u/define-key (kbd "C-h o") #'helpful-symbol)
+(u/define-key (kbd "C-h p") #'helpful-at-point)
 
 ;; hint keybindings
-(+use-package 'which-key)
+(u/use-package 'which-key)
 (which-key-mode +1)
 (with-eval-after-load 'which-key-mode
   (setq which-key-idle-delay 0.5))
 
 ;; help and docs in minibuffer
-(+use-package 'marginalia)
+(u/use-package 'marginalia)
 (marginalia-mode +1)
 
 ;;;; Completion styles and functions
 
 ;; completion style (how completion candidates are narrowed)
-(+use-package 'orderless)
+(u/use-package 'orderless)
 (setq orderless-matching-styles
       '(orderless-literal orderless-initialism orderless-regexp))
 (setq orderless-component-separator "[ +]+")
 (setq completion-styles '(orderless))
 
 ;; completing read functions
-(+use-package 'consult)
+(u/use-package 'consult)
 (with-eval-after-load 'consult
   (setq consult-narrow-key "<"))
-(+define-key (kbd "C-x b")   #'consult-buffer)
-(+define-key (kbd "C-x 4 b") #'consult-buffer-other-window)
-(+define-key (kbd "C-x 5 b") #'consult-buffer-other-frame)
-(+define-key (kbd "M-y")     #'consult-yank-pop)
-(+define-key (kbd "C-x f")   #'consult-recent-file)
-(+define-key (kbd "M-g e")   #'consult-compile-error)
-(+define-key (kbd "M-g w")   #'consult-flymake)
-(+define-key (kbd "M-g g")   #'consult-goto-line)
-(+define-key (kbd "M-g M-g") #'consult-goto-line)
-(+define-key (kbd "M-g o")   #'consult-outline)
-(+define-key (kbd "M-g i")   #'consult-imenu)
-(+define-key (kbd "M-g I")   #'consult-imenu-multi)
-(+define-key (kbd "M-s f")   #'consult-find)
-(+define-key (kbd "M-s L")   #'consult-locate)
-(+define-key (kbd "M-s g")   #'consult-grep)
-(+define-key (kbd "M-s G")   #'consult-git-grep)
-(+define-key (kbd "M-s r")   #'consult-ripgrep)
-(+define-key (kbd "C-s")     #'consult-line)
-(+define-key (kbd "M-s m")   #'consult-multi-occur)
-(+define-key (kbd "M-s k")   #'consult-keep-lines)
-(+define-key (kbd "M-s u")   #'consult-focus-lines)
+(u/define-key (kbd "C-x b")   #'consult-buffer)
+(u/define-key (kbd "C-x 4 b") #'consult-buffer-other-window)
+(u/define-key (kbd "C-x 5 b") #'consult-buffer-other-frame)
+(u/define-key (kbd "M-y")     #'consult-yank-pop)
+(u/define-key (kbd "C-x f")   #'consult-recent-file)
+(u/define-key (kbd "M-g e")   #'consult-compile-error)
+(u/define-key (kbd "M-g w")   #'consult-flymake)
+(u/define-key (kbd "M-g g")   #'consult-goto-line)
+(u/define-key (kbd "M-g M-g") #'consult-goto-line)
+(u/define-key (kbd "M-g o")   #'consult-outline)
+(u/define-key (kbd "M-g i")   #'consult-imenu)
+(u/define-key (kbd "M-g I")   #'consult-imenu-multi)
+(u/define-key (kbd "M-s f")   #'consult-find)
+(u/define-key (kbd "M-s L")   #'consult-locate)
+(u/define-key (kbd "M-s g")   #'consult-grep)
+(u/define-key (kbd "M-s G")   #'consult-git-grep)
+(u/define-key (kbd "M-s r")   #'consult-ripgrep)
+(u/define-key (kbd "C-s")     #'consult-line)
+(u/define-key (kbd "M-s m")   #'consult-multi-occur)
+(u/define-key (kbd "M-s k")   #'consult-keep-lines)
+(u/define-key (kbd "M-s u")   #'consult-focus-lines)
 (define-key minibuffer-local-map (kbd "C-r") #'consult-history)
 
 ;; use consult in xref
 (setq xref-show-xrefs-function       #'consult-xref)
 (setq xref-show-definitions-function #'consult-xref)
 
-(defun +consult-preview-p ()
+(defun u/consult-preview-p ()
   "Helper function to find out if Consult is previewing."
   (when-let (win (active-minibuffer-window))
     (not (eq nil (buffer-local-value
@@ -86,26 +86,26 @@
 ;;;; Minibuffer completions
 
 ;; completion UI
-(+use-package 'vertico)
+(u/use-package 'vertico)
 (vertico-mode +1)
 (define-key vertico-map (kbd "C-j") #'vertico-next)
 (define-key vertico-map (kbd "C-k") #'vertico-previous)
 
 ;; enable acting on minibuffer candidates (and much more)
-(+use-package 'embark)
+(u/use-package 'embark)
 (setq prefix-help-command #'embark-prefix-help-command)
-(+define-key (kbd "C-.") #'embark-act)
+(u/define-key (kbd "C-.") #'embark-act)
 (with-eval-after-load 'embark
   (define-key embark-symbol-map (kbd "h") #'helpful-symbol))
 
-(+use-package 'embark-consult)
+(u/use-package 'embark-consult)
 (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
 
 ;;;; Completions in region
 
 ;; completion UI
-(+use-package 'corfu)
-(+use-package 'corfu-terminal)
+(u/use-package 'corfu)
+(u/use-package 'corfu-terminal)
 (setq corfu-auto t)
 (setq corfu-auto-delay 0.1)
 (setq corfu-cycle t)
@@ -134,7 +134,7 @@
 
 ;;;; Completion at point functions
 
-(+use-package 'cape)
+(u/use-package 'cape)
 
 (add-to-list 'completion-at-point-functions #'cape-file)
 (add-to-list 'completion-at-point-functions #'cape-dabbrev)

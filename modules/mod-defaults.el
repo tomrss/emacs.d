@@ -24,7 +24,7 @@
 (setq recentf-max-saved-items 500)
 (setq recentf-auto-cleanup 120)
 (recentf-mode +1)
-(add-to-list 'recentf-exclude +emacs-cache-directory)
+(add-to-list 'recentf-exclude u/emacs-cache-directory)
 
 ;; reopen file at same point
 (save-place-mode +1)
@@ -83,7 +83,7 @@
 ;;;; Filter logs
 
 ;; TODO move this to utils file?
-(defun +find-first (predicate list)
+(defun u/find-first (predicate list)
   "Find first element in LIST matching PREDICATE."
   (let ((tail list)
         (found nil))
@@ -94,20 +94,20 @@
           (setq tail (cdr tail)))))
     found))
 
-(defvar filter-logs-patterns
+(defvar u/filter-logs-patterns
   '("^Cleaning up the recentf list...")
   "Pattern of logs to be filtered out.
 It works only on the first parameter of the `message' function.")
 
-(defun filter-logs (log-fun &rest args)
+(defun u/filter-logs (log-fun &rest args)
   (unless (or
            (not (and args (car args)))
-           (+find-first
-             (lambda (log-pattern) (string-match log-pattern (car args)))
-             filter-logs-patterns))
-          (apply log-fun args)))
+           (u/find-first
+            (lambda (log-pattern) (string-match log-pattern (car args)))
+            u/filter-logs-patterns))
+    (apply log-fun args)))
 
-(advice-add 'message :around #'filter-logs)
+(advice-add 'message :around #'u/filter-logs)
 
 (provide 'mod-defaults)
 ;;; mod-defaults.el ends here

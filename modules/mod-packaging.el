@@ -14,18 +14,18 @@
 
 ;;; Configure `straight.el' as package manager
 
-(defconst +packaging-system
+(defconst u/packaging-system
   (intern (or (getenv "EMACS_PACKAGING_SYSTEM") "straight"))
   "Packaging system to use.
 Choice between `straight', `builtin', `none'")
 
 ;; initialize packaging
 (cond
- ((eq +packaging-system 'straight)
+ ((eq u/packaging-system 'straight)
   ;; bootstrap `straight.el'
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (+locate-emacs-cache-file "straight/repos/straight.el/bootstrap.el"))
+         (u/locate-emacs-cache-file "straight/repos/straight.el/bootstrap.el"))
         (bootstrap-version 6))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
@@ -35,14 +35,14 @@ Choice between `straight', `builtin', `none'")
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage)))
- ((eq +packaging-system 'builtin)
+ ((eq u/packaging-system 'builtin)
   ;; initialize builtin packaging system
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents)))
- ((eq +packaging-system 'none)
+ ((eq u/packaging-system 'none)
   ;; do nothing
   nil))
 
@@ -52,15 +52,15 @@ Choice between `straight', `builtin', `none'")
       `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory))))
 
 ;; use package custom macro
-(defmacro +use-package (package)
+(defmacro u/use-package (package)
   "Use PACKAGE."
   (cond
-   ((eq +packaging-system 'straight)
+   ((eq u/packaging-system 'straight)
     `(straight-use-package ,package))
-   ((eq +packaging-system 'builtin)
+   ((eq u/packaging-system 'builtin)
     `(unless (package-installed-p ,package)
        (package-install ,package)))
-   ((eq +packaging-system 'none)
+   ((eq u/packaging-system 'none)
     nil)))
 
 (provide 'mod-packaging)

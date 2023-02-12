@@ -26,14 +26,14 @@
 
 (customized-keys-minor-mode +1)
 
-(defun +define-key (key def)
+(defun u/define-key (key def)
   "Define customized KEY with definition DEF."
   (define-key customized-keys-minor-mode-map key def))
 
 ;;;; Vim emulation
 
 ;; base evil configuration
-(+use-package 'evil)
+(u/use-package 'evil)
 (setq evil-want-integration t)
 (setq evil-want-keybinding nil)
 (setq evil-want-C-u-scroll nil)
@@ -43,7 +43,7 @@
 (evil-mode 1)
 
 ;; automatically configure evil for some common modes
-(+use-package 'evil-collection)
+(u/use-package 'evil-collection)
 (with-eval-after-load 'evil
   (evil-collection-init))
 

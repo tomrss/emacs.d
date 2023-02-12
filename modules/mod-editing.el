@@ -15,13 +15,13 @@
 ;;;; Text selection and navigation
 
 ;; increases the selected region by semantic units
-(+use-package 'expand-region)
-(+define-key (kbd "C-ò") #'er/expand-region)
+(u/use-package 'expand-region)
+(u/define-key (kbd "C-ò") #'er/expand-region)
 
 ;;;; Scratch buffers
 
-(if (eq +packaging-system 'straight)
-    (+use-package '(scratch-el :type git
+(if (eq u/packaging-system 'straight)
+    (u/use-package '(scratch-el :type git
 			                   :host github
 			                   :repo "tomrss/scratch.el"))
   ;; TODO this is very wrong. if is ugly, and it requires to having used straight
@@ -33,7 +33,7 @@
   (setq scratch-search-fn #'consult-ripgrep)
   (scratch-persist-mode +1))
 
-(+define-key (kbd "C-c s") 'scratch-key-map)
+(u/define-key (kbd "C-c s") 'scratch-key-map)
 
 (provide 'mod-editing)
 ;;; mod-editing.el ends here

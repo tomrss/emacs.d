@@ -15,38 +15,38 @@
 ;;;; Stateful window layout
 
 (winner-mode +1)
-(+define-key (kbd "C-c w") 'winner-undo)
-(+define-key (kbd "C-c W") 'winner-redo)
+(u/define-key (kbd "C-c w") 'winner-undo)
+(u/define-key (kbd "C-c W") 'winner-redo)
 
 ;;;; Window selection and navigation
 
-(+use-package 'ace-window)
-(+define-key (kbd "M-o") #'ace-window)
-(+define-key (kbd "M-O") #'ace-delete-window)
+(u/use-package 'ace-window)
+(u/define-key (kbd "M-o") #'ace-window)
+(u/define-key (kbd "M-O") #'ace-delete-window)
 (with-eval-after-load 'ace-window
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
-(+define-key (kbd "M-h") #'windmove-left)
-(+define-key (kbd "M-j") #'windmove-down)
-(+define-key (kbd "M-k") #'windmove-up)
-(+define-key (kbd "M-l") #'windmove-right)
+(u/define-key (kbd "M-h") #'windmove-left)
+(u/define-key (kbd "M-j") #'windmove-down)
+(u/define-key (kbd "M-k") #'windmove-up)
+(u/define-key (kbd "M-l") #'windmove-right)
 
-(+define-key (kbd "C-M--") #'shrink-window-horizontally)
-(+define-key (kbd "C-M-+") #'enlarge-window-horizontally)
-(+define-key (kbd "M--") #'shrink-window)
-(+define-key (kbd "M-+") #'enlarge-window)
+(u/define-key (kbd "C-M--") #'shrink-window-horizontally)
+(u/define-key (kbd "C-M-+") #'enlarge-window-horizontally)
+(u/define-key (kbd "M--") #'shrink-window)
+(u/define-key (kbd "M-+") #'enlarge-window)
 
-(+define-key (kbd "C-M-S-h") #'windmove-swap-states-left)
-(+define-key (kbd "C-M-S-j") #'windmove-swap-states-down)
-(+define-key (kbd "C-M-S-k") #'windmove-swap-states-up)
-(+define-key (kbd "C-M-S-l") #'windmove-swap-states-right)
+(u/define-key (kbd "C-M-S-h") #'windmove-swap-states-left)
+(u/define-key (kbd "C-M-S-j") #'windmove-swap-states-down)
+(u/define-key (kbd "C-M-S-k") #'windmove-swap-states-up)
+(u/define-key (kbd "C-M-S-l") #'windmove-swap-states-right)
 
-(+define-key (kbd "C-M-l") 'recenter-other-window)
+(u/define-key (kbd "C-M-l") 'recenter-other-window)
 
 ;;;; Window placement and popups
 
 ;; define window placement rules
-(+use-package 'shackle)
+(u/use-package 'shackle)
 (shackle-mode +1)
 (setq shackle-rules
       '((compilation-mode :noselect t)
@@ -72,20 +72,20 @@
 ;;;; Buffer helpers
 
 ;; use `ibuffer' instead of buffer list
-(+define-key (kbd "C-x C-b") 'ibuffer)
+(u/define-key (kbd "C-x C-b") 'ibuffer)
 
-(defun +edit-emacs-config ()
+(defun u/edit-emacs-config ()
   "Edit the user emacs init file."
   (interactive)
   (find-file user-init-file))
 
 ;; TODO this is probably dangerous
-(defun +kill-other-buffers ()
+(defun u/kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
-(defun +kill-mode-buffers (mode)
+(defun u/kill-mode-buffers (mode)
   "Kill all buffers with major mode MODE."
   (interactive
    (list
@@ -103,16 +103,16 @@
 		(buffer-list))
   (message "Killed buffers with major mode %s" mode))
 
-(defun +kill-dired-buffers ()
+(defun u/kill-dired-buffers ()
   "Kill all Dired buffers."
   (interactive)
-  (+kill-mode-buffers 'dired-mode))
+  (u/kill-mode-buffers 'dired-mode))
 
-(defun +kill-help-buffers ()
+(defun u/kill-help-buffers ()
   "Kill all help buffers."
   (interactive)
-  (+kill-mode-buffers 'help-mode)
-  (+kill-mode-buffers 'helpful-mode))
+  (u/kill-mode-buffers 'help-mode)
+  (u/kill-mode-buffers 'helpful-mode))
 
 (provide 'mod-window)
 ;;; mod-window.el ends here
