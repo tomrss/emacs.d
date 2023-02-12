@@ -54,6 +54,7 @@
 		(helpful-mode :popup t :select t :align below :size 0.33)
 		("\\*.*-e?shell\\*\\'" :regexp t :popup t :select t :align below :size 0.33)
 		("\\*.*-v?term\\*.*\\'" :regexp t :popup t :select t :align below :size 0.33)
+        ("*Async Shell Command*" :ignore t)
 		(flycheck-error-list-mode :popup t :select t :align below :size 0.25)
 		("\\*Warnings\\*" :regexp t :noselect t)
         ("\\*eldoc" :regexp t :popup t :noselect t :align right :size 80)
