@@ -12,8 +12,28 @@
 
 ;;; Code:
 
+;;;; add modules and custom lisp directories to load path
+
 (eval-and-compile
-  (add-to-list 'load-path (locate-user-emacs-file "modules/")))
+  (defvar +user-modules-directory
+    (locate-user-emacs-file "modules/")
+    "Directory of user init modules.")
+
+  (defvar +user-lisp-directory
+    (locate-user-emacs-file "lisp/")
+    "Directory of user custom Lisp.")
+
+  (add-to-list 'load-path +user-modules-directory)
+  (add-to-list 'load-path +user-lisp-directory))
+
+;;;; process autoloads of custom lisp
+
+;; (let ((custom-lisp-autoloads
+;;        (expand-file-name "autoloads" +user-lisp-directory)))
+;;   (loaddefs-generate +user-lisp-directory custom-lisp-autoloads)
+;;   (load custom-lisp-autoloads nil t))
+
+;;;; require modules
 
 (require 'mod-init-directory)
 (require 'mod-defaults)

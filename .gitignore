@@ -1,3 +1,4 @@
 .cache/
 .backups/
 eln-cache/
+lisp/autoloads
