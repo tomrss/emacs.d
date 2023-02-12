@@ -28,10 +28,10 @@
 
 ;;;; process autoloads of custom lisp
 
-;; (let ((custom-lisp-autoloads
-;;        (expand-file-name "autoloads" +user-lisp-directory)))
-;;   (loaddefs-generate +user-lisp-directory custom-lisp-autoloads)
-;;   (load custom-lisp-autoloads nil t))
+(let ((custom-lisp-autoloads
+       (expand-file-name "autoloads" +user-lisp-directory)))
+  (loaddefs-generate +user-lisp-directory custom-lisp-autoloads)
+  (load custom-lisp-autoloads nil t))
 
 ;;;; require modules
 
