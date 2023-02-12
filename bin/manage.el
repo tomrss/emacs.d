@@ -41,4 +41,9 @@
   "Rebuild packages."
   (manage--load-init-files))
 
+(defun manage-sync-from-lockfile ()
+  "Sync packages versions from the ones in the lockfile."
+  (manage--load-init-files)
+  (straight-thaw-versions))
+
 ;;; manage.el ends here

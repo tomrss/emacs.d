@@ -1,6 +1,7 @@
 EMACS := emacs
 MANAGE_EL := bin/manage.el
 CACHE_DIR := .cache
+PACKAGES_DIR := .cache/straight
 BACKUP_DIR := .backups
 BACKUP_FILENAME := $(BACKUP_DIR)/emacs-cache-backup-$(shell date +'%s').tgz
 
@@ -17,8 +18,11 @@ build: rebuild
 rebuild:
 	$(EVAL) '(manage-rebuild)'
 
+sync-from-lockfile:
+	$(EVAL) '(manage-sync-from-lockfile)'
+
 uninstall:
-	rm -rvf straight/
+	rm -rvf $(PACKAGES_DIR)
 
 backup:
 	mkdir -p $(BACKUP_DIR)
