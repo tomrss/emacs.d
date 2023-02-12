@@ -57,6 +57,9 @@
 (add-to-list 'safe-local-variable-values '(python-interpreter . "python3.8"))
 (add-to-list 'safe-local-variable-values '(python-shell-interpreter . "python3.8"))
 
+;; move to thrash instead of delete
+(setq delete-by-moving-to-trash t)
+
 ;;;; Manage backups
 
 ;; disable lockfiles
@@ -76,6 +79,35 @@
       (expand-file-name
        (format "emacs-custom-%d.el" (random 10000))
        temporary-file-directory))
+
+;;;; Filter logs
+
+;; TODO move this to utils file?
+(defun +find-first (predicate list)
+  "Find first element in LIST matching PREDICATE."
+  (let ((tail list)
+        (found nil))
+    (while (and (not found) tail)
+      (let ((x (car tail)))
+        (if (funcall predicate x)
+            (setq found x)
+          (setq tail (cdr tail)))))
+    found))
+
+(defvar filter-logs-patterns
+  '("^Cleaning up the recentf list...")
+  "Pattern of logs to be filtered out.
+It works only on the first parameter of the `message' function.")
+
+(defun filter-logs (log-fun &rest args)
+  (unless (or
+           (not (and args (car args)))
+           (+find-first
+             (lambda (log-pattern) (string-match log-pattern (car args)))
+             filter-logs-patterns))
+          (apply log-fun args)))
+
+(advice-add 'message :around #'filter-logs)
 
 (provide 'mod-defaults)
 ;;; mod-defaults.el ends here
