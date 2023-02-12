@@ -13,14 +13,6 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'project))
-
-;; recognize system
-(defconst IS-GNU     (eq system-type 'gnu/linux))
-(defconst IS-MAC     (eq system-type 'darwin))
-(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-
 ;;;; Fonts and icons
 
 (when (display-graphic-p)
@@ -34,22 +26,30 @@
 (when (display-graphic-p)
   (require 'all-the-icons nil nil)
   (unless (x-list-fonts "all-the-icons")
-    (if IS-WINDOWS
-	    (warn "RuntimeWarning M-x all-the-icons-install-fonts to download the fonts, then install them manually")
-      (all-the-icons-install-fonts t))))
+    (all-the-icons-install-fonts t)))
 
 ;;;; Theme
 
-;; use doom themes
-;; (+use-package 'doom-themes)
-;; (load-theme 'doom-nord t)
-;; (set-face-attribute 'font-lock-doc-face nil :foreground "#EBCB8B")
-;; (set-face-attribute 'completions-annotations nil :foreground "#EBCB8B")
+(defconst +theme
+  (intern (or (getenv "EMACS_THEME") "modus-vivendi"))
+  "Theme to use.")
 
-(setq modus-themes-mode-line '(accented))
-(setq modus-themes-bold-constructs t)
-(setq modus-themes-italic-constructs t)
-(load-theme 'modus-vivendi)
+(cond
+ ((eq +theme 'modus-vivendi)
+  ;; configure modus-vivendi theme
+  (setq modus-themes-bold-constructs t)
+  (setq modus-themes-italic-constructs t)
+  (setq modus-themes-org-blocks 'gray-background)
+  (load-theme 'modus-vivendi))
+ ((eq +theme 'doom-nord)
+  ;; configure nord theme
+  (+use-package 'doom-themes)
+  (setq doom-nord-brighter-modeline t)
+  (load-theme 'doom-nord t)
+  (set-face-attribute 'font-lock-doc-face nil :foreground "#EBCB8B")
+  (set-face-attribute 'completions-annotations nil :foreground "#EBCB8B"))
+ (t
+  (load-theme +theme t)))
 
 ;;;; Modeline
 
