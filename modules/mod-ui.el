@@ -57,32 +57,6 @@
 (setq doom-modeline-icon (display-graphic-p))
 (doom-modeline-mode +1)
 
-;;;; Directory tree view
-
-(+use-package 'treemacs)
-(+use-package 'treemacs-all-the-icons)
-(+define-key (kbd "C-x c t") #'treemacs-select-window)
-(with-eval-after-load 'treemacs
-  (treemacs-project-follow-mode t)
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode 'always)
-  (treemacs-git-commit-diff-mode t)
-  (treemacs-hide-gitignored-files-mode nil)
-
-  (require 'treemacs-all-the-icons)
-  (treemacs-load-theme "all-the-icons"))
-
-(+use-package 'treemacs-evil)
-(with-eval-after-load 'evil
-  (with-eval-after-load 'treemacs
-    (require 'treemacs-evil)))
-
-(+use-package 'treemacs-magit)
-(with-eval-after-load 'magit
-  (with-eval-after-load 'treemacs
-    (require 'treemacs-magit)))
-
 ;;;; Line and column numbers
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -108,44 +82,6 @@
 (add-hook 'dired-mode-hook #'hl-line-mode)
 (add-hook 'prog-mode-hook #'hl-line-mode)
 (add-hook 'special-mode-hook #'hl-line-mode)
-
-;;;; File management
-
-;; configure Dired
-(with-eval-after-load 'dired
-  ;; dired defaults
-  (setq delete-by-moving-to-trash t)
-  (setq dired-auto-revert-buffer t)
-  (setq dired-dwim-target t)
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always) ; no problem, it goes to thrash
-  (setq dired-create-destination-dirs 'ask)
-  (setq dired-listing-switches "-agho --group-directories-first")
-  (setq dired-use-ls-dired (not IS-MAC))
-
-  ;; enable dired-x for omit mode and enhanced find file commands
-  (setq dired-x-hands-off-my-keys nil)
-  (setq dired-omit-files "\\`[.]?#\\|\\`[.].*\\'")
-  (require 'dired-x)
-  (evil-define-key 'normal dired-mode-map (kbd "g h") #'dired-omit-mode))
-
-(+define-key (kbd "C-x j") #'dired-jump)
-
-;; use icons in dired
-(+use-package 'all-the-icons-dired)
-(with-eval-after-load 'dired
-  (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
-
-;; colorize dired
-(+use-package 'diredfl)
-(with-eval-after-load 'dired
-  (add-hook 'dired-mode-hook #'diredfl-mode))
-
-;;;; Process management
-
-(with-eval-after-load 'proced
-  (setq proced-auto-update-interval 5)
-  (proced-toggle-auto-update 1))
 
 ;;;; Visual fill mode
 
