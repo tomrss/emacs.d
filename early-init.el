@@ -68,13 +68,15 @@
 
 ;; initial frame settings
 (setq default-frame-alist
-      '(
+      `(
         ;; start fullscreen without window bar
         (undecorated . t)
         ;; start fullscreen
         (fullscreen . maximized)
         ;; avoid blinding white on startup
-        (background-color . "#000000")))
+        (background-color . ,(if (equal "doom-nord" (getenv "EMACS_THEME"))
+                                 "#2e3440"
+                               "#000000"))))
 
 (set-face-attribute 'default nil :foreground "#ffffff")
 
