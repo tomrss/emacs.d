@@ -24,12 +24,6 @@
   (intern (or (getenv "EMACS_PACKAGING_SYSTEM") "straight"))
   "Packaging system to use.  Currently only `straight' is fully supported.")
 
-;; do our best to keep flymake happy
-(when (eq 'straight eplm-packaging-system)
-  (eval-and-compile
-    (add-to-list 'load-path (locate-user-emacs-file ".cache/straight/repos/straight.el/"))
-    (require 'straight)))
-  
 (defun eplm--load-init-files ()
   "Load init files."
   (load-file "early-init.el")
