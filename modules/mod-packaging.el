@@ -23,6 +23,7 @@ Choice between `straight', `builtin', `none'")
 (cond
  ((eq u/packaging-system 'straight)
   ;; bootstrap `straight.el'
+(setq straight-repository-branch "develop")
   (defvar bootstrap-version)
   (let ((bootstrap-file
          (u/locate-emacs-cache-file "straight/repos/straight.el/bootstrap.el"))
@@ -34,7 +35,10 @@ Choice between `straight', `builtin', `none'")
            'silent 'inhibit-cookies)
         (goto-char (point-max))
         (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage)))
+    (load bootstrap-file nil 'nomessage))
+;; configure straight lockfile (it can be committed)
+(setq straight-profiles
+      `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory)))))
  ((eq u/packaging-system 'builtin)
   ;; initialize builtin packaging system
   (require 'package)
@@ -45,11 +49,6 @@ Choice between `straight', `builtin', `none'")
  ((eq u/packaging-system 'none)
   ;; do nothing
   nil))
-
-
-;; configure straight lockfile (it can be committed)
-(setq straight-profiles
-      `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory))))
 
 ;; use package custom macro
 (defmacro u/use-package (package)
