@@ -114,6 +114,10 @@
 ;; (add-hook 'groovy-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 
+;;;;; ZKoss
+
+(add-to-list 'auto-mode-alist '("\\.zul\\'" . xml-mode))
+
 ;;;; Kotlin
 
 (u/use-package 'kotlin-mode)
