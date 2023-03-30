@@ -40,7 +40,8 @@
   (setq modus-themes-bold-constructs t)
   (setq modus-themes-italic-constructs t)
   (setq modus-themes-org-blocks 'gray-background)
-  (load-theme 'modus-vivendi))
+  (load-theme 'modus-vivendi)
+  (set-face-attribute 'modus-themes-heading-1 nil :foreground "#f78fe7"))
  ((eq u/theme 'doom-nord)
   ;; configure nord theme
   (u/use-package 'doom-themes)
