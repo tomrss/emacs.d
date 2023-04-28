@@ -179,7 +179,9 @@
 
 (u/use-package 'go-mode)
 (add-hook 'go-mode-hook #'u/eglot-deferred)
-(add-hook 'go-mode-hook (lambda () (setq indent-tabs-mode t)))
+(add-hook 'go-mode-hook (lambda ()
+                          (setq indent-tabs-mode t)
+                          (setq outline-regexp "\\(func \\)\\|\\(type \\)")))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 ;;;; LaTeX
