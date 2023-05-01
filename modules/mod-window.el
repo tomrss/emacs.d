@@ -60,6 +60,7 @@
         ("\\*eldoc" :regexp t :popup t :noselect t :align right :size 80)
         (kubernetes-overview-mode :select t :align left :size 0.5)
         ("\\*terraform.*\\*" :regexp t :select t :popup t :align right)
+        ("\\*latex-comp-.*\\*" :regexp t :ignore t)
         ("*virtualenv*" :ignore t)))
 
 ;;;; Workspaces (tab-bar-mode)

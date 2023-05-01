@@ -186,9 +186,7 @@
 
 ;;;; LaTeX
 
-;; add a preview pane of the current edited LaTeX buffer.
-(u/use-package 'latex-preview-pane)
-(add-hook 'latex-mode-hook #'latex-preview-pane-mode)
+;; TODO do something
 
 ;;;; Dockerfile
 
