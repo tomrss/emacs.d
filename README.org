@@ -34,7 +34,11 @@ Install packages: start Emacs or launch installer script with:
 *** Upgrade dependencies
 
 If you want to upgrade dependecies, you can pull latest upgrades on the main branch and
-then rebuild by restarting Emacs or launching =make rebuild=.
+then sync dependencies:
+
+#+begin_src shell
+  make sync-from-lockfile rebuild
+#+end_src
 
 If you want to upgrade further, you can do:
 
@@ -121,4 +125,4 @@ not a terminal emulator but is more integrated with Emacs, is used for everythin
 *** Development
 
 Development module, containing Eglot configuration and customizations for some programming
-modes, most notably Python.
+modes.
