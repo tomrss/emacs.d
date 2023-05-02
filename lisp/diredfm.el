@@ -44,8 +44,7 @@
 (defcustom diredfm-handlers-alist
   '("\\.pdf\\'"
     "\\.txt\\'"
-    ("\\.mkv\\'" . "mpv")
-    ("\\.tex\\'" . (lambda (file) (message "This is a function handler for .tex file"))))
+    ("\\.mkv\\'" . "mpv"))
   "Handlers for opening files in Dired.
 Files that do not match any pattern will be opened in Emacs as usual.
 Every element of the list can be:
