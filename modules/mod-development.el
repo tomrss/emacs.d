@@ -117,6 +117,7 @@
 ;;;;; ZKoss
 
 (add-to-list 'auto-mode-alist '("\\.zul\\'" . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.gsp\\'" . xml-mode))
 
 ;;;; Kotlin
 
