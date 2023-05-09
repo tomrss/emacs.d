@@ -95,8 +95,17 @@
   (unless (u/consult-preview-p)
     (eglot-ensure)))
 
+(defun u/eglot-format-and-save ()
+  "Format buffer with eglot and save."
+  (interactive)
+  (eglot-format)
+  (save-buffer))
+
 (with-eval-after-load 'eglot
-  (define-key eglot-mode-map (kbd "M-RET") #'eglot-code-actions))
+  (define-key eglot-mode-map (kbd "M-RET") #'eglot-code-actions)
+  (evil-define-key 'normal eglot-mode-map (kbd "SPC e") #'eglot)
+  (evil-define-key 'normal eglot-mode-map (kbd "SPC r") #'eglot-rename)
+  (evil-define-key 'normal eglot-mode-map (kbd "SPC f") #'u/eglot-format-and-save))
 
 ;; make eglot completions work with orderless + corfu
 (setq completion-category-overrides '((eglot (styles orderless))))
