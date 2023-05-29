@@ -102,6 +102,9 @@
   (save-buffer))
 
 (with-eval-after-load 'eglot
+  (setq eglot-autoshutdown t)
+  (setq eglot-autoreconnect 2)
+  (setq eglot-confirm-server-initiated-edits nil)
   (define-key eglot-mode-map (kbd "M-RET") #'eglot-code-actions)
   (evil-define-key 'normal eglot-mode-map (kbd "SPC e") #'eglot)
   (evil-define-key 'normal eglot-mode-map (kbd "SPC r") #'eglot-rename)
