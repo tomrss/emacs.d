@@ -205,6 +205,37 @@
                           (setq outline-regexp "\\(func \\)\\|\\(type \\)")))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+;;;; Node
+
+;; TODO enhance this package
+(u/use-package 'nvm)
+
+;; javascript react
+(with-eval-after-load 'js
+  (setq js-indent-level 4)
+  (define-derived-mode js-react-mode js-mode
+    "JSX")
+
+  (require 'tree-sitter-langs)
+  ;; this means: all js is react. because i only use js for react.
+  ;; TODO find a way to recognize js vs jsx
+  (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-react-mode))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(js-react-mode . tsx))
+  (add-hook 'js-react-mode-hook #'tree-sitter-mode)
+  (add-hook 'js-react-mode-hook #'u/eglot-deferred))
+
+(u/use-package 'typescript-mode)
+(with-eval-after-load 'typescript-mode
+  ;; see https://github.com/joaotavora/eglot/issues/624
+  ;; see https://github.com/joaotavora/eglot#handling-quirky-servers
+  (define-derived-mode ts-react-mode typescript-mode
+    "TSX")
+
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . ts-react-mode))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(ts-react-mode . tsx))
+  (add-hook 'ts-react-mode-hook #'tree-sitter-mode)
+  (add-hook 'ts-react-mode-hook #'u/eglot-deferred))
+
 ;;;; LaTeX
 
 ;; TODO do something
