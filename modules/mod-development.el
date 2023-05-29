@@ -253,6 +253,7 @@
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 (add-hook 'terraform-mode-hook #'u/eglot-deferred)
 (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)
+(add-hook 'terraform-mode-hook #'tree-sitter-mode)
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '(terraform-mode "terraform-ls" "serve")))
