@@ -212,7 +212,8 @@
 
 ;; javascript react
 (with-eval-after-load 'js
-  (setq js-indent-level 4)
+  (setq js-indent-level 2)
+  (setq js-jsx-indent-level 2)
   (define-derived-mode js-react-mode js-mode
     "JSX")
 
