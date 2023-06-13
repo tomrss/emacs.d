@@ -54,29 +54,34 @@
 
 ;;;; Directory tree view
 
-(u/use-package 'treemacs)
-(u/use-package 'treemacs-all-the-icons)
-(u/define-key (kbd "C-x c t") #'treemacs-select-window)
-(with-eval-after-load 'treemacs
-  (treemacs-project-follow-mode t)
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode 'always)
-  (treemacs-git-commit-diff-mode t)
-  (treemacs-hide-gitignored-files-mode nil)
+;; TODO move feature flag in separate place
+(defvar u/feature-directory-tree-view nil
+  "Feature flag for enabling directory tree view.")
 
-  (require 'treemacs-all-the-icons)
-  (treemacs-load-theme "all-the-icons"))
-
-(u/use-package 'treemacs-evil)
-(with-eval-after-load 'evil
+(when u/feature-directory-tree-view
+  (u/use-package 'treemacs)
+  (u/use-package 'treemacs-all-the-icons-autoloads)
+  (u/define-key (kbd "C-x c t") #'treemacs-select-window)
   (with-eval-after-load 'treemacs
-    (require 'treemacs-evil)))
+    (treemacs-project-follow-mode t)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (treemacs-git-commit-diff-mode t)
+    (treemacs-hide-gitignored-files-mode nil)
 
-(u/use-package 'treemacs-magit)
-(with-eval-after-load 'magit
-  (with-eval-after-load 'treemacs
-    (require 'treemacs-magit)))
+    (require 'treemacs-all-the-icons)
+    (treemacs-load-theme "all-the-icons"))
+
+  (u/use-package 'treemacs-evil)
+  (with-eval-after-load 'evil
+    (with-eval-after-load 'treemacs
+      (require 'treemacs-evil)))
+
+  (u/use-package 'treemacs-magit)
+  (with-eval-after-load 'magit
+    (with-eval-after-load 'treemacs
+      (require 'treemacs-magit))))
 
 ;;;; Process management
 
