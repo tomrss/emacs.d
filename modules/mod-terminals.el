@@ -30,6 +30,9 @@
 ;; use proper colors in comint mode
 (setq comint-terminfo-terminal "term-256color")
 
+;; default compilation command
+(setq compile-command "make ")
+
 ;;;; Shell
 
 ;; note: shell is comint, so comint configuration affects also here
