@@ -42,7 +42,8 @@
 ;;;; Custom variables
 
 (defcustom diredfm-handlers-alist
-  '(("\\.mkv\\'" . "mpv"))
+  '(("\\.mkv\\'" . "mpv")
+    ("\\.avi\\'" . "mpv"))
   "Handlers for opening files in Dired.
 Files that do not match any pattern will be opened in Emacs as usual.
 Every element of the list can be:
