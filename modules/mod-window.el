@@ -78,7 +78,7 @@
 (defun u/edit-emacs-config ()
   "Edit the user emacs init file."
   (interactive)
-  (find-file user-init-file))
+  (project-switch-project user-emacs-directory))
 
 ;; TODO this is probably dangerous
 (defun u/kill-other-buffers ()
