@@ -15,12 +15,21 @@
 
 ;;;; Fonts and icons
 
+(defvar u/try-fonts-default
+  '("JetBrains Mono NL"
+    "JetBrains Mono")
+  "Try to load one of this fonts (first that works wins) as default font.")
+
+(defvar u/try-fonts-variable-pitch
+  '("Cantarell")
+  "Try to load one of this fonts (first that works wins) as variable pitch font.")
+
 (when (display-graphic-p)
-  (when (x-list-fonts "JetBrains Mono NL")
-    (set-face-attribute 'default     nil :font "JetBrains Mono NL" :height 110 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono NL" :height 110 :weight 'normal))
-  (when (x-list-fonts "Cantarell")
-    (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 130 :weight 'normal)))
+  (when-let ((default-font (u/find-first 'x-list-fonts u/try-fonts-default)))
+    (set-face-attribute 'default     nil :font default-font :height 110 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :font default-font :height 110 :weight 'normal))
+  (when-let ((variable-font (u/find-first 'x-list-fonts u/try-fonts-variable-pitch)))
+    (set-face-attribute 'variable-pitch nil :font variable-font :height 130 :weight 'normal)))
 
 (u/use-package 'all-the-icons)
 (when (display-graphic-p)
