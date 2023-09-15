@@ -97,7 +97,7 @@ the same project."
   (defface u/eshell-venv-face '((t (:inherit default :foreground "grey")))
     "Face for eshell prompt virtualenv section.")
 
-  (defface u/eshell-pwd-face '((t (:inherit font-lock-property-face)))
+  (defface u/eshell-pwd-face '((t (:inherit font-lock-variable-name-face)))
     "Face for eshell prompt path section.")
 
   (defface u/eshell-git-face '((t (:inherit font-lock-type-face)))
@@ -143,7 +143,7 @@ the same project."
     "Eshell prompt section that displays git info."
     (when-let* ((current-branch (when (fboundp 'magit-get-current-branch)
 							      (magit-get-current-branch)))
-                (section (concat "  " current-branch)))
+                (section (concat " " current-branch)))
       (propertize section 'face 'u/eshell-git-face)))
 
   (defun u/eshell-prompt-kube-section ()
