@@ -1,17 +1,32 @@
-;;; mod-ui.el --- User interface module -*- lexical-binding: t -*-
+;;; core-ui.el --- User interface customization -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
 ;; Module for enhancing and personalizing user interface, including
-;; fonts, icons, modeline, theme, dired and other.
+;; fonts, icons, modeline, theme and other.
 
 ;;; Code:
+
+(require 'core-keys)
+(require 'core-packaging)
+(require 'core-utils)
 
 ;;;; Fonts and icons
 
@@ -30,12 +45,6 @@
     (set-face-attribute 'fixed-pitch nil :font default-font :height 110 :weight 'normal))
   (when-let ((variable-font (u/find-first 'x-list-fonts u/try-fonts-variable-pitch)))
     (set-face-attribute 'variable-pitch nil :font variable-font :height 130 :weight 'normal)))
-
-(u/use-package 'all-the-icons)
-(when (display-graphic-p)
-  (require 'all-the-icons nil nil)
-  (unless (x-list-fonts "all-the-icons")
-    (all-the-icons-install-fonts t)))
 
 ;;;; Theme
 
@@ -64,9 +73,14 @@
 
 ;;;; Modeline
 
-(u/use-package 'doom-modeline)
-(setq doom-modeline-icon (display-graphic-p))
-(doom-modeline-mode +1)
+;; TODO we want to set a fallback for the absence of doom modeline,
+;; but this isn't right because core should not depend on modules.
+;; define the concept of "module fallback" somehow
+;; or accept that minions package will be loaded also in case of doom.
+(require 'core-modules)
+(unless (member "doom-modeline" u/enabled-modules)
+  (u/use-package 'minions)
+  (minions-mode +1))
 
 ;;;; Line and column numbers
 
@@ -100,24 +114,34 @@
 
 (defun u/setup-visual-fill (width)
   "Setup visual line and column centered with WIDTH."
-  (setq visual-fill-column-width width)
-  (setq visual-fill-column-center-text t)
-  (visual-line-mode +1)
-  (visual-fill-column-mode +1))
+  (when (fboundp 'visual-fill-column-mode)
+    (setq visual-fill-column-width width)
+    (setq visual-fill-column-center-text t)
+    (visual-line-mode +1)
+    (visual-fill-column-mode +1)))
+
+;;;; Scratch buffers
+
+;; TODO use package-vc-install in the u/use-package macro
+(when (eq u/packaging-system 'straight)
+  (u/use-package '(scratch-el :type git
+			                  :host github
+			                  :repo "tomrss/scratch.el")))
+
+(with-eval-after-load 'scratch
+  (setq scratch-search-fn #'consult-ripgrep)
+  (scratch-persist-mode +1))
+
+(u/define-key (kbd "C-c s") 'scratch-key-map)
 
 ;;;; Starting screen
 
-;; i wrote this package and it's not great
-;; TODO at least add a readme in it
-;; TODO make it private because it sucks
-(if (eq u/packaging-system 'straight)
-    (u/use-package '(welcome :type git
-                             :host github
-                             :repo "tomrss/welcome.el"
-                             :files ("welcome.el" "asset")))
-  ;; TODO this is very wrong. if is ugly, and it requires to having used straight
-  (add-to-list 'load-path "~/.emacs.d/.cache/straight/repos/welcome.el/")
-  (require 'welcome))
+;; TODO use package-vc-install in the u/use-package macro
+(when (eq u/packaging-system 'straight)
+  (u/use-package '(welcome :type git
+                           :host github
+                           :repo "tomrss/welcome.el"
+                           :files ("welcome.el" "asset"))))
 
 (with-eval-after-load 'welcome
   (setq welcome-menu-items
@@ -170,7 +194,6 @@
            :action eww
            :icon (all-the-icons-octicon . "globe"))))
 
-  (evil-set-initial-state 'welcome-mode 'emacs)
   (define-key welcome-mode-map (kbd "j") #'next-line)
   (define-key welcome-mode-map (kbd "k") #'previous-line)
   (add-hook 'welcome-mode-hook
@@ -178,5 +201,5 @@
 
 (add-hook 'emacs-startup-hook #'welcome-screen)
 
-(provide 'mod-ui)
-;;; mod-ui.el ends here
+(provide 'core-ui)
+;;; core-ui.el ends here

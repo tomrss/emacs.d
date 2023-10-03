@@ -1,10 +1,21 @@
-;;; mod-completions.el --- Completions module -*- lexical-binding: t -*-
+;;; core-completions.el --- Setup completion framework -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -13,6 +24,9 @@
 ;; self-documentation.
 
 ;;; Code:
+
+(require 'core-keys)
+(require 'core-packaging)
 
 ;;;; Getting help and docs
 
@@ -35,10 +49,6 @@
 ;; help and docs in minibuffer
 (u/use-package 'marginalia)
 (marginalia-mode +1)
-;; icons in minibuffer
-(u/use-package 'all-the-icons-completion)
-(all-the-icons-completion-mode)
-(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
 
 ;;;; Completion styles and functions
 
@@ -53,6 +63,7 @@
 (u/use-package 'consult)
 (with-eval-after-load 'consult
   (setq consult-narrow-key "<"))
+
 (u/define-key (kbd "C-x b")   #'consult-buffer)
 (u/define-key (kbd "C-x 4 b") #'consult-buffer-other-window)
 (u/define-key (kbd "C-x 5 b") #'consult-buffer-other-frame)
@@ -145,5 +156,5 @@
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 
-(provide 'mod-completions)
-;;; mod-completions.el ends here
+(provide 'core-completions)
+;;; core-completions.el ends here

@@ -1,10 +1,21 @@
 ;;; init.el --- Emacs configuration -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -12,40 +23,75 @@
 
 ;;; Code:
 
-;;;; add modules and custom lisp directories to load path
+;;;; Add core and modules to load path
 
 (eval-and-compile
-  (defvar u/user-modules-directory
+  (defconst u/core-directory
+    (locate-user-emacs-file "core/")
+    "Directory of core modules.")
+
+  (defconst u/modules-directory
     (locate-user-emacs-file "modules/")
-    "Directory of user init modules.")
+    "Directory of user customizable modules.")
 
-  (defvar u/user-lisp-directory
-    (locate-user-emacs-file "lisp/")
-    "Directory of user custom Lisp.")
+  (defconst u/user-local-config
+    (locate-user-emacs-file "local-config.el")
+    "Local config of the user.")
 
-  (add-to-list 'load-path u/user-modules-directory)
-  (add-to-list 'load-path u/user-lisp-directory))
 
-;;;; process autoloads of custom lisp
+  (add-to-list 'load-path u/core-directory)
+  (add-to-list 'load-path u/modules-directory))
 
-(let ((custom-lisp-autoloads
-       (expand-file-name "autoloads" u/user-lisp-directory)))
-  (loaddefs-generate u/user-lisp-directory custom-lisp-autoloads)
-  (load custom-lisp-autoloads nil t))
+;;;; Load core features
 
-;;;; require modules
+(require 'core-init-directory)
+(require 'core-defaults)
+(require 'core-ui)
+(require 'core-completions)
+(require 'core-window)
+(require 'core-dired)
+(require 'core-orgmode)
+(require 'core-terminals)
+(require 'core-development)
 
-(require 'mod-init-directory)
-(require 'mod-defaults)
-(require 'mod-packaging)
-(require 'mod-keys)
-(require 'mod-ui)
-(require 'mod-completions)
-(require 'mod-editing)
-(require 'mod-window)
-(require 'mod-management)
-(require 'mod-org)
-(require 'mod-terminals)
-(require 'mod-development)
+;;;; Set default modules
+
+(setq u/enabled-modules
+      '(
+        ;; key bindings
+        "evil"
+
+        ;; ui
+        "icons"
+        "doom-modeline"
+        ;; "treemacs"
+
+        ;; tools
+        "org-roam"
+        "vterm"
+
+        ;;development
+        "java"
+        "go"
+        "python"
+        "node"
+        "react"
+        "groovy"
+        ;; "kotlin"
+        ;; "scala"
+        ;; "clojure"
+        "terraform"
+        ;; "csharp"
+        "http"
+        ;; "kubernetes"
+        ))
+
+;;;; Load user local configuration
+
+(load u/user-local-config t t)
+
+;;;; Load modules
+
+(u/module-load-modules)
 
 ;;; init.el ends here

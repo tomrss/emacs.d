@@ -1,32 +1,46 @@
-;;; mod-packaging.el --- Packaging module -*- lexical-binding: t -*-
+;;; core-packaging.el --- Setup package loading -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; Module for configuring packaging.
+;; Module for configuring packaging and packaging loading.
 
 ;;; Code:
 
-;;; Configure `straight.el' as package manager
+(require 'core-init-directory)
+
+;; TODO with module system, environment variable for chosing packaging seems not appropriate
 
 (defconst u/packaging-system
   (intern (or (getenv "EMACS_PACKAGING_SYSTEM") "straight"))
   "Packaging system to use.
 Choice between `straight', `builtin', `none'")
 
-;; initialize packaging
+;;;; Initialize packaging
+
 (cond
  ((eq u/packaging-system 'straight)
   ;; bootstrap `straight.el'
-(setq straight-repository-branch "develop")
+  (setq straight-repository-branch "develop")
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (u/locate-emacs-cache-file "straight/repos/straight.el/bootstrap.el"))
+         (u/locate-cache-file "straight/repos/straight.el/bootstrap.el"))
         (bootstrap-version 6))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
@@ -36,9 +50,9 @@ Choice between `straight', `builtin', `none'")
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
-;; configure straight lockfile (it can be committed)
-(setq straight-profiles
-      `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory)))))
+  ;; configure straight lockfile (it can be committed)
+  (setq straight-profiles
+        `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory)))))
  ((eq u/packaging-system 'builtin)
   ;; initialize builtin packaging system
   (require 'package)
@@ -50,7 +64,8 @@ Choice between `straight', `builtin', `none'")
   ;; do nothing
   nil))
 
-;; use package custom macro
+;;;; Use package custom macro
+
 (defmacro u/use-package (package)
   "Use PACKAGE."
   (cond
@@ -62,5 +77,5 @@ Choice between `straight', `builtin', `none'")
    ((eq u/packaging-system 'none)
     nil)))
 
-(provide 'mod-packaging)
-;;; mod-packaging.el ends here
+(provide 'core-packaging)
+;;; core-packaging.el ends here

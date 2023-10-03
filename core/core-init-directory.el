@@ -1,10 +1,21 @@
-;;; mod-init-directory.el --- Cleanup init dir module -*- lexical-binding: t -*-
+;;; core-init-directory.el --- Cleanup init dir -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -17,24 +28,24 @@
 
 ;;; Code:
 
-(defvar u/emacs-cache-directory (locate-user-emacs-file ".cache/")
-  "Location where to save Emacs cache files.")
+(defconst u/cache-directory (locate-user-emacs-file ".cache/")
+  "Location where to save cache files of Emacs and packages.")
 
-(defun u/locate-emacs-cache-file (filename)
+(defun u/locate-cache-file (filename)
   "Locate FILENAME in Emacs cache directory."
   (expand-file-name (convert-standard-filename filename)
-                    u/emacs-cache-directory))
+                    u/cache-directory))
 
-(defalias 'u/cache-file 'u/locate-emacs-cache-file)
+(defalias 'u/cache-file 'u/locate-cache-file)
 
-(make-directory u/emacs-cache-directory t)
+(make-directory u/cache-directory t)
 (make-directory (u/cache-file "auto-save/") t)
 
 (setq savehist-file                     (u/cache-file "history"))
 (setq save-place-file                   (u/cache-file "places"))
 (setq project-list-file                 (u/cache-file "projects"))
 (setq recentf-save-file                 (u/cache-file "recentf"))
-(setq straight-base-dir                 u/emacs-cache-directory)
+(setq straight-base-dir                 u/cache-directory)
 (setq package-user-dir                  (u/cache-file "elpa"))
 (setq eshell-directory-name             (u/cache-file "eshell"))
 (setq undo-tree-history-directory-alist `(("." . ,(u/cache-file "undo"))))
@@ -52,5 +63,5 @@
 (setq org-roam-db-location              (u/cache-file "org-roam.db"))
 (setq url-cache-directory               (u/cache-file "url/cache/"))
 
-(provide 'mod-init-directory)
-;;; mod-init-directory.el ends here
+(provide 'core-init-directory)
+;;; core-init-directory.el ends here

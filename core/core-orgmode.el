@@ -1,18 +1,27 @@
-;;; mod-completions.el --- Completions module -*- lexical-binding: t -*-
+;;; core-orgmode.el --- Setup Org mode -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
 ;; Module for customizing org-mode.
 
 ;;; Code:
-
-;;;; Setup Org Mode
 
 (with-eval-after-load 'org
   ;; setup visual fill
@@ -31,6 +40,7 @@
   (add-to-list 'org-structure-template-alist '("py" . "src python"))
   (add-to-list 'org-structure-template-alist '("yml" . "src yaml"))
   (add-to-list 'org-structure-template-alist '("json" . "src json"))
+  (add-to-list 'org-structure-template-alist '("go" . "src go"))
 
   ;; some defaults
   (setq org-src-fontify-natively t)
@@ -56,34 +66,5 @@
             (lambda ()
               (add-hook 'after-save-hook #'u/org-auto-tangle 0 t))))
 
-;;;; Org roam
-
-(u/use-package 'org-roam)
-(defvar u/org-roam-base-dir "~/.org-roam")
-(add-to-list 'recentf-exclude u/org-roam-base-dir)
-(setq org-roam-v2-ack t)
-(u/define-key (kbd "C-c n l") #'org-roam-buffer-toggle)
-(u/define-key (kbd "C-c n f") #'org-roam-node-find)
-(u/define-key (kbd "C-c n i") #'org-roam-node-insert)
-(autoload 'org-roam-dailies-map "org-roam-dailies" nil nil 'keymap)
-(u/define-key (kbd "C-c n d") 'org-roam-dailies-map)
-(with-eval-after-load 'org-roam
-  (make-directory u/org-roam-base-dir t)
-  (setq org-roam-directory u/org-roam-base-dir)
-  (setq org-roam-completion-everywhere t)
-  (setq org-roam-capture-templates
-        '(("d" "default" plain
-           "%?"
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
-          ("s" "secure" plain
-           "%?"
-           :target (file+head "%<%Y%m%d%H%M%S>.org.gpg"
-                              "#+title: ${title}\n")
-           :unnarrowed t)))
-  (define-key org-mode-map (kbd "C-i") #'completion-at-point)
-  (org-roam-setup))
-
-(provide 'mod-org)
-;;; mod-org.el ends here
+(provide 'core-orgmode)
+;;; core-orgmode.el ends here

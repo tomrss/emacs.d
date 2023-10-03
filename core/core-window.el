@@ -1,16 +1,30 @@
-;;; mod-window.el --- Window and buffer management module -*- lexical-binding: t -*-
+;;; core-window.el --- Window and buffer management -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
 ;; Module for setting up window and buffer management.
 
 ;;; Code:
+
+(require 'core-keys)
+(require 'core-packaging)
 
 ;;;; Stateful window layout
 
@@ -70,13 +84,19 @@
 ;; (setq tab-bar-new-tab-choice "*Welcome*")
 ;; (tab-bar-mode +1)
 
+;;;; Text selection and navigation
+
+;; increases the selected region by semantic units
+(u/use-package 'expand-region)
+(u/define-key (kbd "C-ò") #'er/expand-region)
+
 ;;;; Buffer helpers
 
 ;; use `ibuffer' instead of buffer list
 (u/define-key (kbd "C-x C-b") 'ibuffer)
 
 (defun u/edit-emacs-config ()
-  "Edit the user emacs init file."
+  "Edit the user Emacs init file."
   (interactive)
   (project-switch-project user-emacs-directory))
 
@@ -115,5 +135,5 @@
   (u/kill-mode-buffers 'help-mode)
   (u/kill-mode-buffers 'helpful-mode))
 
-(provide 'mod-window)
-;;; mod-window.el ends here
+(provide 'core-window)
+;;; core-window.el ends here
