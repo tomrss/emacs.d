@@ -5,15 +5,14 @@ Personal GNU Emacs configuration.
 
 ** Guiding Principles
 
-- Fast startup (less than 1.5 seconds)
-- Try to prioritize builtin features (=eglot=, =project=, =flymake=, ...) when it's possible
+- Fast startup (less than 1 seconds)
+- Portable on multiple machines (or mutliple users) allowing changes between them
+- Provide core basic features and pluggable modules
+- Prioritize builtin features (=eglot=, =project=, =flymake=, ...) when it's possible
 - Keep things standard
+- Reproducible builds with functional package management (=straight.el=) and version lockfile
 - Avoid too much key customization
-- But sadly Vim emulation (=evil-mode=) is too much confortable, so use it...
-- Reproducible builds with functional package management (=straight.el=)
-- Modular configuration: modules represents customization macro-areas and not single features
 - Keep the Emacs home directory clean
-- Focus on terminals (=eshell=, =vterm=)
 - It has to work in the terminal
 
 ** Installation
@@ -46,83 +45,52 @@ If you want to upgrade further, you can do:
   make upgrade rebuild
 #+end_src
 
-** Modules
+** Local configuration
 
-*** Clean Init Directory
+Every user installation can provide its own configuration in the =local-config.el= in the
+init directory (by default =.emacs.d=). This file is loaded after core features but before
+pluggable modules.
 
-Module dedicated to cleaning the Emacs home directory from files that are not part of the
-configuration and that should not be checked into source control.
-Those files are put in a =.cache= folder inside Emacs directory.
+This file is gitignored, in fact it should be local only on one installation.
 
-It is pretty much what the [[https://github.com/emacscollective/no-littering][no-littering]] package does, but I wanted to do it myself configuring
-only things I really need.
+A typical usage of this local configuration is to decide which modules to plug in.
 
-This module has no dependencies.
+** The module system
 
-*** Defaults
+This configuration provides features in two ways:
 
-Set some defaults, like =recentf-mode= and =savehist-mode=.
+*** Core features
 
-This module has no dependencies.
+Core feature are basic and fundational features that are always pulled in.
+This type of features prioritize builtin features and tries to keep the number of external
+packages low. Also key customization is minimized.
 
-*** Packaging
+In other words, core features try to enhance Emacs without diverging too much from the standards.
 
-Configure package management.  By default, it uses =straight.el= as package manager, and it is
-strongly suggested to keep it.
+They include:
 
-With the =EMACS_PACKAGING_SYSTEM= environment variable, you can control which packaging system to use:
-- =straight=.  Use =straight.el=.  It is the default and it is suggested to leave it be.
-  When using other packaging systems, you loose the reproducible builds with lockfile
-  and the management script will not be able to operate.
-- =builtin=.  Use builtin =package.el=.
-- =none=.  Do not use any type of packaging system.  This is meant for packaging tools that
-  are external to Emacs, like GNU Guix.
+- Cleanup Emacs init directory
+- Better defaults: enable or tweak features that are builtin
+- Some UI tweaks (fonts, theme, ...)
+- Completion framework: classic based on =vertico=, =corfu=, =marginalia= and =orderless=
+- Try to make sense of window display and management (most notably with =shackle= rules)
+- Boost =dired=
+- Beautify =org-mode= (but not too much)
+- Enhancement of compilation buffers and terminals (especially =eshell=)
+- Development features mainly based on =eglot=
 
-*** Keys
+*** Pluggable modules
 
-Module for customizing keys.  It sets up a custom minor mode holding every user-defined key:
-that is used instead of =global-set-key= in order to avoid that keys are overridden by major
-modes.
+This modules are just Emacs Lisp files that can be pulled in or not in each installation.
+A pluggable module can be loaded or not without breaking anything.
 
-It also sets up Vim emulation with =evil-mode=.
+This approach helps to increase configuration portability over multiple machines and multiple
+users, and also allow to maintain pieces of code no more used without loading them every time,
+ready for possible future usage.
 
-*** User Interface
+Modules that will be loaded are defined in the variable =u/enabled-modules=.
+This variable can be changed in the local config file.
 
-Module for customizing user interface.
+A default selection of modules is included in =init.el=.
 
-It contains customization of fonts and icons, themes, modeline, directory tree view
-(=treemacs=), =dired=, welcome screen and others.
-
-*** Completions
-
-Module for setting up completions: enhancing self-documentation (=which-key=, =helpful=)
-, minibuffer completions ui (=vertico=, =marginalia=), candidate filtering and sorting
-(=orderless=), helper functions (=consult=, =embark=), completions at point (=corfu=).
-
-*** Editing
-
-TODO
-
-*** Window management
-
-Module for enhancing windows and buffers management using builtin features like =winner= and
-=windmove=, as well as external packages =shackle= for setting up clear and simple display
-rules for buffers and =ace-window= to quicky select windows.
-
-*** Org mode
-
-Module for customizing =org-mode= and setting up =org-roam= note taking tool.
-
-*** Terminals
-
-Module entirely dedicated to terminals, included Comint mode (based on which many command
-interpreters in Emacs are written) and therefore Compilation mode.
-
-Special focus on the amazing =eshell= and the external package =vterm=, which has been chosen
-as terminal emulator for everything that needs a proper terminal emulator. Eshell, which is
-not a terminal emulator but is more integrated with Emacs, is used for everything else.
-
-*** Development
-
-Development module, containing Eglot configuration and customizations for some programming
-modes.
+The full list of modules is simply the list of files in =modules= directory.

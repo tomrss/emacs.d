@@ -58,32 +58,25 @@
 
 (setq u/enabled-modules
       '(
-        ;; key bindings
-        "evil"
-
-        ;; ui
-        "icons"
-        "doom-modeline"
-        ;; "treemacs"
-
-        ;; tools
-        "org-roam"
-        "vterm"
-
-        ;;development
-        "java"
-        "go"
-        "python"
-        "node"
-        "react"
-        "groovy"
-        ;; "kotlin"
-        ;; "scala"
-        ;; "clojure"
-        "terraform"
-        ;; "csharp"
-        "http"
-        ;; "kubernetes"
+        "evil"             ; vim emulation with evil mode
+        "icons"            ; use icons in dired, completions and other
+        "doom-modeline"    ; fancy modeline from doom emacs
+        ;; "treemacs"      ; directory tree view
+        "org-roam"         ; org roam note taking tool
+        "vterm"            ; vterm is a fast terminal emulator written in C
+        "go"               ; development with go
+        "python"           ; development with python
+        "java"             ; development with java
+        "groovy"           ; development with groovy
+        ;; "kotlin"        ; development with kotlin
+        ;; "scala"         ; development with scala
+        ;; "clojure"       ; development with clojure
+        "node"             ; development with node
+        "react"            ; development with react
+        ;; "csharp"        ; development with csharp
+        "terraform"        ; iac with terraform
+        "http"             ; http client
+        ;; "kubernetes"    ; kubernetes overview buffer
         ))
 
 ;;;; Load user local configuration
