@@ -1,4 +1,4 @@
 .cache/
 .backups/
 eln-cache/
-lisp/autoloads
+local-config.el

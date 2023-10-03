@@ -1,10 +1,21 @@
-;;; mod-defaults.el --- Defaults module -*- lexical-binding: t -*-
+;;; core-defaults.el --- Better defaults -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Tommaso Rossi
+;; Copyright (C) 2022-2023 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
 
-;; This file is NOT part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -13,6 +24,9 @@
 
 ;;; Code:
 
+(require 'core-init-directory)
+(require 'core-utils)
+
 ;;;; Persistence across sessions
 
 ;; persist selections with builtin savehist mode
@@ -20,11 +34,12 @@
 (savehist-mode +1)
 
 ;; recent files
+(require 'recentf)
 (setq recentf-max-menu-items 500)
 (setq recentf-max-saved-items 500)
 (setq recentf-auto-cleanup 120)
 (recentf-mode +1)
-(add-to-list 'recentf-exclude u/emacs-cache-directory)
+(add-to-list 'recentf-exclude u/cache-directory)
 
 ;; reopen file at same point
 (save-place-mode +1)
@@ -82,24 +97,13 @@
 
 ;;;; Filter logs
 
-;; TODO move this to utils file?
-(defun u/find-first (predicate list)
-  "Find first element in LIST matching PREDICATE."
-  (let ((tail list)
-        (found nil))
-    (while (and (not found) tail)
-      (let ((x (car tail)))
-        (if (funcall predicate x)
-            (setq found x)
-          (setq tail (cdr tail)))))
-    found))
-
 (defvar u/filter-logs-patterns
   '("^Cleaning up the recentf list...")
   "Pattern of logs to be filtered out.
 It works only on the first parameter of the `message' function.")
 
 (defun u/filter-logs (log-fun &rest args)
+  "Filter out annoyng logs with predicate LOG-FUN with its ARGS."
   (unless (or
            (not (and args (car args)))
            (u/find-first
@@ -109,5 +113,5 @@ It works only on the first parameter of the `message' function.")
 
 (advice-add 'message :around #'u/filter-logs)
 
-(provide 'mod-defaults)
-;;; mod-defaults.el ends here
+(provide 'core-defaults)
+;;; core-defaults.el ends here
