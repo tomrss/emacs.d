@@ -5,7 +5,7 @@ Personal GNU Emacs configuration.
 
 ** Guiding Principles
 
-- Fast startup (less than 1 seconds)
+- Fast startup (less than 1 second with native compilation)
 - Portable on multiple machines (or mutliple users) allowing changes between them
 - Provide core basic features and pluggable modules
 - Prioritize builtin features (=eglot=, =project=, =flymake=, ...) when it's possible
