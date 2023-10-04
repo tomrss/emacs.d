@@ -24,12 +24,41 @@
 
 ;;; Code:
 
+;;;; Ensure language server
+
+(defvar u/python-ls-executable "pylsp"
+  "Executable of python language server.")
+
+(defvar u/python-ls-pip-package "python-lsp-server"
+  "Pip package of python language server.")
+
+(defvar u/python-ls-pip-package-extras '("rope"
+                                         "yapf"
+                                         "pycodestyle")
+  "Extras of python language server pip package.")
+
+(defun u/python-install-upgrade-ls ()
+  "Install or upgrade python-language-server (pylsp)."
+  (interactive)
+  (message "Installing python language server...")
+  (let ((buf (generate-new-buffer "*install-python-language-server*")))
+    (u/shell-command-in-buffer
+     (concat "pip install -U " u/python-ls-pip-package)
+     buf)
+    (dolist (extra u/python-ls-pip-package-extras)
+      (u/shell-command-in-buffer
+       (format "pip install -U '%s[%s]'" u/python-ls-pip-package extra)
+       buf))
+    (message "Installing python language server...done")))
+
+;;;; Virtualenv integration
+
 (u/use-package 'pyvenv)
 (with-eval-after-load 'pyvenv
   (setq pyvenv-mode-line-indicator
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] "))))
 
-(defun u/setup-virtualenv-project (proj)
+(defun u/python-setup-virtualenv-project (proj)
   "Setup pyvenv in project PROJ."
   (pyvenv-mode +1)
   (let* ((proj-name (project-name proj))
@@ -42,17 +71,24 @@
         (pyvenv-create proj-name python-shell-interpreter))
       (pyvenv-activate venv-directory))))
 
-(defun u/setup-virtualenv ()
+(defun u/python-setup-virtualenv ()
   "Setup virtual environment."
-  (interactive)
-  (u/setup-virtualenv-project (project-current t)))
+  (when-let ((proj (project-current)))
+    (u/setup-virtualenv-project proj)))
 
-(defun u/setup-virtualenv-after-dir-locals ()
-  "Setup virtual environment after dir locals are set."
-  (add-hook 'hack-local-variables-hook #'u/setup-virtualenv nil t))
+;;;; Setup hooks
 
-(add-hook 'python-mode-hook #'u/eglot-deferred)
-(add-hook 'python-mode-hook #'u/setup-virtualenv-after-dir-locals)
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            ;; hook virtualenv setup after on dir local loading 
+            (add-hook 'hack-local-variables-hook #'u/setup-virtualenv nil t)
+            ;; ensure language server is installed, or else prompt for installing
+            (if (executable-find u/python-ls-executable)
+                (eglot-ensure)
+              (when (y-or-n-p "Eglot requires a language server. Install it now?")
+                (u/python-install-upgrade-ls)
+                (eglot-ensure)))))
 
 (provide 'mod-python)
 ;;; mod-python.el ends here

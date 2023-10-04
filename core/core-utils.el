@@ -34,5 +34,22 @@
           (setq tail (cdr tail)))))
     found))
 
+(defun u/shell-command-in-buffer (command &optional buffer)
+  "Execute shell command COMMAND in BUFFER.
+If BUFFER is nil, new buffer will be generated."
+  (let ((buf (or buffer (generate-new-buffer "*shell-command*"))))
+    ;; (display-buffer buf)
+    (with-current-buffer buf
+      (unless (derived-mode-p 'compilation-mode) (compilation-mode))
+      (let ((inhibit-read-only t))
+        (goto-char (point-max))
+        (insert "$ ")
+        (insert command)
+        (newline)
+        (newline)
+        (unless (zerop (call-process-shell-command command nil buf t))
+          (error "Error executing command.  See buffer %s for details" (buffer-name buf)))
+        (newline)))))
+
 (provide 'core-utils)
 ;;; core-utils.el ends here
