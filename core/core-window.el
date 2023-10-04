@@ -75,7 +75,8 @@
         (kubernetes-overview-mode :select t :align left :size 0.5)
         ("\\*terraform.*\\*" :regexp t :select t :popup t :align right)
         ("\\*latex-comp-.*\\*" :regexp t :ignore t)
-        ("*virtualenv*" :ignore t)))
+        ("*virtualenv*" :ignore t)
+        ("*venv*" :ignore t)))
 
 ;;;; Workspaces (tab-bar-mode)
 

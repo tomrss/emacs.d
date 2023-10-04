@@ -58,6 +58,15 @@
   (setq pyvenv-mode-line-indicator
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] "))))
 
+(defun u/python-create-virtualenv (python-interpter)
+  "Create virtualenv VENV-NAME."
+  (interactive (list
+                (let ((bin-dir (file-name-directory (executable-find "python3"))))
+                  (read-file-name "Python interpreter to use: " bin-dir nil nil "python"))))
+  (let ((proj-name (project-name (project-current t))))
+    (message "Creating virtualenv for project %s..." proj-name)
+    (pyvenv-create proj-name python-interpter)))
+
 (defun u/python-setup-virtualenv-project (proj)
   "Setup pyvenv in project PROJ."
   (pyvenv-mode +1)
@@ -67,22 +76,22 @@
                (not (string-equal proj-name pyvenv-virtual-env-name)))
       (pyvenv-deactivate))
     (unless pyvenv-virtual-env-name
-      (unless (file-directory-p venv-directory)
-        (pyvenv-create proj-name python-shell-interpreter))
-      (pyvenv-activate venv-directory))))
+      (if (file-directory-p venv-directory)
+          (pyvenv-activate venv-directory)
+        (when (y-or-n-p "No virtualenv found.  Create one?")
+          (call-interactively #'u/python-create-virtualenv)
+          (pyvenv-activate venv-directory))))))
 
 (defun u/python-setup-virtualenv ()
   "Setup virtual environment."
   (when-let ((proj (project-current)))
-    (u/setup-virtualenv-project proj)))
+    (u/python-setup-virtualenv-project proj)))
 
 ;;;; Setup hooks
 
-
 (add-hook 'python-mode-hook
           (lambda ()
-            ;; hook virtualenv setup after on dir local loading 
-            (add-hook 'hack-local-variables-hook #'u/setup-virtualenv nil t)
+            (u/python-setup-virtualenv)
             ;; ensure language server is installed, or else prompt for installing
             (if (executable-find u/python-ls-executable)
                 (eglot-ensure)
