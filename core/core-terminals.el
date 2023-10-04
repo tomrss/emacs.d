@@ -219,7 +219,9 @@
   ;; disable pager, no need in eshell
   (setenv "PAGER" "cat")
   ;; truncate buffer for performance
-  (add-to-list 'eshell-output-filter-functions #'eshell-truncate-buffer)
+  ;; TODO this is giving some problems...
+  ;; (add-to-list 'eshell-output-filter-functions #'eshell-truncate-buffer)
+
   ;; use TRAMP
   (add-to-list 'eshell-modules-list 'eshell-tramp)
 
