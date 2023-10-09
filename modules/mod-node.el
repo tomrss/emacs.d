@@ -31,12 +31,13 @@
   (setq js-indent-level 2)
   (require 'tree-sitter-langs)
   (add-hook 'js-mode-hook #'tree-sitter-mode)
-  (add-hook 'js-mode-hook #'u/eglot-deferred))
+  (add-hook 'js-mode-hook #'eglot-ensure))
 
 (u/use-package 'typescript-mode)
 (with-eval-after-load 'typescript-mode
+  (require 'tree-sitter-langs)
   (add-hook 'ts-mode-hook #'tree-sitter-mode)
-  (add-hook 'ts-mode-hook #'u/eglot-deferred))
+  (add-hook 'ts-mode-hook #'eglot-ensure))
 
 (provide 'mod-node)
 ;;; mod-node.el ends here

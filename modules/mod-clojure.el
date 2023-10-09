@@ -25,7 +25,7 @@
 
 (u/use-package 'clojure-mode)
 (u/use-package 'cider)
-(add-hook 'clojure-mode-hook #'u/eglot-deferred)
+(add-hook 'clojure-mode-hook #'eglot-ensure)
 (add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-mode))
 
 (provide 'mod-clojure)

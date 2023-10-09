@@ -24,7 +24,7 @@
 ;;; Code:
 
 (u/use-package 'scala-mode)
-(add-hook 'scala-mode-hook #'u/eglot-deferred)
+(add-hook 'scala-mode-hook #'eglot-ensure)
 (add-to-list 'auto-mode-alist '("\\.sc\(ala\)?\\'" . scala-mode))
 
 (provide 'mod-scala)

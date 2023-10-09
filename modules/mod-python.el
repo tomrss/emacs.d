@@ -92,12 +92,8 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (u/python-setup-virtualenv)
-            ;; ensure language server is installed, or else prompt for installing
-            (if (executable-find u/python-ls-executable)
-                (eglot-ensure)
-              (when (y-or-n-p "Eglot requires a language server. Install it now?")
-                (u/python-install-upgrade-ls)
-                (eglot-ensure)))))
+            (u/eglot-ensure-ls (lambda () (executable-find u/python-ls-executable))
+                               #'u/python-install-upgrade-ls)))
 
 (provide 'mod-python)
 ;;; mod-python.el ends here

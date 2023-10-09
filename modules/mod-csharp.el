@@ -24,7 +24,7 @@
 ;;; Code:
 
 (u/use-package 'csharp-mode)
-(add-hook 'csharp-mode-hook #'u/eglot-deferred)
+(add-hook 'csharp-mode-hook #'eglot-ensure)
 (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode))
 
 (provide 'mod-csharp)

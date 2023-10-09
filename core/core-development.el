@@ -105,10 +105,17 @@
 
 ;;;; Eglot (Language Server Protocol)
 
-(defun u/eglot-deferred ()
-  "Load eglot deferred excluding consult previews."
-  (unless (u/consult-preview-p)
-    (eglot-ensure)))
+(defun u/eglot-ensure-ls (installedp install-function)
+  "Ensure that a language server is installed before starting `eglot'.
+If not, prompt the user for installing it.
+INSTALLEDP is a predicate checking if language server is installed,
+called with no arguments.
+INSTALL-FUNCTION is a function that installs the ls."
+  (if (funcall installedp)
+      (eglot-ensure)
+    (when (y-or-n-p "Eglot requires a language server.  Install it now?")
+      (funcall install-function)
+      (eglot-ensure))))
 
 (defun u/eglot-format-and-save ()
   "Format buffer with eglot and save."

@@ -24,7 +24,7 @@
 ;;; Code:
 
 (u/use-package 'kotlin-mode)
-(add-hook 'kotlin-mode-hook #'u/eglot-deferred)
+(add-hook 'kotlin-mode-hook #'eglot-ensure)
 (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
 
 (provide 'mod-kotlin)

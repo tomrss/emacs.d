@@ -28,7 +28,7 @@
 
 (u/use-package 'terraform-mode)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
-(add-hook 'terraform-mode-hook #'u/eglot-deferred)
+(add-hook 'terraform-mode-hook #'eglot-ensure)
 (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)
 (add-hook 'terraform-mode-hook #'tree-sitter-mode)
 
