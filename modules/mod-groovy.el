@@ -23,10 +23,55 @@
 
 ;;; Code:
 
+;;;; Support sdkman
+
+(add-to-list 'exec-path "~/.sdkman/candidates/groovy/current/bin/")
+
+;;;; Ensure language server
+
+(defvar u/groovy-ls-git-url
+  "https://github.com/GroovyLanguageServer/groovy-language-server.git"
+  "Directory of groovy language server.")
+
+(defvar u/groovy-ls-directory (u/cache-file "groovy-language-server/")
+  "Directory of groovy language server.")
+
+(defvar u/groovy-ls-jar (expand-file-name "build/libs/groovy-language-server-all.jar"
+                                          u/groovy-ls-directory)
+  "Jar of the groovy language server.")
+
+(defvar u/groovy-ls-build-cmd "./gradlew build -x test"
+  "Command for building groovy language server.")
+
+(defun u/groovy-install-ls ()
+  "Install groovy language server."
+  (unless (file-directory-p u/groovy-ls-directory)
+    (message "Cloning groovy language server...")
+    (unless (zerop (shell-command (format "git clone %s %s" u/groovy-ls-git-url u/groovy-ls-directory)))
+      (error "Unable to clone groovy language server repo from %s" u/groovy-ls-git-url))
+    (message "Cloning groovy language server...done"))
+  (let* ((default-directory u/groovy-ls-directory)
+         (buf (generate-new-buffer "*install-groovy-language-server*")))
+    (message "Building groovy language server...")
+    (u/shell-command-in-buffer u/groovy-ls-build-cmd buf)
+    (message "Building groovy language server...done")))
+
+;;;; Configure groovy mode and eglot
+
 (u/use-package 'groovy-mode)
 ;; TODO find a groovy ls that works
-;; (add-hook 'groovy-mode-hook #'u/eglot-deferred)
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
+
+(defun u/groovy-eglot-ensure ()
+  "Ensure `eglot' for groovy."
+  (u/eglot-ensure-ls (lambda () (file-exists-p u/groovy-ls-jar))
+                     #'u/groovy-install-ls))
+
+(add-hook 'groovy-mode-hook #'u/groovy-eglot-ensure)
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               `(groovy-mode . ("java" "-jar" ,u/groovy-ls-jar))))
 
 (provide 'mod-groovy)
 ;;; mod-groovy.el ends here
