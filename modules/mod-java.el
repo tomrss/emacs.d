@@ -24,13 +24,25 @@
 
 ;;; Code:
 
-;; TODO after 10 years still not able to work with java in emacs... only lsp worked
+;;;; Support sdkman
 
-;; TODO it doeesnt work
-;; (u/use-package 'eglot-java)
-;; (add-hook 'java-mode-hook 'eglot-java-mode)
+(add-to-list 'exec-path "~/.sdkman/candidates/java/current/bin/")
+(add-to-list 'exec-path "~/.sdkman/candidates/maven/current/bin/")
+(add-to-list 'exec-path "~/.sdkman/candidates/gradle/current/bin/")
 
-;;;;; ZKoss
+;;;; Configure eglot
+
+(u/use-package 'eglot-java)
+(add-hook 'java-mode-hook 'eglot-java-mode)
+(with-eval-after-load 'eglot-java
+  (define-key eglot-java-mode-map (kbd "C-c j n") #'eglot-java-file-new)
+  (define-key eglot-java-mode-map (kbd "C-c j x") #'eglot-java-run-main)
+  (define-key eglot-java-mode-map (kbd "C-c j t") #'eglot-java-run-test)
+  (define-key eglot-java-mode-map (kbd "C-c j N") #'eglot-java-project-new)
+  (define-key eglot-java-mode-map (kbd "C-c j T") #'eglot-java-project-build-task)
+  (define-key eglot-java-mode-map (kbd "C-c j R") #'eglot-java-project-build-refresh))
+
+;;;; ZKoss
 
 (add-to-list 'auto-mode-alist '("\\.zul\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.gsp\\'" . xml-mode))
