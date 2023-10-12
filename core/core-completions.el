@@ -130,11 +130,12 @@
 (define-key corfu-map (kbd "C-j") #'corfu-next)
 (define-key corfu-map (kbd "C-k") #'corfu-previous)
 
-;; TODO this would be nice, but straight doesn't add corfu extensions to build
-;; (corfu-popupinfo-mode +1)
-;; (setq corfu-popupinfo-delay '(2.0 . 0.))
-;; (define-key corfu-map (kbd "C-k") #'corfu-previous)
-;; (set-face-attribute 'corfu-popupinfo nil :height 1.0)
+(setq tab-always-indent 'complete)
+
+;; popup info with docs
+(corfu-popupinfo-mode +1)
+(setq corfu-popupinfo-delay '(1.5 . 0.))
+(set-face-attribute 'corfu-popupinfo nil :height 1.0)
 
 ;; dont' remember where I found this piece of code
 (add-hook 'eshell-mode-hook
@@ -142,10 +143,10 @@
             (setq-local corfu-quit-at-boundary t
                         corfu-quit-no-match t)
             (corfu-mode +1)))
+
+;; work also in terminal
 (unless (display-graphic-p)
   (corfu-terminal-mode +1))
-
-(setq tab-always-indent 'complete)
 
 ;;;; Completion at point functions
 
@@ -155,6 +156,8 @@
 (add-to-list 'completion-at-point-functions #'cape-dabbrev)
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
+;; this could be used to disable caching of candidates in eglot if needed:
+;; (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
 
 (provide 'core-completions)
 ;;; core-completions.el ends here
