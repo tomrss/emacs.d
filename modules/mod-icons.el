@@ -25,23 +25,30 @@
 
 ;;;; Setup icons
 
-(u/use-package 'all-the-icons)
-(when (display-graphic-p)
-  (require 'all-the-icons nil nil)
-  (unless (x-list-fonts "all-the-icons")
-    (all-the-icons-install-fonts t)))
+(u/use-package 'nerd-icons)
+(require 'nerd-icons nil nil)
+(when window-system
+  (unless (x-list-fonts "Symbols Nerd Font Mono")
+    (nerd-icons-install-fonts t)))
+(with-eval-after-load 'nerd-icons
+  (add-to-list 'nerd-icons-extension-icon-alist
+               '("go" nerd-icons-mdicon "nf-md-language_go" :face nerd-icons-blue :height 1.2)))
 
 ;;;; Icons in dired
 
-(u/use-package 'all-the-icons-dired)
+(u/use-package 'nerd-icons-dired)
 (with-eval-after-load 'dired
-  (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
+  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
 
 ;;;; Icons in minibuffer completions
 
-(u/use-package 'all-the-icons-completion)
-(all-the-icons-completion-mode)
-(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
+(u/use-package 'nerd-icons-completion)
+(with-eval-after-load 'marginalia
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+(u/use-package 'nerd-icons-ibuffer)
+(add-hook 'ibuffer-mode-hook #'nerd-icons-ibuffer-mode)
 
 ;;;; Icons in doom modeline
 
@@ -50,9 +57,9 @@
 ;;;; Icons in treemacs
 
 (with-eval-after-load 'treemacs
-  (u/use-package 'treemacs-all-the-icons)
-  (require 'treemacs-all-the-icons)
-  (treemacs-load-theme "all-the-icons"))
+  (u/use-package 'treemacs-nerd-icons)
+  (require 'treemacs-nerd-icons)
+  (treemacs-load-theme "nerd-icons"))
 
 (provide 'mod-icons)
 ;;; mod-icons.el ends here

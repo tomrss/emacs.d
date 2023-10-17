@@ -148,51 +148,51 @@
         '(("Recent files"
            :key "f"
            :action consult-recent-file
-           :icon (all-the-icons-octicon . "history"))
+           :icon (nerd-icons-octicon . "nf-oct-history"))
           ("Projects"
            :key "p"
            :action project-switch-project
-           :icon (all-the-icons-octicon . "repo"))
+           :icon (nerd-icons-octicon . "nf-oct-repo"))
           ("Dired"
            :key "d"
            :action dired
-           :icon (all-the-icons-octicon . "file-directory"))
+           :icon (nerd-icons-sucicon . "nf-custom-folder_oct"))
           ("Edit configuration"
            :key "c"
            :action u/edit-emacs-config
-           :icon (all-the-icons-octicon . "gear"))
+           :icon (nerd-icons-octicon . "nf-oct-gear"))
           ("Kubernetes"
            :key "u"
            :action kubernetes-overview
-           :icon (all-the-icons-octicon . "server"))
+           :icon (nerd-icons-octicon . "nf-oct-server"))
           ("Eshell"
            :key "e"
            :action eshell
-           :icon (all-the-icons-octicon . "terminal"))
+           :icon (nerd-icons-octicon . "nf-oct-terminal"))
           ("Vterm"
            :key "v"
            :action vterm
-           :icon (all-the-icons-faicon . "terminal"))
+           :icon (nerd-icons-faicon . "nf-fa-terminal"))
           ("Scratch"
            :key "s"
            :action scratch-new
-           :icon (all-the-icons-octicon . "file-text"))
+           :icon (nerd-icons-mdicon . "nf-md-clipboard_edit"))
           ("Bookmarks"
            :key "b"
            :action bookmark-jump
-           :icon (all-the-icons-octicon . "bookmark"))
+           :icon (nerd-icons-octicon . "nf-oct-bookmark"))
           ("Org Roam note"
            :key "r"
            :action org-roam-node-find
-           :icon (all-the-icons-octicon . "checklist"))
+           :icon (nerd-icons-octicon . "nf-oct-checklist"))
           ("Org Roam daily"
            :key "y"
            :action org-roam-dailies-capture-today
-           :icon (all-the-icons-octicon . "calendar"))
+           :icon (nerd-icons-octicon . "nf-oct-calendar"))
           ("EWW browser"
            :key "w"
            :action eww
-           :icon (all-the-icons-octicon . "globe"))))
+           :icon (nerd-icons-octicon . "nf-oct-globe"))))
 
   (define-key welcome-mode-map (kbd "j") #'next-line)
   (define-key welcome-mode-map (kbd "k") #'previous-line)
