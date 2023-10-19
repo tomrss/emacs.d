@@ -60,7 +60,7 @@
 ;; highlight mathing parentesis
 (show-paren-mode +1)
 (set-face-attribute 'show-paren-match nil
-                    :background nil
+                    :background "unspecified"
                     :foreground "red"
                     :italic t)
 
