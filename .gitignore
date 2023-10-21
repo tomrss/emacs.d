@@ -2,3 +2,4 @@
 .backups/
 eln-cache/
 local-config.el
+custom.el

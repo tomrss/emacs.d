@@ -66,12 +66,6 @@
 ;; silent native compilation warning
 (setq native-comp-async-report-warnings-errors 'silent)
 
-;; local variables that are safe to use
-(add-to-list 'safe-local-variable-values '(flymake-mode))
-(add-to-list 'safe-local-variable-values '(pyvenv-virtualenvwrapper-python . "python3.8"))
-(add-to-list 'safe-local-variable-values '(python-interpreter . "python3.8"))
-(add-to-list 'safe-local-variable-values '(python-shell-interpreter . "python3.8"))
-
 ;; move to thrash instead of delete
 (setq delete-by-moving-to-trash t)
 
@@ -87,13 +81,11 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 
-;;;; Disable customize
+;;;; Custom file
 
-;; disable `customize' for good by setting custom file to random temp file
-(setq custom-file
-      (expand-file-name
-       (format "emacs-custom-%d.el" (random 10000))
-       temporary-file-directory))
+;; set custom file.  `custom' is not supported by this configuration and is only used
+;; for remembering trusted dir-locals, otherwise it should be dropped.
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
 ;;;; Filter logs
 
