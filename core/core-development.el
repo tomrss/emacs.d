@@ -99,10 +99,6 @@
 
 ;; TODO try tempel
 
-;;;; Debugger
-
-(straight-use-package 'realgud)
-
 ;;;; Eglot (Language Server Protocol)
 
 (defun u/eglot-ensure-ls (installedp install-function)
