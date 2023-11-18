@@ -53,31 +53,37 @@
 (require 'core-orgmode)
 (require 'core-terminals)
 (require 'core-development)
+(require 'core-modules)
 
 ;;;; Set default modules
 
-(setq u/enabled-modules
-      '(
-        "evil"             ; vim emulation with evil mode
-        "icons"            ; use icons in dired, completions and other
-        "doom-modeline"    ; fancy modeline from doom emacs
-        ;; "treemacs"      ; directory tree view
-        "org-roam"         ; org roam note taking tool
-        "vterm"            ; vterm is a fast terminal emulator written in C
-        "go"               ; development with go
-        "python"           ; development with python
-        "java"             ; development with java
-        "groovy"           ; development with groovy
-        ;; "kotlin"        ; development with kotlin
-        ;; "scala"         ; development with scala
-        ;; "clojure"       ; development with clojure
-        "node"             ; development with node
-        "react"            ; development with react
-        ;; "csharp"        ; development with csharp
-        "terraform"        ; iac with terraform
-        "http"             ; http client
-        ;; "kubernetes"    ; kubernetes overview buffer
-        ))
+(defvar u/default-modules
+  '(
+    "evil"                ; vim emulation with evil mode
+    "icons"               ; use icons in dired, completions and other
+    "doom-modeline"       ; fancy modeline from doom emacs
+    "modus-vivendi-theme" ; high-contrast dark theme
+    ;; "nord-theme"       ; low-contrast dark theme based on Nord Theme
+    ;; "treemacs"         ; directory tree view
+    "org-roam"            ; org roam note taking tool
+    "vterm"               ; vterm is a fast terminal emulator written in C
+    "go"                  ; development with go
+    "python"              ; development with python
+    "java"                ; development with java
+    "groovy"              ; development with groovy
+    ;; "kotlin"           ; development with kotlin
+    ;; "scala"            ; development with scala
+    ;; "clojure"          ; development with clojure
+    "node"                ; development with node
+    "react"               ; development with react
+    ;; "csharp"           ; development with csharp
+    "terraform"           ; iac with terraform
+    "http"                ; http client
+    ;; "kubernetes"       ; kubernetes overview buffer
+    )
+  "Default modules loaded.  Override them in `u/user-local-config' file.")
+
+(setq u/enabled-modules u/default-modules)
 
 ;;;; Load user local configuration
 

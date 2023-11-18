@@ -85,9 +85,7 @@
         ;; start fullscreen
         (fullscreen . maximized)
         ;; avoid blinding white on startup
-        (background-color . ,(if (equal "doom-nord" (getenv "EMACS_THEME"))
-                                 "#2e3440"
-                               "#000000"))))
+        (background-color . "#000000")))
 
 (set-face-attribute 'default nil :foreground "#ffffff")
 

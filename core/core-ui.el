@@ -46,42 +46,6 @@
   (when-let ((variable-font (u/find-first 'x-list-fonts u/try-fonts-variable-pitch)))
     (set-face-attribute 'variable-pitch nil :font variable-font :height 130 :weight 'normal)))
 
-;;;; Theme
-
-(defconst u/theme
-  (intern (or (getenv "EMACS_THEME") "modus-vivendi"))
-  "Theme to use.")
-
-(cond
- ((eq u/theme 'modus-vivendi)
-  ;; configure modus-vivendi theme
-  (setq modus-themes-bold-constructs t)
-  (setq modus-themes-italic-constructs t)
-  (setq modus-themes-org-blocks 'gray-background)
-  (load-theme 'modus-vivendi)
-  (set-face-attribute 'modus-themes-heading-1 nil :foreground "#f78fe7"))
- ((eq u/theme 'doom-nord)
-  ;; configure nord theme
-  (u/use-package 'doom-themes)
-  (setq doom-nord-brighter-modeline t)
-  (load-theme 'doom-nord t)
-  (set-face-attribute 'query-replace nil :background "#BF616A")
-  (set-face-attribute 'font-lock-doc-face nil :foreground "#EBCB8B")
-  (set-face-attribute 'completions-annotations nil :foreground "#EBCB8B"))
- (t
-  (load-theme u/theme t)))
-
-;;;; Modeline
-
-;; TODO we want to set a fallback for the absence of doom modeline,
-;; but this isn't right because core should not depend on modules.
-;; define the concept of "module fallback" somehow
-;; or accept that minions package will be loaded also in case of doom.
-(require 'core-modules)
-(unless (member "doom-modeline" u/enabled-modules)
-  (u/use-package 'minions)
-  (minions-mode +1))
-
 ;;;; Line and column numbers
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
