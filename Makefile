@@ -54,21 +54,21 @@ PACKAGES_DIR := .cache/straight
 BACKUP_DIR := .backups
 BACKUP_FILENAME := $(BACKUP_DIR)/emacs-cache-backup-$(shell date +'%s').tgz
 
-EVAL = $(EMACS) --batch --load $(EPLM) --eval
+ELISP_FUNCALL = $(EMACS) --batch --load $(EPLM) --funcall
 
 install:
-	$(EVAL) '(eplm-install)'
+	$(ELISP_FUNCALL) eplm-install
 
 upgrade:
-	$(EVAL) '(eplm-upgrade)'
+	$(ELISP_FUNCALL) eplm-upgrade
 
 sync-from-lockfile:
-	$(EVAL) '(eplm-sync-from-lockfile)'
+	$(ELISP_FUNCALL) eplm-sync-from-lockfile
 
 build: rebuild
 
 rebuild:
-	$(EVAL) '(eplm-rebuild)'
+	$(ELISP_FUNCALL) eplm-rebuild
 
 uninstall:
 	rm -rvf $(PACKAGES_DIR)
