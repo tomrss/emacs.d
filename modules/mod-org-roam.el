@@ -25,7 +25,10 @@
 ;;; Code:
 
 (u/use-package 'org-roam)
-(defvar u/org-roam-base-dir "~/.org-roam")
+
+(defvar u/org-roam-base-dir "~/.org-roam"
+  "Directory where to store Roam notes.")
+
 (add-to-list 'recentf-exclude u/org-roam-base-dir)
 (setq org-roam-v2-ack t)
 (u/define-key (kbd "C-c n l") #'org-roam-buffer-toggle)
@@ -38,17 +41,9 @@
   (make-directory u/org-roam-base-dir t)
   (setq org-roam-directory u/org-roam-base-dir)
   (setq org-roam-completion-everywhere t)
-  (setq org-roam-capture-templates
-        '(("d" "default" plain
-           "%?"
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
-          ("s" "secure" plain
-           "%?"
-           :target (file+head "%<%Y%m%d%H%M%S>.org.gpg"
-                              "#+title: ${title}\n")
-           :unnarrowed t)))
+  (setq org-roam-node-display-template (concat "${title:*} "
+                                               (propertize "${tags:50}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
   (define-key org-mode-map (kbd "C-i") #'completion-at-point)
   (org-roam-setup))
 
