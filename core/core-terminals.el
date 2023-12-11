@@ -184,7 +184,7 @@
 		 ("d"     "dired $1")
 		 ("pd"    "proced $1")
 		 ("l"     "ls -lh $*")
-		 ("ll"    "ls -lah $*")
+		 ("ll"    "ls -lahv --color=auto $*")
 		 ("k"     "kubectl $*")
 		 ("h"     "helm $*")
          ("kk"    "kubernetes-overview")

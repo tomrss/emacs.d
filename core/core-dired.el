@@ -39,7 +39,7 @@
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes (if delete-by-moving-to-trash 'always 'top))
   (setq dired-create-destination-dirs 'ask)
-  (setq dired-listing-switches "-agho --group-directories-first")
+  (setq dired-listing-switches "-agoahv --group-directories-first")
   (setq dired-use-ls-dired (not (eq system-type 'darwin)))
 
 ;;;; Enable dired-x for omit mode and enhanced find file commands
