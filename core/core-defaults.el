@@ -86,6 +86,7 @@
 ;; set custom file.  `custom' is not supported by this configuration and is only used
 ;; for remembering trusted dir-locals, otherwise it should be dropped.
 (setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file t t)
 
 ;;;; Filter logs
 
