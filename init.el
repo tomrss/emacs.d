@@ -65,6 +65,7 @@
     "modus-vivendi-theme" ; high-contrast dark theme
     ;; "nord-theme"       ; low-contrast dark theme based on Nord Theme
     ;; "treemacs"         ; directory tree view
+    "tempel"              ; templates for code snippets and more
     "org-roam"            ; org roam note taking tool
     "vterm"               ; vterm is a fast terminal emulator written in C
     "go"                  ; development with go
