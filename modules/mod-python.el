@@ -58,14 +58,14 @@
   (setq pyvenv-mode-line-indicator
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] "))))
 
-(defun u/python-create-virtualenv (python-interpter)
-  "Create virtualenv VENV-NAME."
+(defun u/python-create-virtualenv (python-interpreter)
+  "Create virtualenv with PYTHON-INTERPRETER."
   (interactive (list
                 (let ((bin-dir (file-name-directory (executable-find "python3"))))
                   (read-file-name "Python interpreter to use: " bin-dir nil nil "python"))))
   (let ((proj-name (project-name (project-current t))))
     (message "Creating virtualenv for project %s..." proj-name)
-    (pyvenv-create proj-name python-interpter)))
+    (pyvenv-create proj-name python-interpreter)))
 
 (defun u/python-setup-virtualenv-project (proj)
   "Setup pyvenv in project PROJ."
