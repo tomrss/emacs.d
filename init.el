@@ -68,6 +68,7 @@
     "tempel"              ; template of code snippets
     "org-roam"            ; org roam note taking tool
     "vterm"               ; vterm is a fast terminal emulator written in C
+    "tree-sitter"         ; use tree-sitter for syntax highlighting (require build option)
     "go"                  ; development with go
     "python"              ; development with python
     "java"                ; development with java

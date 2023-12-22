@@ -130,14 +130,6 @@ INSTALL-FUNCTION is a function that installs the ls."
 ;; make eglot completions work with orderless + corfu
 (setq completion-category-overrides '((eglot (styles orderless))))
 
-;;;; Treesitter
-
-(u/use-package 'tree-sitter)
-(u/use-package 'tree-sitter-langs)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-(with-eval-after-load 'tree-sitter
-  (require 'tree-sitter-langs))
-
 
 ;;;; LaTeX
 

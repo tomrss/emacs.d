@@ -20,7 +20,7 @@
 ;;; Commentary:
 
 ;; Support for React development in JavaScript and TypeScript with
-;; `eglot' and `tree-sitter'.
+;; `eglot'.
 
 ;;; Code:
 
@@ -33,8 +33,6 @@
     "JSX")
 
   (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-react-mode))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(js-react-mode . tsx))
-  (add-hook 'js-react-mode-hook #'tree-sitter-mode)
   (add-hook 'js-react-mode-hook #'eglot-ensure))
 
 (with-eval-after-load 'typescript-mode
@@ -44,8 +42,6 @@
     "TSX")
 
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . ts-react-mode))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(ts-react-mode . tsx))
-  (add-hook 'ts-react-mode-hook #'tree-sitter-mode)
   (add-hook 'ts-react-mode-hook #'eglot-ensure))
 
 (provide 'mod-react)

@@ -19,8 +19,8 @@
 
 ;;; Commentary:
 
-;; Support for Terraform development with `eglot', `tree-sitter' and
-;; some useful helper functions.
+;; Support for Terraform development with `eglot' and some useful
+;; helper functions.
 
 ;;; Code:
 
@@ -30,7 +30,6 @@
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 (add-hook 'terraform-mode-hook #'eglot-ensure)
 (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)
-(add-hook 'terraform-mode-hook #'tree-sitter-mode)
 
 ;;;; Language server setup
 

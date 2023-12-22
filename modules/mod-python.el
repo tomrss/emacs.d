@@ -92,7 +92,6 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (u/python-setup-virtualenv)
-            (tree-sitter-mode +1)
             (u/eglot-ensure-ls (lambda () (executable-find u/python-ls-executable))
                                #'u/python-install-upgrade-ls)))
 
