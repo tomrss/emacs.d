@@ -125,10 +125,6 @@
            :key "c"
            :action u/edit-emacs-config
            :icon (nerd-icons-octicon . "nf-oct-gear"))
-          ("Kubernetes"
-           :key "u"
-           :action kubernetes-overview
-           :icon (nerd-icons-octicon . "nf-oct-server"))
           ("Eshell"
            :key "e"
            :action eshell
