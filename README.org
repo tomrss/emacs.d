@@ -1,7 +1,14 @@
 #+title: emacs.d
 #+author: Tommaso Rossi
 
+#+html: <a href="https://github.com/tomrss/emacs.d/actions/workflows/build.yml"><img alt="Build" src="https://github.com/tomrss/emacs.d/actions/workflows/build.yml/badge.svg"/></a>
+
+
 Personal GNU Emacs configuration.
+
+** Requirements
+
+GNU Emacs 29.1 or greater.  Tested by CI on 29.1 and development snapshots, used every day on development snapshot.
 
 ** Guiding Principles
 
