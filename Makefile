@@ -49,12 +49,13 @@
 
 EMACS := emacs
 EPLM := bin/eplm.el
+ROOT_DIR := $(shell pwd)
 CACHE_DIR := .cache
 PACKAGES_DIR := .cache/straight
 BACKUP_DIR := .backups
 BACKUP_FILENAME := $(BACKUP_DIR)/emacs-cache-backup-$(shell date +'%s').tgz
 
-ELISP_FUNCALL = $(EMACS) --batch --load $(EPLM) --funcall
+ELISP_FUNCALL = $(EMACS) --init-directory=$(ROOT_DIR)  --batch --load $(EPLM) --funcall
 
 install:
 	$(ELISP_FUNCALL) eplm-install
