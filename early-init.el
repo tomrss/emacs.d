@@ -32,7 +32,7 @@
     (let ((eln-cache-dir "~/.cache/emacs/eln-cache/"))
       (make-directory eln-cache-dir t)
       (startup-redirect-eln-cache
-     (convert-standard-filename eln-cache-dir))))
+       (convert-standard-filename eln-cache-dir)))))
 
 ;;;; Optimize garbage collections
 
