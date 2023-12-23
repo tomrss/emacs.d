@@ -1,3 +1,7 @@
+# Try out a clean installation of this configuration bundle on a
+# couple of Emacs versions.  Installation also evaluates most of the
+# elisp code used so it's an indication of everything working.
+
 name: Build
 
 on:
@@ -5,6 +9,13 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
 
@@ -19,13 +30,13 @@ jobs:
 
     steps:
 
-    - name: Setup Emacs
-      uses: purcell/setup-emacs@v6.0
-      with:
-        version: ${{ matrix.emacs_version }}
-
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: make install
+      - name: Setup Emacs
+        uses: purcell/setup-emacs@v6.0
+        with:
+          version: ${{ matrix.emacs_version }}
+    
+      - name: Checkout
+        uses: actions/checkout@v4
+    
+      - name: Install dependencies
+        run: make install
