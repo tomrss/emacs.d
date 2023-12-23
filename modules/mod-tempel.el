@@ -26,22 +26,11 @@
 (u/use-package 'tempel)
 (u/use-package 'tempel-collection)
 
-;; Require trigger prefix before template name when completing.
-;; :custom
-;; (tempel-trigger-prefix "<")
-
 ;; Setup completion at point
 (defun tempel-setup-capf ()
-  "Add the Tempel Capf to `completion-at-point-functions'.
-
-  `tempel-expand' only triggers on exact matches.  Alternatively use
-  `tempel-complete' if you want to see all matches, but then you
-  should also configure `tempel-trigger-prefix', such that Tempel
-  does not trigger too often when you don't expect it.  NOTE: We add
-  `tempel-expand' *before* the main programming mode Capf, such
-  that it will be tried first."
+  "Add the Tempel Capf to `completion-at-point-functions'."
   (setq-local completion-at-point-functions
-              (cons #'tempel-expand
+              (cons #'tempel-complete
                     completion-at-point-functions)))
 
 (add-hook 'conf-mode-hook 'tempel-setup-capf)
@@ -49,6 +38,8 @@
 (add-hook 'text-mode-hook 'tempel-setup-capf)
 
 (with-eval-after-load 'tempel
+  (define-key tempel-map (kbd "TAB") #'tempel-next)
+  (define-key tempel-map (kbd "<backtab>") #'tempel-previous)
   (require 'tempel-collection))
 
 (provide 'mod-tempel)
