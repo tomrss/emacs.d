@@ -71,32 +71,31 @@
 
 ;;;; Early UI cleanups
 
-(message "display graphic %s" (display-graphic-p))
-(when (display-graphic-p)
-  ;; frame resize seems to be very expensive, disable it
-  (setq frame-inhibit-implied-resize t)
-  (setq inhibit-default-init t)
-  (setq inhibit-startup-buffer-menu t)
-  (setq inhibit-startup-screen t)
-  (setq initial-scratch-message nil)
-  
-  ;; initial frame settings
-  (setq default-frame-alist
-        `(
-          ;; start fullscreen without window bar
-          ;; (undecorated . t)
-          ;; start fullscreen
-          (fullscreen . maximized)
-          ;; avoid blinding white on startup
-          (background-color . "#000000")))
+;; (when (display-graphic-p)
+;;   ;; frame resize seems to be very expensive, disable it
+;;   (setq frame-inhibit-implied-resize t)
+;;   (setq inhibit-default-init t)
+;;   (setq inhibit-startup-buffer-menu t)
+;;   (setq inhibit-startup-screen t)
+;;   (setq initial-scratch-message nil)
 
-  (set-face-attribute 'default nil :foreground "#ffffff")
+;;   ;; initial frame settings
+;;   (setq default-frame-alist
+;;         `(
+;;           ;; start fullscreen without window bar
+;;           ;; (undecorated . t)
+;;           ;; start fullscreen
+;;           (fullscreen . maximized)
+;;           ;; avoid blinding white on startup
+;;           (background-color . "#000000")))
 
-  ;; disable unwanted ui components
-  (menu-bar-mode -1)
-  (toggle-scroll-bar -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (setq inhibit-startup-screen t))
+;;   (set-face-attribute 'default nil :foreground "#ffffff")
+
+;;   ;; disable unwanted ui components
+;;   (menu-bar-mode -1)
+;;   (toggle-scroll-bar -1)
+;;   (scroll-bar-mode -1)
+;;   (tool-bar-mode -1)
+;;   (setq inhibit-startup-screen t))
 
 ;;; early-init.el ends here
