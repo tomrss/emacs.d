@@ -2,6 +2,7 @@ name: Upgrade
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   upgrade:
