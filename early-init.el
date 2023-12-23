@@ -26,12 +26,12 @@
 
 ;;;; Move native compilation cache outside init dir
 
-(when (and (fboundp 'native-compile)
-           (fboundp 'startup-redirect-eln-cache))
-  (let ((eln-cache-dir "~/.cache/emacs/eln-cache/"))
-    (make-directory eln-cache-dir t)
-    (startup-redirect-eln-cache
-     (convert-standard-filename eln-cache-dir))))
+;; (when (and (fboundp 'native-compile)
+;;            (fboundp 'startup-redirect-eln-cache))
+;;   (let ((eln-cache-dir "~/.cache/emacs/eln-cache/"))
+;;     (make-directory eln-cache-dir t)
+;;     (startup-redirect-eln-cache
+;;      (convert-standard-filename eln-cache-dir))))
 
 ;;;; Optimize garbage collections
 
