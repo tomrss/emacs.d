@@ -42,7 +42,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           title: Upgrade dependency packages
-          commit-message: [upgrade-bot] Upgrade dependency packages
+          commit-message: '[upgrade-bot] Upgrade dependency packages'
           branch: upgrade-bot/upgrade-dependency-packages
           delete-branch: true
           body: |
