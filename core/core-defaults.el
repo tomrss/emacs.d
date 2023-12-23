@@ -81,6 +81,11 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 
+;;;; Spell check
+
+(setq ispell-program-name
+      (u/find-first 'executable-find '("aspell" "hunspell" "ispell")))
+
 ;;;; Custom file
 
 ;; set custom file.  `custom' is not supported by this configuration and is only used
