@@ -138,11 +138,7 @@
 (set-face-attribute 'corfu-popupinfo nil :height 1.0)
 
 ;; dont' remember where I found this piece of code
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (setq-local corfu-quit-at-boundary t
-                        corfu-quit-no-match t)
-            (corfu-mode +1)))
+(add-hook 'eshell-mode-hook #'corfu-mode)
 
 ;; work also in terminal
 (unless (display-graphic-p)
@@ -155,9 +151,7 @@
 (add-to-list 'completion-at-point-functions #'cape-file)
 (add-to-list 'completion-at-point-functions #'cape-dabbrev)
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-(advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
-;; this could be used to disable caching of candidates in eglot if needed:
-;; (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+(advice-add 'ispell-completion-at-point :around #'cape-wrap-silent)
 
 (provide 'core-completions)
 ;;; core-completions.el ends here
