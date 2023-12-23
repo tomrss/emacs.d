@@ -1,0 +1,31 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        emacs_version:
+          - 29
+          - 30
+          - snapshot
+
+    steps:
+
+    - name: Setup Emacs
+      uses: purcell/setup-emacs@v6
+      with:
+        version: ${{ matrix.emacs_version }}
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: make install
