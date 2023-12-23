@@ -71,6 +71,7 @@
 
 ;;;; Early UI cleanups
 
+(message "display graphic %s" (display-graphic-p))
 (when (display-graphic-p)
   ;; frame resize seems to be very expensive, disable it
   (setq frame-inhibit-implied-resize t)
