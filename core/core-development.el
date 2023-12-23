@@ -64,10 +64,6 @@
                     :foreground "red"
                     :italic t)
 
-;; close matching parentheses
-(electric-pair-mode +1)
-(add-to-list 'electric-pair-pairs '(?{ . ?}))
-
 ;; highlight matching delimiters with rainbow colors
 (u/use-package 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
