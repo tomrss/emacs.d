@@ -1,0 +1,53 @@
+name: Upgrade
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * SAT'
+
+jobs:
+  upgrade:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Emacs
+        uses: purcell/setup-emacs@v6.0
+        with:
+          version: snapshot
+    
+      - name: Cache emacs packages
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-emacs-packages
+        with:
+          path: .cache/straight/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('lockfile.el') }}
+ 
+      - name: Install
+        run: make install
+
+      - name: Upgrade packages
+        run: make upgrade
+
+      - name: Build packages
+        run: make build
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: Upgrade dependency packages
+          commit-message: '[upgrade-bot] Upgrade dependency packages'
+          branch: upgrade-bot/upgrade-dependency-packages
+          delete-branch: true
+          body: |
+            Upgrade package dependencies.
+
+            This Pull Request was opened automatically.
