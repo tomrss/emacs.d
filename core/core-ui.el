@@ -57,8 +57,7 @@
 
 ;;;; Smooth scrolling
 
-(unless (version< emacs-version "29")
-  (pixel-scroll-precision-mode +1))
+(pixel-scroll-precision-mode +1)
 (setq fast-but-imprecise-scrolling t)
 (setq scroll-margin 1)
 (setq scroll-step 1)
