@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     paths-ignore:
-      - README.md
+      - README.org
 
 jobs:
 
