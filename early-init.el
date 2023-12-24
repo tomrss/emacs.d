@@ -78,7 +78,6 @@
 (setq inhibit-startup-buffer-menu t)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
-(setq inhibit-startup-screen t)
 
 ;; initial frame settings
 (setq default-frame-alist
@@ -92,13 +91,12 @@
 
 (set-face-attribute 'default nil :foreground "#ffffff")
 
-(add-hook 'after-make-frame-functions
-          (lambda ()
-            (when (display-graphics-p)
-              ;; disable unwanted ui components
-              (menu-bar-mode -1)
-              (toggle-scroll-bar -1)
-              (scroll-bar-mode -1)
-              (tool-bar-mode -1))))
+(when (not (getenv "CI"))
+  ;; disable unwanted ui components
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (setq inhibit-startup-screen t))
 
 ;;; early-init.el ends here
