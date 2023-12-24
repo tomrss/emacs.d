@@ -4,16 +4,19 @@
 #+html: <a href="https://github.com/tomrss/emacs.d/actions/workflows/build.yml"><img alt="Build" src="https://github.com/tomrss/emacs.d/actions/workflows/build.yml/badge.svg"/></a>
 
 
-Personal GNU Emacs configuration.
+GNU Emacs configuration built around reproducibility, speed and portability
+across multiple installations.
 
 ** Requirements
 
 GNU Emacs 29.1 or greater.  Tested by CI on 29.1 and development snapshots, used every day on development snapshot.
 
-** Guiding Principles
+This configuration is only tested on GNU/Linux systems.
+
+** Guiding principles and features
 
 - Fast startup (less than 1 second with native compilation)
-- Portable on multiple machines (or mutliple users) allowing changes between them
+- Portable on multiple machines (or multiple users) allowing specific local changes
 - Provide core basic features and pluggable modules
 - Prioritize builtin features (=eglot=, =project=, =flymake=, ...) when it's possible
 - Keep things standard
@@ -31,22 +34,23 @@ option of Emacs 29):
   git clone https://github.com/tomrss/emacs.d .emacs.d
 #+end_src
 
-Install packages: start Emacs or launch installer script with:
+Install packages: start Emacs or launch installer script in `.emacs.d` directory with:
 #+begin_src shell
-  cd .emacs.d
   make install
 #+end_src
 
-*** Upgrade dependencies
+** Update
 
-If you want to upgrade dependecies, you can pull latest upgrades on the main branch and
-then sync dependencies:
+Updates to package dependencies are made automatically by GitHub Action weekly.
+Packages and their "versions" (git commit) are freezed in dependency lockfile.
+If you want to upgrade package dependencies as per lockfile provided, you can pull latest
+updates on the main branch and then sync:
 
 #+begin_src shell
   make sync-from-lockfile rebuild
 #+end_src
 
-If you want to upgrade further, you can do:
+If you want to upgrade further (you will be out of sync with this repo), you can do:
 
 #+begin_src shell
   make upgrade rebuild
@@ -78,7 +82,7 @@ They include:
 
 - Cleanup Emacs init directory
 - Better defaults: enable or tweak features that are builtin
-- Some UI tweaks (fonts, theme, ...)
+- Some UI tweaks (fonts, scrolling, ...)
 - Completion framework: classic based on =vertico=, =corfu=, =marginalia= and =orderless=
 - Try to make sense of window display and management (most notably with =shackle= rules)
 - Boost =dired=
