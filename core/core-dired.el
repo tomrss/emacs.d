@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2022-2023 Tommaso Rossi
 
-;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
+;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

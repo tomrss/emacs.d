@@ -2,7 +2,7 @@
 
 # Copyright (C) 2023  Tommaso Rossi
 
-## Author: Tommaso Rossi <tommaso.rossi1@protonmail.com
+## Author: Tommaso Rossi <tommaso.rossi1@protonmail.com>
 
 ## This file is NOT part of GNU Emacs.
 
