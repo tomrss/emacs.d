@@ -24,16 +24,6 @@
 
 ;;; Code:
 
-;;;; Move native compilation cache outside init dir
-
-(when (not (getenv "CI"))
-  (when (and (fboundp 'native-compile)
-             (fboundp 'startup-redirect-eln-cache))
-    (let ((eln-cache-dir "~/.cache/emacs/eln-cache/"))
-      (make-directory eln-cache-dir t)
-      (startup-redirect-eln-cache
-       (convert-standard-filename eln-cache-dir)))))
-
 ;;;; Optimize garbage collections
 
 (defconst +gc-cons-standard-threshold-mb 1024
