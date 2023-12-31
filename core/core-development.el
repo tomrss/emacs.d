@@ -126,6 +126,16 @@ INSTALL-FUNCTION is a function that installs the ls."
 ;; make eglot completions work with orderless + corfu
 (setq completion-category-overrides '((eglot (styles orderless))))
 
+;;;; C/C++
+
+(defun u/try-ensure-eglot-c ()
+  "Ensure `eglot' if a C language server is installed."
+  (when (or (executable-find "ccls")
+            (executable-find "clangd"))
+    (eglot-ensure)))
+
+(add-hook 'c-mode-hook 'u/try-ensure-eglot-c)
+(add-hook 'c++-mode-hook 'u/try-ensure-eglot-c)
 
 ;;;; LaTeX
 
