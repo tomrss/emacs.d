@@ -65,6 +65,7 @@
 (setq eglot-java-junit-platform-console-standalone-jar (u/cache-file "eglot-java/junit-platform-console-standalone/junit-platform-console-standalone.jar"))
 (setq eglot-java-eclipse-jdt-cache-directory (u/cache-file "eglot-java/jdt-cache/"))
 (setq eglot-java-server-install-dir     (u/cache-file "eglot-java/eclipse.jdt.ls"))
+(setq multisession-directory            (u/cache-file "multisession/"))
 
 (provide 'core-init-directory)
 ;;; core-init-directory.el ends here
