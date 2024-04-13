@@ -33,6 +33,7 @@
 (add-hook 'prog-mode-hook 'copilot-mode)
 
 (with-eval-after-load 'copilot
+  (setq copilot-indent-offset-warning-disable t)
   (define-key copilot-completion-map (kbd "C-f") 'copilot-accept-completion))
 
 (provide 'mod-copilot)
