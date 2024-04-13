@@ -40,12 +40,6 @@
 (u/define-key (kbd "C-h o") #'helpful-symbol)
 (u/define-key (kbd "C-h p") #'helpful-at-point)
 
-;; hint keybindings
-(u/use-package 'which-key)
-(which-key-mode +1)
-(with-eval-after-load 'which-key-mode
-  (setq which-key-idle-delay 0.5))
-
 ;; help and docs in minibuffer
 (u/use-package 'marginalia)
 (marginalia-mode +1)

@@ -19,7 +19,6 @@
  ("elisp-refs" . "541a064c3ce27867872cf708354a65d83baf2a6d")
  ("elisp-tree-sitter" . "3cfab8a0e945db9b3df84437f27945746a43cc71")
  ("emacs-libvterm" . "ae4ae1aef2fcae98a37aad83f2a6aeeaeacedd4f")
- ("emacs-which-key" . "c606abd083387d85e96dbc9b7ebde52f214407c6")
  ("emacsmirror-mirror" . "fcd146a1d1ff80ad56476e8079102919dd2858ed")
  ("emacsql" . "fdcf44749650b978532e056dc8e108c3c1741ed3")
  ("embark" . "d3c9d1b4c890cf365846cc2b418f37341999e79f")
