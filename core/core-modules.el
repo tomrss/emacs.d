@@ -47,7 +47,7 @@ Modules are specified in `u/modules'.  If `u/enable-all-modules', load
 all modules instead."
   (if u/enable-all-modules
       (dolist (module-file (directory-files u/modules-directory t "mod-.*\\.el"))
-        (u/module--load-module module-file))
+        (u/module--load-module (file-name-nondirectory module-file)))
     (dolist (module-name u/enabled-modules)
       (u/module--load-module (format "mod-%s" module-name)))))
 
