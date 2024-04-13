@@ -29,19 +29,27 @@
 (defvar u/enabled-modules nil
   "List of module names to load.")
 
+(defvar u/enable-all-modules (getenv "EMACS_ENABLE_ALL_MODULES")
+  "If non-nil, load all modules.")
+
 (define-error 'no-such-module "No such module")
 
 (defun u/module--load-module (name)
   "Require module with NAME."
   (condition-case nil
-      (require (intern (format "mod-%s" name)))
+      (require (intern name))
     (file-missing
      (signal 'no-such-module `(,name)))))
 
 (defun u/module-load-modules ()
-  "Load modules specified in `u/modules'."
-  (dolist (module-name u/enabled-modules)
-    (u/module--load-module module-name)))
+  "Load pluggable module.
+Modules are specified in `u/modules'.  If `u/enable-all-modules', load
+all modules instead."
+  (if u/enable-all-modules
+      (dolist (module-file (directory-files u/modules-directory t "mod-.*\\.el"))
+        (u/module--load-module module-file))
+    (dolist (module-name u/enabled-modules)
+      (u/module--load-module (format "mod-%s" module-name)))))
 
 (provide 'core-modules)
 ;;; core-modules.el ends here

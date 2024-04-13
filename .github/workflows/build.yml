@@ -20,6 +20,8 @@ jobs:
         emacs_version:
           - 29.1
           - snapshot
+    env:
+      EMACS_ENABLE_ALL_MODULES: "true"
 
     steps:
 
