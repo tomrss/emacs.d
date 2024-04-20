@@ -3,6 +3,7 @@
 
 #+html: <a href="https://github.com/tomrss/emacs.d/actions/workflows/build.yml"><img alt="Build" src="https://github.com/tomrss/emacs.d/actions/workflows/build.yml/badge.svg"/></a>
 
+#+html: <a href="https://github.com/tomrss/emacs.d/actions/workflows/upgrade.yml"><img alt="Upgrade" src="https://github.com/tomrss/emacs.d/actions/workflows/upgrade.yml/badge.svg"/></a>
 
 GNU Emacs configuration built around reproducibility, speed and portability
 across multiple installations.
@@ -24,6 +25,8 @@ This configuration is only tested on GNU/Linux systems.
 - Avoid too much key customization
 - Keep the Emacs home directory clean
 - It has to work in the terminal
+- Test package installation and startup in CI
+- Weekly automated package upgrades via [[https://github.com/tomrss/emacs.d/actions/workflows/upgrade.yml][GitHub action]]
 
 ** Installation
 
