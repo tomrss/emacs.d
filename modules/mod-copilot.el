@@ -30,7 +30,9 @@
                          :repo "copilot-emacs/copilot.el"
                          :files ("*.el")))
 
-(add-hook 'prog-mode-hook 'copilot-mode)
+(unless (getenv "CI")
+  ;; enable copilot in all programming modes (skip in CI)
+  (add-hook 'prog-mode-hook 'copilot-mode))
 
 (with-eval-after-load 'copilot
   (setq copilot-indent-offset-warning-disable t)
