@@ -72,7 +72,7 @@
     "go"                  ; development with go
     "python"              ; development with python
     "scheme"              ; scheme and guile hacking
-    ;; "java"             ; development with java
+    "java"                ; development with java
     "groovy"              ; development with groovy
     ;; "kotlin"           ; development with kotlin
     ;; "scala"            ; development with scala
