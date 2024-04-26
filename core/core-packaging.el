@@ -52,7 +52,16 @@ Choice between `straight', `builtin', `none'")
     (load bootstrap-file nil 'nomessage))
   ;; configure straight lockfile (it can be committed)
   (setq straight-profiles
-        `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory)))))
+        `((nil . ,(expand-file-name "lockfile.el" user-emacs-directory))))
+  ;; exclude built-in packages from straight
+  (dolist (package '(org
+                     eglot
+                     jsonrpc
+                     package
+                     eldoc
+                     xref
+                     flymake))
+    (straight-use-package `(,package :type built-in))))
  ((eq u/packaging-system 'builtin)
   ;; initialize builtin packaging system
   (require 'package)
