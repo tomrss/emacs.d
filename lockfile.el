@@ -45,7 +45,7 @@
  ("hydra" . "317e1de33086637579a7aeb60f77ed0405bf359b")
  ("kotlin-mode" . "fddd747e5b4736e8b27a147960f369b86179ddff")
  ("kubernetes-el" . "24de7a1621dc06234abf63db454d63a522aaa632")
- ("magit" . "82ba5b2828383213ffab6c483f7d787b5c9da0ef")
+ ("magit" . "49ba535f526266b69fcaf7442acfa59ad8473caf")
  ("magit-popup" . "d8585fa39f88956963d877b921322530257ba9f5")
  ("map" . "48fa72ddd02002ce30d400f04ce2bd88ef02d577")
  ("marginalia" . "58eb5fd6e5cc21b12c5455ae69e7ae93579647bc")
