@@ -19,6 +19,7 @@ jobs:
       matrix:
         emacs_version:
           - 29.1
+          - 29.4
           - snapshot
     env:
       EMACS_ENABLE_ALL_MODULES: "true"
