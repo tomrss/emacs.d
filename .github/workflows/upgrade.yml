@@ -10,7 +10,8 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
+      pull-requests: write
     env:
       EMACS_ENABLE_ALL_MODULES: "true"
 
@@ -18,8 +19,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false
 
       - name: Setup Emacs
         uses: purcell/setup-emacs@v6.0
@@ -46,7 +45,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.PAT }}
           title: Upgrade dependency packages
           commit-message: '[upgrade-bot] Upgrade dependency packages'
           branch: upgrade-bot/upgrade-dependency-packages
