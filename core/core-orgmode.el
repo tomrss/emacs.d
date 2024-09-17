@@ -55,6 +55,7 @@
   (setq org-return-follows-link t)
   (setq org-startup-truncated nil)
   (setq org-startup-with-inline-images t)
+  (setq org-ellipsis " ▼")
 
   ;; auto tangle on save
   (defun u/org-auto-tangle ()
