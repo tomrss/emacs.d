@@ -45,6 +45,12 @@
 ;; garbage collect when idle
 (run-with-idle-timer 2 t 'garbage-collect)
 
+;;;; Put native comp cache elsewhere
+
+(when (boundp 'native-comp-eln-load-path)
+ (startup-redirect-eln-cache
+  (expand-file-name ".cache/eln-cache" user-emacs-directory)))
+
 ;;;; Temporary disable file handler at startup
 
 (defvar default-file-name-handler-alist file-name-handler-alist)
