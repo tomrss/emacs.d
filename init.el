@@ -54,6 +54,9 @@
 (require 'core-terminals)
 (require 'core-development)
 (require 'core-modules)
+(cond
+ ((eq system-type 'darwin)
+  (require 'core-mac)))
 
 ;;;; Set default modules
 
