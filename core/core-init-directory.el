@@ -60,6 +60,7 @@
 (setq scratch-directory                 (u/cache-file "scratch/"))
 (setq bookmark-file                     (u/cache-file "bookmarks"))
 (setq org-id-locations-file             (u/cache-file ".org-id-locations"))
+(setq org-persist-directory             (u/cache-file "org-persist/"))
 (setq org-roam-db-location              (u/cache-file "org-roam.db"))
 (setq url-cache-directory               (u/cache-file "url/cache/"))
 (setq eglot-java-junit-platform-console-standalone-jar (u/cache-file "eglot-java/junit-platform-console-standalone/junit-platform-console-standalone.jar"))
