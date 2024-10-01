@@ -84,6 +84,7 @@
     "react"               ; development with react
     ;; "csharp"           ; development with csharp
     "erlang"              ; development with erlang
+    ;; "php"              ; development with php
     "terraform"           ; iac with terraform
     "http"                ; http client
     ;; "kubernetes"       ; kubernetes overview buffer
