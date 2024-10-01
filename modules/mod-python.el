@@ -34,6 +34,7 @@
 
 (defvar u/python-ls-pip-package-extras '("rope"
                                          "yapf"
+                                         "pyflakes"
                                          "pycodestyle")
   "Extras of python language server pip package.")
 
