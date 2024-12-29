@@ -82,5 +82,12 @@
 
 (evil-set-initial-state 'welcome-mode 'emacs)
 
+;;;; Forge
+
+;; Setup is automatic, just disable annoying warning.  No eval after
+;; load, when forge evil hook is run this variable needs to be already
+;; set (we could hook before but its easier like this)
+(setq forge-add-default-bindings nil)
+
 (provide 'mod-evil)
 ;;; mod-evil.el ends here
