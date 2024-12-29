@@ -89,6 +89,7 @@
     "http"                ; http client
     ;; "kubernetes"       ; kubernetes overview buffer
     ;; "copilot"          ; github copilot
+    "github"              ; github integration
     )
   "Default modules loaded.  Override them in `u/user-local-config' file.")
 
