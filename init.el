@@ -88,7 +88,7 @@
     "terraform"           ; iac with terraform
     "http"                ; http client
     ;; "kubernetes"       ; kubernetes overview buffer
-    "copilot"             ; github copilot
+    ;; "copilot"          ; github copilot
     )
   "Default modules loaded.  Override them in `u/user-local-config' file.")
 
