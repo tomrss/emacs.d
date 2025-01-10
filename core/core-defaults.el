@@ -69,6 +69,9 @@
 ;; move to thrash instead of delete
 (setq delete-by-moving-to-trash t)
 
+;; authinfo crypted with GPG
+(setq auth-sources '("~/.authinfo.gpg"))
+
 ;;;; Manage backups
 
 ;; disable lockfiles
