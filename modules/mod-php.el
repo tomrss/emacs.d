@@ -25,6 +25,8 @@
 
 (u/use-package 'php-mode)
 (add-hook 'php-mode-hook #'eglot-ensure)
+(add-hook 'php-mode-hook (lambda ()
+                           (setq indent-tabs-mode t)))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 
 (provide 'mod-php)
