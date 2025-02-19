@@ -40,10 +40,10 @@
   "Try to load one of this fonts (first that works wins) as variable pitch font.")
 
 (when (display-graphic-p)
-  (when-let ((default-font (u/find-first 'x-list-fonts u/try-fonts-default)))
+  (when-let* ((default-font (u/find-first 'x-list-fonts u/try-fonts-default)))
     (set-face-attribute 'default     nil :font default-font :height 110 :weight 'normal)
     (set-face-attribute 'fixed-pitch nil :font default-font :height 110 :weight 'normal))
-  (when-let ((variable-font (u/find-first 'x-list-fonts u/try-fonts-variable-pitch)))
+  (when-let* ((variable-font (u/find-first 'x-list-fonts u/try-fonts-variable-pitch)))
     (set-face-attribute 'variable-pitch nil :font variable-font :height 130 :weight 'normal)))
 
 ;;;; Line and column numbers

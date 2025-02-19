@@ -122,7 +122,7 @@ External file handlers are driven by `+dired-open-handlers-alist' and
         (funcall handler file))
        ((stringp handler)
         ;; try to call external executable
-        (if-let ((command-handler (executable-find handler)))
+        (if-let* ((command-handler (executable-find handler)))
             (u/dired--open-file-externally command-handler file)
           (user-error "Handler %s is not found as an executable" handler)))
        (t

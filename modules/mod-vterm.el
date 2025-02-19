@@ -54,7 +54,7 @@ the same project."
                      (generate-new-buffer-name buf-basename))
                     (t
                      buf-basename))))
-    (if-let ((buf (get-buffer buf-name)))
+    (if-let* ((buf (get-buffer buf-name)))
         (pop-to-buffer buf)
       (vterm-other-window buf-name))))
 

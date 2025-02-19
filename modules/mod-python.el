@@ -85,7 +85,7 @@
 
 (defun u/python-setup-virtualenv ()
   "Setup virtual environment."
-  (when-let ((proj (project-current)))
+  (when-let* ((proj (project-current)))
     (u/python-setup-virtualenv-project proj)))
 
 ;;;; Setup hooks

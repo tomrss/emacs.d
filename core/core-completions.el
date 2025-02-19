@@ -93,7 +93,7 @@
 
 (defun u/consult-preview-p ()
   "Helper function to find out if Consult is previewing."
-  (when-let (win (active-minibuffer-window))
+  (when-let* (win (active-minibuffer-window))
     (not (eq nil (buffer-local-value
                   'consult--preview-function
                   (window-buffer win))))))

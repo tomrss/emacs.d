@@ -166,7 +166,7 @@
  / _/_\\ \\/ _  / _// /__/ /__
 /___/___/_//_/___/____/____/
 "
-          (when-let ((proj (project-current)))
+          (when-let* ((proj (project-current)))
             (concat
              "\nin project: "
              (project-name proj)))
