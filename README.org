@@ -10,9 +10,10 @@ across multiple installations.
 
 ** Requirements
 
-GNU Emacs 29.1 or greater.  Tested by CI on 29.1 and development snapshots, used every day on development snapshot.
+GNU Emacs 29.1 or greater.  Tested by CI on 29.4, 30.1 and development
+snapshots, used every day on development snapshot.
 
-This configuration is only tested on GNU/Linux systems.
+This configuration is tested on multiple GNU/Linux systems and MacOS Sequoia.
 
 ** Guiding principles and features
 
@@ -108,3 +109,25 @@ This variable can be changed in the local config file.
 A default selection of modules is included in =init.el=.
 
 The full list of modules is simply the list of files in =modules= directory.
+
+** Supported operating systems and Emacs build
+*** Build for MacOS
+
+#+begin_src shell
+  # install dependencies
+  brew install gcc jibgccjit gnutls tree-sitter
+
+  # get emacs sources
+  export EMACS_VERSION=30.1
+  wget https://ftpmirror.gnu.org/emacs/emacs-${EMACS_VERSION}.tar.gz.sig
+  wget https://ftpmirror.gnu.org/emacs/emacs-${EMACS_VERSION}.tar.gz
+  gpg --verify emacs-${EMACS_VERSION}.tar.gz.sig
+  tar -xzvf emacs-${EMACS_VERSION}.tar.gz
+
+  # build
+  ./autogen.sh
+  ./configure --with-native-compilation=aot --with-tree-sitter --with-gnutls --with-ns
+  make -j8
+  sudo make install
+  cp -r nextstep/Emacs.app /Applications
+#+end_src
