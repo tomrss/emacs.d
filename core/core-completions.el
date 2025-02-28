@@ -149,9 +149,12 @@
 (u/use-package 'cape)
 
 (add-to-list 'completion-at-point-functions #'cape-file)
+
 (add-to-list 'completion-at-point-functions #'cape-dabbrev)
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-(advice-add 'ispell-completion-at-point :around #'cape-wrap-silent)
+
+;; https://github.com/minad/corfu/discussions/457#discussioncomment-9309913
+(setq text-mode-ispell-word-completion nil)
 
 (provide 'core-completions)
 ;;; core-completions.el ends here
