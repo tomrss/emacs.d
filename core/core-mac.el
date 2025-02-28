@@ -29,6 +29,7 @@
 (u/use-package 'exec-path-from-shell)
 ;; TODO this is really slow, try to use a non-interactive shell
 (exec-path-from-shell-initialize)
+(setq exec-path-from-shell-arguments '("-l"))
 
 ;; fix dired
 (with-eval-after-load 'dired
