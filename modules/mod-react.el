@@ -26,23 +26,23 @@
 
 (require 'mod-node)
 
+(define-derived-mode js-react-mode js-mode
+  "JSX")
+
 ;; javascript react
-(with-eval-after-load 'js
-  (setq js-jsx-indent-level 2)
-  (define-derived-mode js-react-mode js-mode
-    "JSX")
+(require 'tree-sitter)
+(setq js-jsx-indent-level 2)
 
-  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-react-mode))
-  (add-hook 'js-react-mode-hook #'eglot-ensure))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-react-mode))
+(add-hook 'js-react-mode-hook #'eglot-ensure)
 
-(with-eval-after-load 'typescript-mode
-  ;; see https://github.com/joaotavora/eglot/issues/624
-  ;; see https://github.com/joaotavora/eglot#handling-quirky-servers
-  (define-derived-mode ts-react-mode typescript-mode
-    "TSX")
+;; see https://github.com/joaotavora/eglot/issues/624
+;; see https://github.com/joaotavora/eglot#handling-quirky-servers
+(define-derived-mode ts-react-mode typescript-mode
+  "TSX")
 
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . ts-react-mode))
-  (add-hook 'ts-react-mode-hook #'eglot-ensure))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . ts-react-mode))
+(add-hook 'ts-react-mode-hook #'eglot-ensure)
 
 (provide 'mod-react)
 ;;; mod-react.el ends here
