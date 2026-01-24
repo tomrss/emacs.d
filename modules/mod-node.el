@@ -26,14 +26,37 @@
 ;; TODO enhance this package
 (u/use-package 'nvm)
 
-;; javascript react
+(defvar u/node-ls-npm-package "typescript-language-server"
+  "NPM package of node language server.")
+
+(defvar u/node-typescript-npm-package "typescript"
+  "NPM package of typescript.")
+
+(defvar u/node-ls-executable "typescript-language-server"
+  "Executable of node language server.")
+
+(defun u/node-install-upgrade-ls ()
+  "Install or upgrade typescript-language-server."
+  (interactive)
+  (message "Installing node language server...")
+  (let ((buf (generate-new-buffer "*install-node-language-server*")))
+    (u/call-process-in-buffer
+     "npm" buf t
+     "install" "-g" u/node-typescript-npm-package u/node-ls-npm-package)
+    (message "Installing node language server...done")))
+
+(defun u/js-eglot-ensure ()
+  "Hook for ensuring Eglot with required language servers in JS modes."
+  (u/eglot-ensure-ls (lambda () (executable-find u/node-ls-executable))
+                     #'u/node-install-upgrade-ls))
+
 (with-eval-after-load 'js
   (setq js-indent-level 2)
-  (add-hook 'js-mode-hook #'eglot-ensure))
+  (add-hook 'js-mode-hook #'u/js-eglot-ensure))
 
 (u/use-package 'typescript-mode)
 (with-eval-after-load 'typescript-mode
-  (add-hook 'ts-mode-hook #'eglot-ensure))
+  (add-hook 'ts-mode-hook #'u/js-eglot-ensure))
 
 (provide 'mod-node)
 ;;; mod-node.el ends here

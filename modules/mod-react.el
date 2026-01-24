@@ -34,7 +34,7 @@
 (setq js-jsx-indent-level 2)
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-react-mode))
-(add-hook 'js-react-mode-hook #'eglot-ensure)
+(add-hook 'js-react-mode-hook #'u/js-eglot-ensure)
 
 ;; see https://github.com/joaotavora/eglot/issues/624
 ;; see https://github.com/joaotavora/eglot#handling-quirky-servers
@@ -42,7 +42,7 @@
   "TSX")
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . ts-react-mode))
-(add-hook 'ts-react-mode-hook #'eglot-ensure)
+(add-hook 'ts-react-mode-hook #'u/js-eglot-ensure)
 
 (provide 'mod-react)
 ;;; mod-react.el ends here

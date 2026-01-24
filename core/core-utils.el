@@ -51,5 +51,29 @@ If BUFFER is nil, new buffer will be generated."
           (error "Error executing command.  See buffer %s for details" (buffer-name buf)))
         (newline)))))
 
+;; TODO maybe unify these 2?
+
+(defun u/call-process-in-buffer (command &optional buffer sudo &rest args)
+  "Call process COMMAND in BUFFER with ARGS.
+If BUFFER is nil, new buffer will be generated.
+If SUDO is non-nil, execute command as super user."
+  (let ((buf (or buffer (generate-new-buffer "*shell-command*"))))
+    ;; (display-buffer buf)
+    (with-current-buffer buf
+      (pop-to-buffer buf)
+      (let ((default-directory (if sudo "/sudo::/" ".")))
+        (unless (derived-mode-p 'compilation-mode) (compilation-mode))
+        (let ((inhibit-read-only t))
+          (goto-char (point-max))
+          (insert (if sudo "# " "$ "))
+          (insert command)
+          (insert " ")
+          (insert (string-join args " "))
+          (newline)
+          (newline)
+          (unless (zerop (apply #'process-file command nil buf t args))
+            (error "Error executing command.  See buffer %s for details" (buffer-name buf)))
+          (newline))))))
+
 (provide 'core-utils)
 ;;; core-utils.el ends here
