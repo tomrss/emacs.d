@@ -39,40 +39,41 @@
 
 ;;;; Helper functions
 
-(defun u/terraform-command (command &optional interactive)
-  "Execute Terrafom COMMAND.
+(with-eval-after-load 'terraform-mode
+  (defun u/terraform-command (command &optional interactive)
+    "Execute Terrafom COMMAND.
 
 If INTERACTIVE is non-nil, `comint-mode' will be used."
-  (let ((default-directory (project-root (project-current t))))
-    (compilation-start
-     (concat "terraform " command)
-     interactive
-     (lambda (_) (format "*terraform: %s @ %s *" command default-directory)))))
+    (let ((default-directory (project-root (project-current t))))
+      (compilation-start
+       (concat "terraform " command)
+       interactive
+       (lambda (_) (format "*terraform: %s @ %s *" command default-directory)))))
 
-(defun u/terraform-init ()
-  "Terraform plan."
-  (interactive)
-  (u/terraform-command "init"))
+  (defun u/terraform-init ()
+    "Terraform plan."
+    (interactive)
+    (u/terraform-command "init"))
 
-(defun u/terraform-plan ()
-  "Terraform plan."
-  (interactive)
-  (u/terraform-command "plan"))
+  (defun u/terraform-plan ()
+    "Terraform plan."
+    (interactive)
+    (u/terraform-command "plan"))
 
-(defun u/terraform-apply ()
-  "Terraform apply."
-  (interactive)
-  (u/terraform-command "apply" t))
+  (defun u/terraform-apply ()
+    "Terraform apply."
+    (interactive)
+    (u/terraform-command "apply" t))
 
-(defun u/terraform-apply-auto-approve ()
-  "Terraform apply auto approve."
-  (interactive)
-  (u/terraform-command "apply -auto-approve"))
+  (defun u/terraform-apply-auto-approve ()
+    "Terraform apply auto approve."
+    (interactive)
+    (u/terraform-command "apply -auto-approve"))
 
-(defun u/terraform-destroy ()
-  "Terraform destroy."
-  (interactive)
-  (u/terraform-command "destroy" t))
+  (defun u/terraform-destroy ()
+    "Terraform destroy."
+    (interactive)
+    (u/terraform-command "destroy" t)))
 
 (provide 'mod-terraform)
 ;;; mod-terraform.el ends here
