@@ -115,7 +115,7 @@ The full list of modules is simply the list of files in =modules= directory.
 
 #+begin_src shell
   # install dependencies
-  brew install gcc jibgccjit gnutls tree-sitter
+  brew install gcc autoconf libgccjit gnutls tree-sitter
 
   # get emacs sources
   export EMACS_VERSION=30.1
@@ -127,7 +127,14 @@ The full list of modules is simply the list of files in =modules= directory.
   # build
   ./autogen.sh
   ./configure --with-native-compilation=aot --with-tree-sitter --with-gnutls --with-ns
-  make -j8
+  # sometimes it does not get the tree sitter lib and include path and you have to pass it:
+  # ./configure --with-tree-sitter \
+  #   TREE_SITTER_LIBS="-L/opt/homebrew/lib -ltree-sitter" \
+  #   TREE_SITTER_CFLAGS="-I/opt/homebrew/include" \
+  #   --with-native-compilation=aot --with-gnutls --with-ns
+  make -j8 # or whathever number of cores
   sudo make install
-  cp -r nextstep/Emacs.app /Applications
+  sudo cp -r nextstep/Emacs.app /Applications
+  # tell MacOS that Emacs is trusted
+  sudo xattr -rd com.apple.quarantine /Applications/Emacs.app
 #+end_src
