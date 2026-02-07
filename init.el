@@ -81,10 +81,9 @@
     ;; "scala"            ; development with scala
     ;; "clojure"          ; development with clojure
     "node"                ; development with node
-    "react"               ; development with react
+    "web"                 ; web development (html, jsx, tsx, vue, svelte)
     ;; "csharp"           ; development with csharp
     "erlang"              ; development with erlang
-    ;; "php"              ; development with php
     "terraform"           ; iac with terraform
     "http"                ; http client
     ;; "kubernetes"       ; kubernetes overview buffer

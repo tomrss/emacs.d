@@ -41,8 +41,9 @@
   (message "Installing node language server...")
   (let ((buf (generate-new-buffer "*install-node-language-server*")))
     (u/call-process-in-buffer
-     "npm" buf t
-     "install" "-g" u/node-typescript-npm-package u/node-ls-npm-package)
+     "npm" buf nil
+     "install" "--prefix" u/lsp-servers-directory
+     u/node-typescript-npm-package u/node-ls-npm-package)
     (message "Installing node language server...done")))
 
 (defun u/js-eglot-ensure ()

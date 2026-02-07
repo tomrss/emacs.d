@@ -68,5 +68,15 @@
 (setq eglot-java-server-install-dir     (u/cache-file "eglot-java/eclipse.jdt.ls"))
 (setq multisession-directory            (u/cache-file "multisession/"))
 
+;; LSP servers installed via npm
+(defconst u/lsp-servers-directory (u/cache-file "lsp-servers/")
+  "Directory for locally installed LSP servers.")
+
+(defconst u/lsp-servers-bin-directory (concat u/lsp-servers-directory "node_modules/.bin/")
+  "Directory containing LSP server executables.")
+
+(make-directory u/lsp-servers-directory t)
+(add-to-list 'exec-path u/lsp-servers-bin-directory)
+
 (provide 'core-init-directory)
 ;;; core-init-directory.el ends here

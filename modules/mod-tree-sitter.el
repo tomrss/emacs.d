@@ -35,21 +35,11 @@
 (with-eval-after-load 'tree-sitter
   (require 'tree-sitter-langs))
 
-;; add languages
-
-(with-eval-after-load 'typescript-mode
-  (add-to-list 'tree-sitter-major-mode-language-alist '(ts-react-mode . tsx)))
-
-(with-eval-after-load 'js
-  (add-to-list 'tree-sitter-major-mode-language-alist '(js-react-mode . tsx)))
-
 ;; activate tree sitter for some modes
 
 (add-hook 'python-mode-hook #'tree-sitter-mode)
 (add-hook 'js-mode-hook #'tree-sitter-mode)
 (add-hook 'ts-mode-hook #'tree-sitter-mode)
-(add-hook 'js-react-mode-hook #'tree-sitter-mode)
-(add-hook 'ts-react-mode-hook #'tree-sitter-mode)
 (add-hook 'terraform-mode-hook #'tree-sitter-mode)
 
 (provide 'mod-tree-sitter)
