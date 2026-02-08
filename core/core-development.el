@@ -53,7 +53,8 @@
 (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
 (add-hook 'prog-mode-hook #'diff-hl-mode)
 (add-hook 'prog-mode-hook #'diff-hl-margin-mode)
-(diff-hl-flydiff-mode t)
+(with-eval-after-load 'diff-hl
+  (diff-hl-flydiff-mode t))
 
 ;;;; Configure parentheses
 

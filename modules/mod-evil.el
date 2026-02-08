@@ -37,7 +37,10 @@
 ;;;; Automatically configure evil for some common modes
 (u/use-package 'evil-collection)
 (with-eval-after-load 'evil
-  (evil-collection-init))
+  (evil-collection-init '(bookmark calendar compile consult corfu custom
+                          dired diff-hl eglot embark flymake forge
+                          ibuffer info magit org org-roam vertico
+                          vterm xref)))
 
 ;;;; Evil in dired
 

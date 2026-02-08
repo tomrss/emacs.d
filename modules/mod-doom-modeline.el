@@ -26,7 +26,7 @@
 ;;; Code:
 
 (u/use-package 'doom-modeline)
-(doom-modeline-mode +1)
+(add-hook 'emacs-startup-hook #'doom-modeline-mode)
 
 (provide 'mod-doom-modeline)
 ;;; mod-doom-modeline.el ends here

@@ -26,11 +26,10 @@
 ;;;; Setup icons
 
 (u/use-package 'nerd-icons)
-(require 'nerd-icons nil nil)
-(when window-system
-  (unless (x-list-fonts "Symbols Nerd Font Mono")
-    (nerd-icons-install-fonts t)))
 (with-eval-after-load 'nerd-icons
+  (when window-system
+    (unless (x-list-fonts "Symbols Nerd Font Mono")
+      (nerd-icons-install-fonts t)))
   (add-to-list 'nerd-icons-extension-icon-alist
                '("go" nerd-icons-mdicon "nf-md-language_go" :face nerd-icons-blue :height 1.2)))
 
@@ -43,7 +42,7 @@
 ;;;; Icons in minibuffer completions
 
 (u/use-package 'nerd-icons-completion)
-(with-eval-after-load 'marginalia
+(with-eval-after-load 'nerd-icons
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
