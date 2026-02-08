@@ -39,12 +39,8 @@
   "Install or upgrade typescript-language-server."
   (interactive)
   (message "Installing node language server...")
-  (let ((buf (generate-new-buffer "*install-node-language-server*")))
-    (u/call-process-in-buffer
-     "npm" buf nil
-     "install" "--prefix" u/lsp-servers-directory
-     u/node-typescript-npm-package u/node-ls-npm-package)
-    (message "Installing node language server...done")))
+  (u/lsp-install-npm-package u/node-typescript-npm-package u/node-ls-npm-package)
+  (message "Installing node language server...done"))
 
 (defun u/js-eglot-ensure ()
   "Hook for ensuring Eglot with required language servers in JS modes."

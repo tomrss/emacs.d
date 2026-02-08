@@ -23,8 +23,26 @@
 
 ;;; Code:
 
+(defvar u/go-ls-package "golang.org/x/tools/gopls@latest"
+  "Go package for gopls language server.")
+
+(defvar u/go-ls-executable "gopls"
+  "Executable of Go language server.")
+
+(defun u/go-install-upgrade-ls ()
+  "Install or upgrade gopls."
+  (interactive)
+  (message "Installing Go language server...")
+  (u/lsp-install-go-package u/go-ls-package)
+  (message "Installing Go language server...done"))
+
+(defun u/go-eglot-ensure ()
+  "Hook for ensuring Eglot with required language server in Go mode."
+  (u/eglot-ensure-ls (lambda () (executable-find u/go-ls-executable))
+                     #'u/go-install-upgrade-ls))
+
 (u/use-package 'go-mode)
-(add-hook 'go-mode-hook #'eglot-ensure)
+(add-hook 'go-mode-hook #'u/go-eglot-ensure)
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode t)
                           (setq outline-regexp "\\(func \\)\\|\\(type \\)")))

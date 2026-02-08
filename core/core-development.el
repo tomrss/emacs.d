@@ -97,6 +97,35 @@
 
 ;;;; Eglot (Language Server Protocol)
 
+(defun u/lsp-install-npm-package (&rest packages)
+  "Install npm PACKAGES in the local LSP servers directory."
+  (let ((buf (generate-new-buffer "*install-npm-lsp*")))
+    (apply #'u/call-process-in-buffer
+           "npm" buf nil
+           "install" "--prefix" u/lsp-servers-node-directory
+           packages)))
+
+(defun u/lsp-install-pip-package (package &optional extras)
+  "Install pip PACKAGE in the local LSP servers venv.
+EXTRAS is an optional list of package extras to install."
+  (let ((buf (generate-new-buffer "*install-pip-lsp*"))
+        (venv u/lsp-servers-python-directory)
+        (python (concat u/lsp-servers-python-directory "bin/python")))
+    (unless (file-exists-p python)
+      (u/call-process-in-buffer "python3" buf nil "-m" "venv" venv))
+    (u/call-process-in-buffer python buf nil "-m" "pip" "install" "-U" package)
+    (dolist (extra extras)
+      (u/call-process-in-buffer
+       python buf nil "-m" "pip" "install" "-U"
+       (format "%s[%s]" package extra)))))
+
+(defun u/lsp-install-go-package (package)
+  "Install go PACKAGE in the local LSP servers directory."
+  (let ((buf (generate-new-buffer "*install-go-lsp*"))
+        (process-environment (cons (concat "GOPATH=" u/lsp-servers-go-directory)
+                                   process-environment)))
+    (u/call-process-in-buffer "go" buf nil "install" package)))
+
 (defun u/eglot-ensure-ls (installedp install-function)
   "Ensure that a language server is installed before starting `eglot'.
 If not, prompt the user for installing it.

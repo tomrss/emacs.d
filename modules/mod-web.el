@@ -87,17 +87,7 @@
   "Language server configuration for web modes.
 Each entry is (MODE EXECUTABLE NPM-PACKAGE).")
 
-;;;; Generic language server functions
-
-(defun u/web-ls-install (npm-package)
-  "Install language server NPM-PACKAGE in local lsp-servers directory."
-  (message "Installing %s..." npm-package)
-  (let ((buf (generate-new-buffer (format "*install-%s*" npm-package))))
-    (u/call-process-in-buffer "npm" buf nil
-                              "install"
-                              "--prefix" u/lsp-servers-directory
-                              npm-package)
-    (message "Installing %s...done" npm-package)))
+;;;; Eglot ensure
 
 (defun u/web-eglot-ensure ()
   "Ensure eglot is started with the appropriate language server.
@@ -107,7 +97,10 @@ Automatically installs the language server if not found."
               (npm-package (nth 2 config)))
     (u/eglot-ensure-ls
      (lambda () (executable-find executable))
-     (lambda () (u/web-ls-install npm-package)))))
+     (lambda ()
+       (message "Installing %s..." npm-package)
+       (u/lsp-install-npm-package npm-package)
+       (message "Installing %s...done" npm-package)))))
 
 ;;;; Eglot configuration
 

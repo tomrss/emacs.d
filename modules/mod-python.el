@@ -42,15 +42,8 @@
   "Install or upgrade python-language-server (pylsp)."
   (interactive)
   (message "Installing python language server...")
-  (let ((buf (generate-new-buffer "*install-python-language-server*")))
-    (u/shell-command-in-buffer
-     (concat "pip install -U " u/python-ls-pip-package)
-     buf)
-    (dolist (extra u/python-ls-pip-package-extras)
-      (u/shell-command-in-buffer
-       (format "pip install -U '%s[%s]'" u/python-ls-pip-package extra)
-       buf))
-    (message "Installing python language server...done")))
+  (u/lsp-install-pip-package u/python-ls-pip-package u/python-ls-pip-package-extras)
+  (message "Installing python language server...done"))
 
 ;;;; Virtualenv integration
 
