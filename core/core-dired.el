@@ -139,9 +139,8 @@ External file handlers are driven by `+dired-open-handlers-alist' and
 
 ;;;; Dired colorization
 
-(u/use-package 'diredfl)
-(with-eval-after-load 'dired
-  (add-hook 'dired-mode-hook #'diredfl-mode))
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
 
 ;;;; Process management
 

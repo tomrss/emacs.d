@@ -32,9 +32,9 @@
 
 ;;;; Configure eglot
 
-(u/use-package 'eglot-java)
-(add-hook 'java-mode-hook 'eglot-java-mode)
-(with-eval-after-load 'eglot-java
+(use-package eglot-java
+  :hook (java-mode . eglot-java-mode)
+  :config
   (define-key eglot-java-mode-map (kbd "C-c j n") #'eglot-java-file-new)
   (define-key eglot-java-mode-map (kbd "C-c j x") #'eglot-java-run-main)
   (define-key eglot-java-mode-map (kbd "C-c j t") #'eglot-java-run-test)

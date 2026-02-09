@@ -23,10 +23,11 @@
 
 ;;; Code:
 
-(u/use-package 'clojure-mode)
-(u/use-package 'cider)
-(add-hook 'clojure-mode-hook #'eglot-ensure)
-(add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-mode))
+(use-package clojure-mode
+  :mode "\\.clj\\'"
+  :hook (clojure-mode . eglot-ensure))
+
+(use-package cider)
 
 (provide 'mod-clojure)
 ;;; mod-clojure.el ends here

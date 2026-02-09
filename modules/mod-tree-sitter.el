@@ -27,20 +27,13 @@
 
 ;; setup tree sitter
 
-(u/use-package 'tree-sitter)
-(u/use-package 'tree-sitter-langs)
+(use-package tree-sitter
+  :hook ((python-mode js-mode ts-mode terraform-mode) . tree-sitter-mode)
+  :config
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-
-(with-eval-after-load 'tree-sitter
-  (require 'tree-sitter-langs))
-
-;; activate tree sitter for some modes
-
-(add-hook 'python-mode-hook #'tree-sitter-mode)
-(add-hook 'js-mode-hook #'tree-sitter-mode)
-(add-hook 'ts-mode-hook #'tree-sitter-mode)
-(add-hook 'terraform-mode-hook #'tree-sitter-mode)
+(use-package tree-sitter-langs
+  :after tree-sitter)
 
 (provide 'mod-tree-sitter)
 ;;; mod-tree-sitter.el ends here

@@ -58,16 +58,15 @@
 
 ;;;; Configure groovy mode and eglot
 
-(u/use-package 'groovy-mode)
-;; TODO find a groovy ls that works
-(add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
-
 (defun u/groovy-eglot-ensure ()
   "Ensure `eglot' for groovy."
   (u/eglot-ensure-ls (lambda () (file-exists-p u/groovy-ls-jar))
                      #'u/groovy-install-ls))
 
-(add-hook 'groovy-mode-hook #'u/groovy-eglot-ensure)
+;; TODO find a groovy ls that works
+(use-package groovy-mode
+  :mode "\\.groovy\\'"
+  :hook (groovy-mode . u/groovy-eglot-ensure))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs

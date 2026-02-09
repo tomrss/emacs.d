@@ -25,16 +25,14 @@
 
 ;;; Code:
 
-(u/use-package '(copilot :type git
-                         :host github
-                         :repo "copilot-emacs/copilot.el"
-                         :files ("*.el")))
-
-(unless (getenv "CI")
-  ;; enable copilot in all programming modes (skip in CI)
-  (add-hook 'prog-mode-hook 'copilot-mode))
-
-(with-eval-after-load 'copilot
+(use-package copilot
+  :straight (copilot :type git
+                     :host github
+                     :repo "copilot-emacs/copilot.el"
+                     :files ("*.el"))
+  :hook (prog-mode . copilot-mode)
+  :if (not (getenv "CI"))
+  :config
   (setq copilot-indent-offset-warning-disable t)
   (define-key copilot-completion-map (kbd "C-f") 'copilot-accept-completion))
 

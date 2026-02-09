@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(u/use-package 'csharp-mode)
-(add-hook 'csharp-mode-hook #'eglot-ensure)
-(add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode))
+(use-package csharp-mode
+  :mode "\\.cs\\'"
+  :hook (csharp-mode . eglot-ensure))
 
 (provide 'mod-csharp)
 ;;; mod-csharp.el ends here

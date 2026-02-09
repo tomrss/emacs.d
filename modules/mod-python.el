@@ -47,8 +47,8 @@
 
 ;;;; Virtualenv integration
 
-(u/use-package 'pyvenv)
-(with-eval-after-load 'pyvenv
+(use-package pyvenv
+  :config
   (setq pyvenv-mode-line-indicator
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] "))))
 

@@ -41,12 +41,12 @@
   (u/eglot-ensure-ls (lambda () (executable-find u/go-ls-executable))
                      #'u/go-install-upgrade-ls))
 
-(u/use-package 'go-mode)
-(add-hook 'go-mode-hook #'u/go-eglot-ensure)
-(add-hook 'go-mode-hook (lambda ()
-                          (setq indent-tabs-mode t)
-                          (setq outline-regexp "\\(func \\)\\|\\(type \\)")))
-(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+(use-package go-mode
+  :mode "\\.go\\'"
+  :hook ((go-mode . u/go-eglot-ensure)
+         (go-mode . (lambda ()
+                      (setq indent-tabs-mode t)
+                      (setq outline-regexp "\\(func \\)\\|\\(type \\)")))))
 
 (provide 'mod-go)
 ;;; mod-go.el ends here

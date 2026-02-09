@@ -34,10 +34,11 @@
 
 ;;;; Window selection and navigation
 
-(u/use-package 'ace-window)
-(u/define-key (kbd "M-o") #'ace-window)
-(u/define-key (kbd "M-O") #'ace-delete-window)
-(with-eval-after-load 'ace-window
+(use-package ace-window
+  :init
+  (u/define-key (kbd "M-o") #'ace-window)
+  (u/define-key (kbd "M-O") #'ace-delete-window)
+  :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (u/define-key (kbd "M-h") #'windmove-left)
@@ -60,23 +61,25 @@
 ;;;; Window placement and popups
 
 ;; define window placement rules
-(u/use-package 'shackle)
-(shackle-mode +1)
-(setq shackle-rules
-      '((compilation-mode :noselect t)
-		(help-mode :popup t :select t :align below :size 0.33)
-		(helpful-mode :popup t :select t :align below :size 0.33)
-		("\\*.*-e?shell\\*\\'" :regexp t :popup t :select t :align below :size 0.33)
-		("\\*.*-v?term\\*.*\\'" :regexp t :popup t :select t :align below :size 0.33)
-        ("*Async Shell Command*" :ignore t)
-		(flycheck-error-list-mode :popup t :select t :align below :size 0.25)
-		("\\*Warnings\\*" :regexp t :noselect t)
-        ("\\*eldoc" :regexp t :popup t :noselect t :align right :size 80)
-        (kubernetes-overview-mode :select t :align left :size 0.5)
-        ("\\*terraform.*\\*" :regexp t :select t :popup t :align right)
-        ("\\*latex-comp-.*\\*" :regexp t :ignore t)
-        ("*virtualenv*" :ignore t)
-        ("*venv*" :ignore t)))
+(use-package shackle
+  :init
+  (shackle-mode +1)
+  :config
+  (setq shackle-rules
+        '((compilation-mode :noselect t)
+          (help-mode :popup t :select t :align below :size 0.33)
+          (helpful-mode :popup t :select t :align below :size 0.33)
+          ("\\*.*-e?shell\\*\\'" :regexp t :popup t :select t :align below :size 0.33)
+          ("\\*.*-v?term\\*.*\\'" :regexp t :popup t :select t :align below :size 0.33)
+          ("*Async Shell Command*" :ignore t)
+          (flycheck-error-list-mode :popup t :select t :align below :size 0.25)
+          ("\\*Warnings\\*" :regexp t :noselect t)
+          ("\\*eldoc" :regexp t :popup t :noselect t :align right :size 80)
+          (kubernetes-overview-mode :select t :align left :size 0.5)
+          ("\\*terraform.*\\*" :regexp t :select t :popup t :align right)
+          ("\\*latex-comp-.*\\*" :regexp t :ignore t)
+          ("*virtualenv*" :ignore t)
+          ("*venv*" :ignore t))))
 
 ;;;; Workspaces (tab-bar-mode)
 
@@ -88,8 +91,9 @@
 ;;;; Text selection and navigation
 
 ;; increases the selected region by semantic units
-(u/use-package 'expand-region)
-(u/define-key (kbd "C-ò") #'er/expand-region)
+(use-package expand-region
+  :init
+  (u/define-key (kbd "C-ò") #'er/expand-region))
 
 ;;;; Buffer helpers
 

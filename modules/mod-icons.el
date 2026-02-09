@@ -25,8 +25,8 @@
 
 ;;;; Setup icons
 
-(u/use-package 'nerd-icons)
-(with-eval-after-load 'nerd-icons
+(use-package nerd-icons
+  :config
   (when window-system
     (unless (x-list-fonts "Symbols Nerd Font Mono")
       (nerd-icons-install-fonts t)))
@@ -35,19 +35,19 @@
 
 ;;;; Icons in dired
 
-(u/use-package 'nerd-icons-dired)
-(with-eval-after-load 'dired
-  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+(use-package nerd-icons-dired
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 ;;;; Icons in minibuffer completions
 
-(u/use-package 'nerd-icons-completion)
-(with-eval-after-load 'nerd-icons
+(use-package nerd-icons-completion
+  :after nerd-icons
+  :config
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-(u/use-package 'nerd-icons-ibuffer)
-(add-hook 'ibuffer-mode-hook #'nerd-icons-ibuffer-mode)
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
 ;;;; Icons in doom modeline
 
@@ -56,7 +56,7 @@
 ;;;; Icons in treemacs
 
 (with-eval-after-load 'treemacs
-  (u/use-package 'treemacs-nerd-icons)
+  (use-package treemacs-nerd-icons)
   (require 'treemacs-nerd-icons)
   (treemacs-load-theme "nerd-icons"))
 

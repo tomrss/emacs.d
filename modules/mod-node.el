@@ -24,7 +24,7 @@
 ;;; Code:
 
 ;; TODO enhance this package
-(u/use-package 'nvm)
+(use-package nvm)
 
 (defvar u/node-ls-npm-package "typescript-language-server"
   "NPM package of node language server.")
@@ -51,8 +51,8 @@
   (setq js-indent-level 2)
   (add-hook 'js-mode-hook #'u/js-eglot-ensure))
 
-(u/use-package 'typescript-mode)
-(with-eval-after-load 'typescript-mode
+(use-package typescript-mode
+  :config
   (add-hook 'ts-mode-hook #'u/js-eglot-ensure))
 
 (provide 'mod-node)

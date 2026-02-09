@@ -61,30 +61,24 @@ Choice between `straight', `builtin', `none'")
                      eldoc
                      xref
                      flymake))
-    (straight-use-package `(,package :type built-in))))
+    (straight-use-package `(,package :type built-in)))
+  (setq straight-use-package-by-default t))
  ((eq u/packaging-system 'builtin)
+
   ;; initialize builtin packaging system
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
   (unless package-archive-contents
-    (package-refresh-contents)))
+    (package-refresh-contents))
+  (setq use-package-always-ensure t))
  ((eq u/packaging-system 'none)
   ;; do nothing
   nil))
 
-;;;; Use package custom macro
-
-(defmacro u/use-package (package)
-  "Use PACKAGE."
-  (cond
-   ((eq u/packaging-system 'straight)
-    `(straight-use-package ,package))
-   ((eq u/packaging-system 'builtin)
-    `(unless (package-installed-p ,package)
-       (package-install ,package)))
-   ((eq u/packaging-system 'none)
-    nil)))
+;; defer package loading by default (use :demand t to override)
+(setq use-package-always-defer t)
+(setq use-package-compute-statistics t)
 
 (provide 'core-packaging)
 ;;; core-packaging.el ends here

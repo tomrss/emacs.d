@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(u/use-package 'kotlin-mode)
-(add-hook 'kotlin-mode-hook #'eglot-ensure)
-(add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
+(use-package kotlin-mode
+  :mode "\\.kt\\'"
+  :hook (kotlin-mode . eglot-ensure))
 
 (provide 'mod-kotlin)
 ;;; mod-kotlin.el ends here

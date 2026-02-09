@@ -294,8 +294,8 @@ to."
         (eshell/cd parent-dir)))))
 
 ;; eshell syntax highlighting
-(u/use-package 'eshell-syntax-highlighting)
-(add-hook 'eshell-mode-hook #'eshell-syntax-highlighting-mode)
+(use-package eshell-syntax-highlighting
+  :hook (eshell-mode . eshell-syntax-highlighting-mode))
 
 (provide 'core-terminals)
 ;;; core-terminals.el ends here

@@ -23,8 +23,9 @@
 
 ;;; Code:
 
-(u/use-package 'forge)
-(with-eval-after-load 'magit
+(use-package forge
+  :after magit
+  :config
   (setq forge-database-file (u/cache-file "forge-database.sqlite"))
   (require 'forge))
 

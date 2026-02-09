@@ -32,28 +32,28 @@
 ;;;; Version control
 
 ;; magit
-(u/use-package 'magit)
-(unless (fboundp 'magit-get-current-branch)
-  (autoload #'magit-get-current-branch "magit" nil t))
-(with-eval-after-load 'magit
+(use-package magit
+  :init
+  (unless (fboundp 'magit-get-current-branch)
+    (autoload #'magit-get-current-branch "magit" nil t))
+  ;; integrate magit with project
+  (define-key project-prefix-map (kbd "G") #'magit-status)
+  (add-to-list 'project-switch-commands '(magit-status "Magit"))
+  (u/define-key (kbd "C-x g") #'magit-status)
+  :config
   (setq magit-no-message
 		'("Turning on magit-auto-revert-mode...")))
 
-;; integrate magit with project
-(define-key project-prefix-map (kbd "G") #'magit-status)
-(add-to-list 'project-switch-commands '(magit-status "Magit"))
-
-(u/define-key (kbd "C-x g") #'magit-status) ; is the default but it's somehow deleted
-
 ;; highlight changes (git gutters)
-(u/use-package 'diff-hl)
-(autoload #'diff-hl-magit-post-refresh "diff-hl" nil t)
-(add-hook 'dired-mode-hook #'diff-hl-dired-mode-unless-remote)
-(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-(add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
-(add-hook 'prog-mode-hook #'diff-hl-mode)
-(add-hook 'prog-mode-hook #'diff-hl-margin-mode)
-(with-eval-after-load 'diff-hl
+(use-package diff-hl
+  :hook ((prog-mode . diff-hl-mode)
+         (prog-mode . diff-hl-margin-mode)
+         (dired-mode . diff-hl-dired-mode-unless-remote)
+         (magit-pre-refresh . diff-hl-magit-pre-refresh)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
+  :init
+  (autoload #'diff-hl-magit-post-refresh "diff-hl" nil t)
+  :config
   (diff-hl-flydiff-mode t))
 
 ;;;; Configure parentheses
@@ -66,9 +66,8 @@
                     :italic t)
 
 ;; highlight matching delimiters with rainbow colors
-(u/use-package 'rainbow-delimiters)
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'inferior-emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :hook ((prog-mode inferior-emacs-lisp-mode) . rainbow-delimiters-mode))
 
 ;;;; Syntax checking
 
@@ -84,13 +83,10 @@
 
 ;; aggressively indent as you type
 ;; TODO this sometimes interfere with undo
-(u/use-package 'aggressive-indent)
-(autoload 'aggressive-indent-mode "aggressive-indent")
-(with-eval-after-load 'aggressive-indent
+(use-package aggressive-indent
+  :hook ((emacs-lisp-mode lisp-mode scheme-mode) . aggressive-indent-mode)
+  :config
   (setq aggressive-indent-comments-too t))
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'scheme-mode-hook #'aggressive-indent-mode)
 
 ;;;; Code snippets
 
@@ -173,40 +169,35 @@ INSTALL-FUNCTION is a function that installs the ls."
 
 ;;;; Dockerfile
 
-(u/use-package 'dockerfile-mode)
-(add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
+(use-package dockerfile-mode
+  :mode "Dockerfile")
 
 ;;;; Markdown
 
-(u/use-package 'markdown-mode)
-(unless
-    (fboundp 'gfm-mode)
-  (autoload #'gfm-mode "markdown-mode" nil t))
-(setq mardown-command "multimarkdown")
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.mkd\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(use-package markdown-mode
+  :mode ("\\.md\\'" "\\.mkd\\'" "\\.markdown\\'")
+  :init
+  (unless (fboundp 'gfm-mode)
+    (autoload #'gfm-mode "markdown-mode" nil t))
+  (setq mardown-command "multimarkdown"))
 
 ;;;; Yaml
 
-(u/use-package 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
-;; this is for terraform templates
-(add-to-list 'auto-mode-alist '("\\.ya?ml\\.tftpl\\'" . yaml-mode))
-(add-hook 'yaml-mode-hook
-          (lambda ()
-            (set (make-local-variable 'font-lock-variable-name-face)
-                 'font-lock-type-face)))
+(use-package yaml-mode
+  :mode ("\\.ya?ml\\'" "\\.ya?ml\\.tftpl\\'")
+  :hook (yaml-mode . (lambda ()
+                        (set (make-local-variable 'font-lock-variable-name-face)
+                             'font-lock-type-face))))
 
 ;;;; Toml
 
-(u/use-package 'toml-mode)
-(add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-mode))
+(use-package toml-mode
+  :mode "\\.toml\\'")
 
 ;;;; Csv
 
-(u/use-package 'csv-mode)
-(add-to-list 'auto-mode-alist '("\\.csv\\'" . csv-mode))
+(use-package csv-mode
+  :mode "\\.csv\\'")
 
 (provide 'core-development)
 ;;; core-development.el ends here

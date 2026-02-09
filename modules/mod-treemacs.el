@@ -23,9 +23,10 @@
 
 ;;; Code:
 
-(u/use-package 'treemacs)
-(u/define-key (kbd "C-x c t") #'treemacs-select-window)
-(with-eval-after-load 'treemacs
+(use-package treemacs
+  :init
+  (u/define-key (kbd "C-x c t") #'treemacs-select-window)
+  :config
   (treemacs-project-follow-mode t)
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -33,10 +34,8 @@
   (treemacs-git-commit-diff-mode t)
   (treemacs-hide-gitignored-files-mode nil))
 
-(u/use-package 'treemacs-magit)
-(with-eval-after-load 'magit
-  (with-eval-after-load 'treemacs
-    (require 'treemacs-magit)))
+(use-package treemacs-magit
+  :after (treemacs magit))
 
 (provide 'mod-treemacs)
 ;;; mod-treemacs.el ends here

@@ -24,23 +24,26 @@
 ;;; Code:
 
 ;;;; Base evil configuration
-(u/use-package 'evil)
-(setq evil-want-integration t)
-(setq evil-want-keybinding nil)
-(setq evil-want-C-u-scroll nil)
-(setq evil-want-C-i-jump nil)
-(setq evil-respect-visual-line-mode t)
-(setq evil-undo-system 'undo-redo)
-(evil-mode +1)
-(add-hook 'with-editor-mode-hook 'evil-insert-state)
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll nil)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-respect-visual-line-mode t)
+  (setq evil-undo-system 'undo-redo)
+  (evil-mode +1)
+  :config
+  (add-hook 'with-editor-mode-hook 'evil-insert-state))
 
 ;;;; Automatically configure evil for some common modes
-(u/use-package 'evil-collection)
-(with-eval-after-load 'evil
+(use-package evil-collection
+  :after evil
+  :init
   (evil-collection-init '(bookmark calendar compile consult corfu custom
                           dired diff-hl eglot embark flymake forge
-                          ibuffer info magit org org-roam vertico
-                          vterm xref)))
+                          ibuffer info magit magit-section magit-todos
+                          org org-roam vertico vterm xref)))
 
 ;;;; Evil in dired
 
@@ -70,7 +73,7 @@
 ;;;; Evil in treemacs
 
 (with-eval-after-load 'treemacs
-  (u/use-package 'treemacs-evil)
+  (use-package treemacs-evil)
   (with-eval-after-load 'evil
     (with-eval-after-load 'treemacs
       (require 'treemacs-evil))))
@@ -78,7 +81,7 @@
 ;;;; Evil in kubernetes buffer
 
 (with-eval-after-load 'kubernetes-overview
-  (u/use-package 'kubernetes-evil)
+  (use-package kubernetes-evil)
   (require 'kubernetes-evil))
 
 ;;;; Evil in welcome screen
