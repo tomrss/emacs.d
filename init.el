@@ -75,15 +75,15 @@
     "go"                  ; development with go
     "python"              ; development with python
     "scheme"              ; scheme and guile hacking
-    "java"                ; development with java
-    "groovy"              ; development with groovy
+    ;; "java"             ; development with java
+    ;; "groovy"           ; development with groovy
     ;; "kotlin"           ; development with kotlin
     ;; "scala"            ; development with scala
     ;; "clojure"          ; development with clojure
     "node"                ; development with node
     "web"                 ; web development (html, jsx, tsx, vue, svelte)
     ;; "csharp"           ; development with csharp
-    "erlang"              ; development with erlang
+    ;; "erlang"           ; development with erlang
     "terraform"           ; iac with terraform
     "http"                ; http client
     ;; "kubernetes"       ; kubernetes overview buffer
