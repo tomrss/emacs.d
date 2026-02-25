@@ -23,10 +23,10 @@
 
 ;;; Code:
 
-(u/use-package 'erlang)
-(add-hook 'erlang-mode-hook #'eglot-ensure)
-(add-to-list 'auto-mode-alist '("\\.erl\\'" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.hrl\\'" . erlang-mode))
+(use-package erlang
+  :mode (("\\.erl\\'" . erlang-mode)
+         ("\\.hrl\\'" . erlang-mode))
+  :hook (erlang-mode . eglot-ensure))
 
 ;; TODO try distel
 

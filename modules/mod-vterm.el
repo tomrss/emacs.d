@@ -25,9 +25,11 @@
 
 (require 'project)
 
-
-(u/use-package 'vterm)
-(with-eval-after-load 'vterm
+(use-package vterm
+  :init
+  ;; overrides `project-vc-dir' but I use magit
+  (define-key project-prefix-map (kbd "v") #'u/project-vterm)
+  :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
   (setq vterm-max-scrollback 10000)
   (setq vterm-kill-buffer-on-exit t))
@@ -57,9 +59,6 @@ the same project."
     (if-let* ((buf (get-buffer buf-name)))
         (pop-to-buffer buf)
       (vterm-other-window buf-name))))
-
-;; overrides `project-vc-dir' but I use magit
-(define-key project-prefix-map (kbd "v") #'u/project-vterm)
 
 (provide 'mod-vterm)
 ;;; mod-vterm.el ends here

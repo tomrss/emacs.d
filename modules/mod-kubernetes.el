@@ -23,11 +23,11 @@
 
 ;;; Code:
 
-(u/use-package 'kubernetes)
-  (with-eval-after-load 'kubernetes-overview
-    ;; set very low frequency because it is too dangerous and slow
-    (setq kubernetes-poll-frequency 3600)
-    (setq kubernetes-redraw-frequency 3600))
+(use-package kubernetes
+  :config
+  ;; set very low frequency because it is too dangerous and slow
+  (setq kubernetes-poll-frequency 3600)
+  (setq kubernetes-redraw-frequency 3600))
 
 (provide 'mod-kubernetes)
 ;;; mod-kubernetes.el ends here

@@ -24,10 +24,10 @@
 
 ;;; Code:
 
-(u/use-package 'restclient)
-(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
+(use-package restclient
+  :mode ("\\.http\\'" . restclient-mode))
 
-(u/use-package 'httprepl)
+(use-package httprepl)
 
 (provide 'mod-http)
 ;;; mod-http.el ends here

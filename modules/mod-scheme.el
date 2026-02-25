@@ -26,7 +26,7 @@
 ;; TODO this package declares package as dependency, this creates problem with straight and eglot 
 ;; in emacs 30 (13-04-2024)
 ;; https://github.com/radian-software/straight.el/issues/1146
-;; (u/use-package 'geiser-guile)
+;; (use-package geiser-guile)
 
 (provide 'mod-scheme)
 ;;; mod-scheme.el ends here

@@ -23,9 +23,6 @@
 
 ;;; Code:
 
-(u/use-package 'tempel)
-(u/use-package 'tempel-collection)
-
 ;; Setup completion at point
 (defun tempel-setup-capf ()
   "Add the Tempel Capf to `completion-at-point-functions'."
@@ -33,14 +30,14 @@
               (cons #'tempel-complete
                     completion-at-point-functions)))
 
-(add-hook 'conf-mode-hook 'tempel-setup-capf)
-(add-hook 'prog-mode-hook 'tempel-setup-capf)
-(add-hook 'text-mode-hook 'tempel-setup-capf)
-
-(with-eval-after-load 'tempel
+(use-package tempel
+  :hook ((conf-mode prog-mode text-mode) . tempel-setup-capf)
+  :config
   (define-key tempel-map (kbd "TAB") #'tempel-next)
-  (define-key tempel-map (kbd "<backtab>") #'tempel-previous)
-  (require 'tempel-collection))
+  (define-key tempel-map (kbd "<backtab>") #'tempel-previous))
+
+(use-package tempel-collection
+  :after tempel)
 
 (provide 'mod-tempel)
 ;;; mod-tempel.el ends here

@@ -26,10 +26,10 @@
 
 ;;;; Setup language
 
-(u/use-package 'terraform-mode)
-(add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
-(add-hook 'terraform-mode-hook #'eglot-ensure)
-(add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)
+(use-package terraform-mode
+  :mode "\\.tf\\'"
+  :hook ((terraform-mode . eglot-ensure)
+         (terraform-mode . terraform-format-on-save-mode)))
 
 ;;;; Language server setup
 

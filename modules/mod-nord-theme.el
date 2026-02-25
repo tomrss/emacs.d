@@ -23,13 +23,14 @@
 
 ;;; Code:
 
-(u/use-package 'doom-themes)
-
-(setq doom-nord-brighter-modeline t)
-(load-theme 'doom-nord t)
-(set-face-attribute 'query-replace nil :background "#BF616A")
-(set-face-attribute 'font-lock-doc-face nil :foreground "#EBCB8B")
-(set-face-attribute 'completions-annotations nil :foreground "#EBCB8B")
+(use-package doom-themes
+  :init
+  (setq doom-nord-brighter-modeline t)
+  (load-theme 'doom-nord t)
+  :config
+  (set-face-attribute 'query-replace nil :background "#BF616A")
+  (set-face-attribute 'font-lock-doc-face nil :foreground "#EBCB8B")
+  (set-face-attribute 'completions-annotations nil :foreground "#EBCB8B"))
 
 (provide 'mod-nord-theme)
 ;;; mod-nord-theme.el ends here

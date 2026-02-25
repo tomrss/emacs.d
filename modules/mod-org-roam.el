@@ -24,20 +24,19 @@
 
 ;;; Code:
 
-(u/use-package 'org-roam)
-
 (defvar u/org-roam-base-dir "~/.org-roam"
   "Directory where to store Roam notes.")
 
-(add-to-list 'recentf-exclude u/org-roam-base-dir)
-(setq org-roam-v2-ack t)
-(u/define-key (kbd "C-c n l") #'org-roam-buffer-toggle)
-(u/define-key (kbd "C-c n f") #'org-roam-node-find)
-(u/define-key (kbd "C-c n i") #'org-roam-node-insert)
-(autoload 'org-roam-dailies-map "org-roam-dailies" nil nil 'keymap)
-(u/define-key (kbd "C-c n d") 'org-roam-dailies-map)
-
-(with-eval-after-load 'org-roam
+(use-package org-roam
+  :init
+  (add-to-list 'recentf-exclude u/org-roam-base-dir)
+  (setq org-roam-v2-ack t)
+  (u/define-key (kbd "C-c n l") #'org-roam-buffer-toggle)
+  (u/define-key (kbd "C-c n f") #'org-roam-node-find)
+  (u/define-key (kbd "C-c n i") #'org-roam-node-insert)
+  (autoload 'org-roam-dailies-map "org-roam-dailies" nil nil 'keymap)
+  (u/define-key (kbd "C-c n d") 'org-roam-dailies-map)
+  :config
   (make-directory u/org-roam-base-dir t)
   (setq org-roam-directory u/org-roam-base-dir)
   (setq org-roam-completion-everywhere t)

@@ -26,10 +26,11 @@
 ;;; Code:
 
 ;; this is necessary in macos, otherwise emacs would not found the correct path
-(u/use-package 'exec-path-from-shell)
-;; TODO this is really slow, try to use a non-interactive shell
-(exec-path-from-shell-initialize)
-(setq exec-path-from-shell-arguments '("-l"))
+(use-package exec-path-from-shell
+  :init
+  ;; TODO this is really slow, try to use a non-interactive shell
+  (exec-path-from-shell-initialize)
+  (setq exec-path-from-shell-arguments '("-l")))
 
 ;; fix dired
 (with-eval-after-load 'dired

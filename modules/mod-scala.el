@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(u/use-package 'scala-mode)
-(add-hook 'scala-mode-hook #'eglot-ensure)
-(add-to-list 'auto-mode-alist '("\\.sc\(ala\)?\\'" . scala-mode))
+(use-package scala-mode
+  :mode "\\.sc\\(ala\\)?\\'"
+  :hook (scala-mode . eglot-ensure))
 
 (provide 'mod-scala)
 ;;; mod-scala.el ends here

@@ -73,7 +73,7 @@
 
 ;;;; Visual fill mode
 
-(u/use-package 'visual-fill-column)
+(use-package visual-fill-column)
 
 (defun u/setup-visual-fill (width)
   "Setup visual line and column centered with WIDTH."
@@ -85,80 +85,79 @@
 
 ;;;; Scratch buffers
 
-;; TODO use package-vc-install in the u/use-package macro
+;; TODO use package-vc-install
 (when (eq u/packaging-system 'straight)
-  (u/use-package '(scratch-el :type git
-			                  :host github
-			                  :repo "tomrss/scratch.el")))
-
-(with-eval-after-load 'scratch
-  (setq scratch-search-fn #'consult-ripgrep)
-  (scratch-persist-mode +1))
-
-(u/define-key (kbd "C-c s") 'scratch-key-map)
+  (use-package scratch
+    :straight (scratch-el :type git
+                          :host github
+                          :repo "tomrss/scratch.el")
+    :init
+    (u/define-key (kbd "C-c s") 'scratch-key-map)
+    :config
+    (setq scratch-search-fn #'consult-ripgrep)
+    (scratch-persist-mode +1)))
 
 ;;;; Starting screen
 
-;; TODO use package-vc-install in the u/use-package macro
+;; TODO use package-vc-install
 (when (eq u/packaging-system 'straight)
-  (u/use-package '(welcome :type git
-                           :host github
-                           :repo "tomrss/welcome.el"
-                           :files ("welcome.el" "asset"))))
+  (use-package welcome
+    :straight (welcome :type git
+                       :host github
+                       :repo "tomrss/welcome.el"
+                       :files ("welcome.el" "asset"))
+    :hook (emacs-startup . welcome-screen)
+    :config
+    (setq welcome-menu-items
+          '(("Recent files"
+             :key "f"
+             :action consult-recent-file
+             :icon (nerd-icons-octicon . "nf-oct-history"))
+            ("Projects"
+             :key "p"
+             :action project-switch-project
+             :icon (nerd-icons-octicon . "nf-oct-repo"))
+            ("Dired"
+             :key "d"
+             :action dired
+             :icon (nerd-icons-sucicon . "nf-custom-folder_oct"))
+            ("Edit configuration"
+             :key "c"
+             :action u/edit-emacs-config
+             :icon (nerd-icons-octicon . "nf-oct-gear"))
+            ("Eshell"
+             :key "e"
+             :action eshell
+             :icon (nerd-icons-octicon . "nf-oct-terminal"))
+            ("Vterm"
+             :key "v"
+             :action vterm
+             :icon (nerd-icons-faicon . "nf-fa-terminal"))
+            ("Scratch"
+             :key "s"
+             :action scratch-new
+             :icon (nerd-icons-mdicon . "nf-md-clipboard_edit"))
+            ("Bookmarks"
+             :key "b"
+             :action bookmark-jump
+             :icon (nerd-icons-octicon . "nf-oct-bookmark"))
+            ("Org Roam note"
+             :key "r"
+             :action org-roam-node-find
+             :icon (nerd-icons-octicon . "nf-oct-checklist"))
+            ("Org Roam daily"
+             :key "y"
+             :action org-roam-dailies-capture-today
+             :icon (nerd-icons-octicon . "nf-oct-calendar"))
+            ("EWW browser"
+             :key "w"
+             :action eww
+             :icon (nerd-icons-octicon . "nf-oct-globe"))))
 
-(with-eval-after-load 'welcome
-  (setq welcome-menu-items
-        '(("Recent files"
-           :key "f"
-           :action consult-recent-file
-           :icon (nerd-icons-octicon . "nf-oct-history"))
-          ("Projects"
-           :key "p"
-           :action project-switch-project
-           :icon (nerd-icons-octicon . "nf-oct-repo"))
-          ("Dired"
-           :key "d"
-           :action dired
-           :icon (nerd-icons-sucicon . "nf-custom-folder_oct"))
-          ("Edit configuration"
-           :key "c"
-           :action u/edit-emacs-config
-           :icon (nerd-icons-octicon . "nf-oct-gear"))
-          ("Eshell"
-           :key "e"
-           :action eshell
-           :icon (nerd-icons-octicon . "nf-oct-terminal"))
-          ("Vterm"
-           :key "v"
-           :action vterm
-           :icon (nerd-icons-faicon . "nf-fa-terminal"))
-          ("Scratch"
-           :key "s"
-           :action scratch-new
-           :icon (nerd-icons-mdicon . "nf-md-clipboard_edit"))
-          ("Bookmarks"
-           :key "b"
-           :action bookmark-jump
-           :icon (nerd-icons-octicon . "nf-oct-bookmark"))
-          ("Org Roam note"
-           :key "r"
-           :action org-roam-node-find
-           :icon (nerd-icons-octicon . "nf-oct-checklist"))
-          ("Org Roam daily"
-           :key "y"
-           :action org-roam-dailies-capture-today
-           :icon (nerd-icons-octicon . "nf-oct-calendar"))
-          ("EWW browser"
-           :key "w"
-           :action eww
-           :icon (nerd-icons-octicon . "nf-oct-globe"))))
-
-  (define-key welcome-mode-map (kbd "j") #'next-line)
-  (define-key welcome-mode-map (kbd "k") #'previous-line)
-  (add-hook 'welcome-mode-hook
-            (lambda () (u/setup-visual-fill welcome-window-width))))
-
-(add-hook 'emacs-startup-hook #'welcome-screen)
+    (define-key welcome-mode-map (kbd "j") #'next-line)
+    (define-key welcome-mode-map (kbd "k") #'previous-line)
+    (add-hook 'welcome-mode-hook
+              (lambda () (u/setup-visual-fill welcome-window-width)))))
 
 (provide 'core-ui)
 ;;; core-ui.el ends here
