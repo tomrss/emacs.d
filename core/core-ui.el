@@ -109,7 +109,7 @@
     :hook (emacs-startup . welcome-screen)
     :config
     (setq welcome-menu-items
-          '(("Recent files"
+          `(("Recent files"
              :key "f"
              :action consult-recent-file
              :icon (nerd-icons-octicon . "nf-oct-history"))
@@ -129,9 +129,15 @@
              :key "e"
              :action eshell
              :icon (nerd-icons-octicon . "nf-oct-terminal"))
-            ("Vterm"
-             :key "v"
-             :action vterm
+            (,(cond
+               ((locate-library "vterm") "Vterm")
+               ((locate-library "eat")   "Eat")
+               (t                        "Term"))
+             :key "t"
+             :action ,(cond
+                       ((locate-library "vterm") 'vterm)
+                       ((locate-library "eat")   'eat)
+                       (t                        'term))
              :icon (nerd-icons-faicon . "nf-fa-terminal"))
             ("Scratch"
              :key "s"

@@ -42,7 +42,7 @@
   :init
   (evil-collection-init '(bookmark calendar compile consult corfu custom
                           dired diff-hl eglot embark flymake forge
-                          ibuffer info magit magit-section magit-todos
+                          eat ibuffer info magit magit-section magit-todos
                           org org-roam vertico vterm xref)))
 
 ;;;; Evil in dired

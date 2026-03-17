@@ -70,7 +70,8 @@
     ;; "treemacs"         ; directory tree view
     "tempel"              ; template of code snippets
     "org-roam"            ; org roam note taking tool
-    "vterm"               ; vterm is a fast terminal emulator written in C
+    ;; "vterm"            ; vterm is a fast terminal emulator written in C
+    "eat"                 ; eat is a terminal emulator in pure elisp
     "tree-sitter"         ; use tree-sitter for syntax highlighting (require build option)
     "go"                  ; development with go
     "python"              ; development with python
