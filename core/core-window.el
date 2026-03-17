@@ -76,6 +76,7 @@
           (flycheck-error-list-mode :popup t :select t :align below :size 0.25)
           ("\\*Warnings\\*" :regexp t :noselect t)
           ("\\*eldoc" :regexp t :popup t :noselect t :align right :size 80)
+          ("\\*claude:" :regexp t :popup t :select t :align right :size 80)
           (kubernetes-overview-mode :select t :align left :size 0.5)
           ("\\*terraform.*\\*" :regexp t :select t :popup t :align right)
           ("\\*latex-comp-.*\\*" :regexp t :ignore t)
