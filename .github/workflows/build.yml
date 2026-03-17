@@ -6,7 +6,7 @@ name: Build
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     paths-ignore:
       - README.org
 
@@ -14,6 +14,9 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
+    permissions:
+      content: read
+
     strategy:
       fail-fast: false
       matrix:
