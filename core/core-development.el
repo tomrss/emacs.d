@@ -1,6 +1,6 @@
 ;;; core-development.el --- Development features -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022-2023 Tommaso Rossi
+;; Copyright (C) 2022-2026 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com>
 
@@ -108,7 +108,10 @@ EXTRAS is an optional list of package extras to install."
   (let ((buf (generate-new-buffer "*install-pip-lsp*"))
         (venv u/lsp-servers-python-directory)
         (python (concat u/lsp-servers-python-directory "bin/python")))
-    (unless (file-exists-p python)
+    (unless (and (file-exists-p python)
+                 (= 0 (call-process python nil nil nil "-c" "import sys")))
+      (when (file-exists-p venv)
+        (delete-directory venv t))
       (u/call-process-in-buffer "python3" buf nil "-m" "venv" venv))
     (u/call-process-in-buffer python buf nil "-m" "pip" "install" "-U" package)
     (dolist (extra extras)

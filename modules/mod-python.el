@@ -1,6 +1,6 @@
 ;;; mod-python.el --- Support for Python development  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023  Tommaso Rossi
+;; Copyright (C) 2023-2026 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi@protonmail.com>
 
@@ -83,10 +83,19 @@
 
 ;;;; Setup hooks
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               `((python-mode python-ts-mode)
+                 . ,(lambda (&rest _)
+                      (list (concat u/lsp-servers-python-directory "bin/" u/python-ls-executable))))))
+
 (add-hook 'python-mode-hook
           (lambda ()
             (u/python-setup-virtualenv)
-            (u/eglot-ensure-ls (lambda () (executable-find u/python-ls-executable))
+            (u/eglot-ensure-ls (lambda ()
+                                 (file-executable-p
+                                  (concat u/lsp-servers-python-directory
+                                          "bin/" u/python-ls-executable)))
                                #'u/python-install-upgrade-ls)))
 
 (provide 'mod-python)
