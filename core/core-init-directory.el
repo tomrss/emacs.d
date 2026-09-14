@@ -85,6 +85,7 @@
 (add-to-list 'exec-path (concat u/lsp-servers-node-directory "node_modules/.bin/"))
 (add-to-list 'exec-path (concat u/lsp-servers-python-directory "bin/"))
 (add-to-list 'exec-path (concat u/lsp-servers-go-directory "bin/"))
+(add-to-list 'exec-path "~/.local/bin/")
 
 (provide 'core-init-directory)
 ;;; core-init-directory.el ends here
