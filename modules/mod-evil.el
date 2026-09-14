@@ -32,6 +32,7 @@
   (setq evil-want-C-i-jump nil)
   (setq evil-respect-visual-line-mode t)
   (setq evil-undo-system 'undo-redo)
+  (setq evil-collection-repl-submit-state 'insert)
   (evil-mode +1)
   :config
   (add-hook 'with-editor-mode-hook 'evil-insert-state))
