@@ -95,5 +95,10 @@
 ;; set (we could hook before but its easier like this)
 (setq forge-add-default-bindings nil)
 
+;;;; Evil in agent-shell diff
+
+(with-eval-after-load 'agent-shell-diff
+  (evil-set-initial-state 'agent-shell-diff-mode 'motion))
+
 (provide 'mod-evil)
 ;;; mod-evil.el ends here

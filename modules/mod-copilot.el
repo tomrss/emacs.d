@@ -1,6 +1,6 @@
 ;;; mod-copilot.el --- Setup GitHub copilot in Emacs    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023  Tommaso Rossi
+;; Copyright (C) 2023-2026  Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi@protonmail.com>
 
@@ -19,22 +19,25 @@
 
 ;;; Commentary:
 
-;; Setup GitHub copilot Emacs.  Requires a copilot subscription in GitHub.
-;; First time usage: run `M-x copilot-install-server` and then
-;; `M-x copilot-authenticate` and follow the instructions.
+;; Claude-Code-like experience for GitHub Copilot, powered by agent-shell (ACP).
+;; Requires GitHub Copilot CLI in PATH:  npm install -g @github/copilot
+;; First run: log in to Copilot CLI once outside Emacs (`copilot`, then /login).
 
 ;;; Code:
 
-(use-package copilot
-  :straight (copilot :type git
-                     :host github
-                     :repo "copilot-emacs/copilot.el"
-                     :files ("*.el"))
-  :hook (prog-mode . copilot-mode)
-  :if (not (getenv "CI"))
-  :config
-  (setq copilot-indent-offset-warning-disable t)
-  (define-key copilot-completion-map (kbd "C-f") 'copilot-accept-completion))
+(use-package agent-shell
+  :straight (agent-shell :type git :host github :repo "xenodium/agent-shell")
+  :init
+  (with-eval-after-load 'shell-maker
+    (setq shell-maker-root-path u/cache-directory))
+  :bind-keymap
+  ("C-c g" . agent-shell-mode-map)
+  :bind
+  (:map agent-shell-diff-mode-map
+        ("C-c C-c" . agent-shell-diff-accept-all)
+        ("C-c C-k" . agent-shell-diff-reject-all)
+        ("C-c f"   . agent-shell-diff-open-file))
+  :commands (agent-shell agent-shell-github-start-copilot))
 
 (provide 'mod-copilot)
 ;;; mod-copilot.el ends here

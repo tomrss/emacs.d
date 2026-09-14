@@ -3,3 +3,4 @@
 eln-cache/
 local-config.el
 custom.el
+/.agent-shell/
