@@ -1,6 +1,6 @@
 ;;; eplm.el --- Emacs Package Lifecycle Manager -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022-2023 Tommaso Rossi
+;; Copyright (C) 2022-2026 Tommaso Rossi
 
 ;; Author: Tommaso Rossi <tommaso.rossi1@protonmail.com>
 
@@ -37,8 +37,20 @@
 
 (defun eplm--load-init-files ()
   "Load init files."
-  (load-file "early-init.el")
-  (load-file "init.el"))
+  (condition-case err
+      (progn
+        (load-file "early-init.el")
+        (load-file "init.el"))
+    (error
+     (let ((straight-msg
+            (with-current-buffer "*straight-process*"
+              (save-excursion
+                (goto-char (point-max))
+                (if (search-backward "[Return code: 0]" nil t)
+                    (buffer-substring-no-properties (line-beginning-position 2) (point-max))
+                  (buffer-substring-no-properties (point-min) (point-max)))))))
+       (message "Error loading init files: %s" err)
+       (message "Package manager process error: %s" straight-msg)))))
 
 (defun eplm-install ()
   "Install packages defined in init files."
